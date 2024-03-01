@@ -8,6 +8,3 @@ netsuite_project:
       database: netsuite
       driver: 'ODBC Driver 17 for SQL Server'
       schema: dbo
-      encrypt: false
-      trust_cert: true
-      windows_login: true
