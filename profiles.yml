@@ -11,3 +11,4 @@ netsuite_project:
       encrypt: false
       trust_cert: true
       windows_login: true
+      
