@@ -1,8 +1,9 @@
 
 {{
     config(
-        materialized='incremental',
-        unique_key = ['transaction_nsid', 'transaction_line_nsid']
+        materialized='incremental'
+        , unique_key = ['transaction_nsid', 'transaction_line_nsid']
+        , post_hook = 'DELETE FROM {{this}} WHERE transaction_nsid IN (SELECT transaction_nsid FROM [dbo_stg].[deleted_records] )'
     )
 }}
 
@@ -19,5 +20,5 @@ FROM {{ ref('transaction') }} t
     ON t.transaction_nsid = tl.transaction_nsid
 
 {% if is_incremental() %}
-    WHERE t.transaction_last_modified_date >= (SELECT MAX(incremental_date.transaction_last_modified_date) FROM {{ this }} as incremental_date) 
+    WHERE t.transaction_last_modified_date >= (SELECT MAX(incremental_date.transaction_last_modified_date) FROM {{ this }} as incremental_date);
 {% endif %}
