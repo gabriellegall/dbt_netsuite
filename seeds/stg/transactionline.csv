@@ -1,4 +1,4 @@
-transaction;id
+transaction_nsid;transaction_line_nsid
 1;1
 1;2
 1;3

@@ -1,0 +1,6 @@
+
+version: 2
+
+models:
+  - name: transaction_with_line
+    description: "Merge of transaction and transactionline"
