@@ -23,7 +23,6 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
-
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
@@ -34,7 +33,10 @@ models:
   netsuite_project:
     # Config indicated by + and applies to all files under models/example/
     example:
-      +materialized: view
-      example:
-        +materialized: table
+      +materialized: table
 
+seeds:
+  netsuite_project:
+    stg:
+      +schema: stg
+      +delimiter: ";"
