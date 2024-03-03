@@ -9,6 +9,8 @@
     )
 }}
 
-select * from {{ ref('item') }}
+SELECT
+  *
+FROM {{ ref('item') }}
 
 {% endsnapshot %}
