@@ -30,9 +30,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   netsuite_project:
-    example:
-      +materialized: table
-
+    dwh:
+      +schema: dwh
 seeds:
   netsuite_project:
     stg:
