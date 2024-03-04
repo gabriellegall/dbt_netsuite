@@ -1,4 +1,4 @@
-{% snapshot dim_item %}
+{% snapshot historized_item %}
 
 {{
     config(

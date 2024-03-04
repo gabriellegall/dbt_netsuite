@@ -6,4 +6,5 @@
 
 SELECT 
     *
-FROM {{ ref('dim_item') }}
+    , {{ scd_valid_to() }}
+FROM {{ ref('historized_item') }}
