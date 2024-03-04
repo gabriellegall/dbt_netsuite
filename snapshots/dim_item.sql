@@ -1,4 +1,4 @@
-{% snapshot item_snapshot %}
+{% snapshot dim_item %}
 
 {{
     config(

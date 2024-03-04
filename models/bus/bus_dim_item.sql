@@ -1,4 +1,3 @@
-
 {{
     config(
         materialized = 'view'
@@ -7,4 +6,4 @@
 
 SELECT 
     *
-FROM {{ source('dim_item') }}
+FROM {{ ref('dim_item') }}

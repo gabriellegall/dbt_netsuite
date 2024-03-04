@@ -35,6 +35,7 @@ models:
   netsuite_project:
     dwh:
       +schema: dwh
+      
 seeds:
   netsuite_project:
     stg:
