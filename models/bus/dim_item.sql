@@ -4,7 +4,4 @@
     )
 }}
 
-SELECT 
-    *
-    , {{ scd_valid_to_fill_date() }}
-FROM {{ ref('historized_item') }}
+{{ generate_dim_scd('item_nsid', ref('historized_item')) }}

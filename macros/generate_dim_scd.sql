@@ -1,5 +1,6 @@
 {% macro generate_dim_scd(column_key, table_name) %}
-    {% set excluded_columns = ['dbt_scd_id', 'dbt_updated_at', 'dbt_valid_from', 'dbt_valid_to'] %}
+
+    {% set excluded_columns = [column_key, 'dbt_scd_id', 'dbt_updated_at', 'dbt_valid_from', 'dbt_valid_to'] %}
 
     {% set selected_columns_1 = [] %}
     {% set selected_columns_2 = [] %}
@@ -26,5 +27,6 @@
         LEFT OUTER JOIN 
         ( SELECT * FROM {{ table_name }} WHERE dbt_valid_to IS NULL ) live
             ON live.{{ column_key }} = hist.{{ column_key }}
+
 {% endmacro %}
 
