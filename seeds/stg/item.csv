@@ -1,2 +1,2 @@
-item_nsid;item_name;item_code
-1;Nivea Hand Kream;WBR805
+item_nsid;item_name;item_code;item_type;project_code;item_category_nsid;item_pattern_nsid
+1;Nivea Hand Cream;WBR805;Assembly;ZDEK5056;1;1
