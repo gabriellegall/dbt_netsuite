@@ -21,7 +21,7 @@
         {{ selected_columns_1 | join(', ') }}
         , {{ selected_columns_2 | join(', ') }}
         , {{ excluded_columns_meta | join(', ') }}
-        , {{ scd_valid_to_fill_date() }}
+        , {{ column_scd_valid_to_fill_date() }}
     FROM  
         {{ table_name }} AS hist
         LEFT OUTER JOIN 

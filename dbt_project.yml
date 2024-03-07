@@ -39,8 +39,6 @@ models:
       +schema: dwh
     bus:
       +schema: bus
-      pre-hook: "{{ logging.log_model_start_event() }}"
-      post-hook: "{{ logging.log_model_end_event() }}"
 
 seeds:
   netsuite_project:
