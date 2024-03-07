@@ -20,6 +20,7 @@
     SELECT 
         {{ selected_columns_1 | join(', ') }}
         , {{ selected_columns_2 | join(', ') }}
+        , {{ dbt_utils.generate_surrogate_key(['hist.' ~ column_key])}} AS fk_{{ column_key }}
         , {{ excluded_columns_meta | join(', ') }}
         , {{ column_scd_valid_to_fill_date() }}
     FROM  
