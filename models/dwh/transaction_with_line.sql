@@ -10,14 +10,20 @@
 SELECT 
     t.transaction_nsid
     , tl.transaction_line_nsid
+    , t.transaction_last_modified_date
     , t.transaction_type
     , t.transaction_number
     , t.transaction_date
-    , t.transaction_last_modified_date
+    , t.expected_delivery_date
+    , EOMONTH ( CASE 
+        WHEN t.transaction_type IN ( 'Invoice' )        THEN t.transaction_date
+        WHEN t.transaction_type IN ( 'Opportunity' )    THEN t.expected_delivery_date
+        ELSE NULL
+      END )                                                         AS fx_avg_rate_date
     , tl.item_nsid
-    , {{ dbt_utils.generate_surrogate_key ( ['tl.item_nsid'] )}} AS fk_{{ var("item_key") }}
+    , {{ dbt_utils.generate_surrogate_key ( ['tl.item_nsid'] )}}    AS fk_{{ var("item_key") }}
     , t.bu_nsid
-    , {{ dbt_utils.generate_surrogate_key ( ['t.bu_nsid'] )}} AS fk_{{ var("bu_key") }}
+    , {{ dbt_utils.generate_surrogate_key ( ['t.bu_nsid'] )}}       AS fk_{{ var("bu_key") }}
 
 FROM {{ ref('transaction') }} t
     LEFT OUTER JOIN {{ ref('transactionline') }} tl
