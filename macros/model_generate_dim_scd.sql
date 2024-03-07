@@ -1,4 +1,4 @@
-{% macro generate_dim_scd(column_key, table_name) %}
+{% macro model_generate_dim_scd(column_key, table_name) %}
 
     {% set excluded_columns = [column_key, 'dbt_scd_id', 'dbt_updated_at', 'dbt_valid_from', 'dbt_valid_to'] %}
 

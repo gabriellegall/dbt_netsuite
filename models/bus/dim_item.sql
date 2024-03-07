@@ -4,4 +4,4 @@
     )
 }}
 
-{{ generate_dim_scd('item_nsid', ref('historized_item')) }}
+{{ model_generate_dim_scd('item_nsid', ref('historized_item')) }}
