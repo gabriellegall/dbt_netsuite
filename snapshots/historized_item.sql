@@ -2,7 +2,7 @@
 
 {{
     config(
-      unique_key    = 'item_nsid',
+      unique_key    = var("item_key"),
       strategy      = 'check',
       target_schema = 'scd',
       check_cols    = 'all'

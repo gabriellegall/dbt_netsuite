@@ -29,9 +29,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 vars:
-  future_proof_date: '9999-12-31'
-  dbt_start_datetime: '{{ run_started_at.strftime("%Y-%m-%d %H:%M:%S") }}'
-  dbt_start_date:     '{{ run_started_at.strftime("%Y-%m-%d") }}'
+  future_proof_date   : '9999-12-31'
+  dbt_start_datetime  : '{{ run_started_at.strftime("%Y-%m-%d %H:%M:%S") }}'
+  dbt_start_date      : '{{ run_started_at.strftime("%Y-%m-%d") }}'
+  item_key            : 'item_nsid'
+  bu_key              : 'bu_nsid'
 
 models:
   netsuite_project:

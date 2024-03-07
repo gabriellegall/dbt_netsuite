@@ -1,5 +1,5 @@
-﻿transaction_nsid;transaction_type;transaction_number;transaction_date;transaction_last_modified_date
-1;Invoice;INV014587;10/01/2024;01/03/2024
-2;Invoice;INV014588;02/01/2024;01/03/2024
-3;Invoice;INV014589;03/01/2024;02/03/2024
-4;Invoice;INV014590;10/01/2024;03/03/2024
+﻿transaction_nsid;transaction_type;transaction_number;transaction_date;transaction_last_modified_date;bu_nsid
+1;Invoice;INV014587;10/01/2024;01/03/2024;1
+2;Invoice;INV014588;02/01/2024;01/03/2024;2
+3;Invoice;INV014589;03/01/2024;02/03/2024;3
+4;Invoice;INV014590;10/01/2024;03/03/2024;1
