@@ -23,7 +23,7 @@ SELECT
     , tl.item_nsid
     , {{ dbt_utils.generate_surrogate_key ( ['tl.item_nsid'] )}}    AS fk_{{ var("item_key") }}
     , t.bu_nsid
-    , {{ dbt_utils.generate_surrogate_key ( ['t.bu_nsid'] )}}       AS fk_{{ var("bu_key") }}
+    , {{ dbt_utils.generate_surrogate_key ( ['t.bu_nsid'] )}}       AS fk_{{ var("business_unit_key") }}
 
 FROM {{ ref('transaction') }} t
     LEFT OUTER JOIN {{ ref('transactionline') }} tl

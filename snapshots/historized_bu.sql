@@ -2,17 +2,16 @@
 
 {{
     config(
-      unique_key    = var("bu_key"),
+      unique_key    = var("business_unit_key"),
       strategy      = 'check',
       target_schema = 'scd',
       check_cols    = 'all',
-      enabled       = true
     )
 }}
 
 SELECT
   bu.bu_nsid
   , bu.bu_code
-FROM {{ ref('bu') }} bu
+FROM {{ ref('subsidiary') }} bu
 
 {% endsnapshot %}
