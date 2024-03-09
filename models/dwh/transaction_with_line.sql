@@ -1,9 +1,10 @@
 
 {{
     config(
-        materialized = 'incremental'
-        , unique_key = ['transaction_nsid', 'transaction_line_nsid']
-        , post_hook  = 'DELETE FROM {{this}} WHERE transaction_nsid IN (SELECT transaction_nsid FROM [STG].[deleted_records] )'
+        materialized       = 'incremental'
+        , unique_key       = ['transaction_nsid', 'transaction_line_nsid']
+        , post_hook        = 'DELETE FROM {{this}} WHERE transaction_nsid IN (SELECT transaction_nsid FROM [STG].[deleted_records] )'
+        , on_schema_change = 'sync_all_columns'
     )
 }}
 
@@ -24,6 +25,7 @@ SELECT
     , {{ dbt_utils.generate_surrogate_key ( ['tl.item_nsid'] )}}    AS fk_{{ var("item_key") }}
     , t.bu_nsid
     , {{ dbt_utils.generate_surrogate_key ( ['t.bu_nsid'] )}}       AS fk_{{ var("business_unit_key") }}
+    , t.customer_nsid
 
 FROM {{ ref('transaction') }} t
     LEFT OUTER JOIN {{ ref('transactionline') }} tl
