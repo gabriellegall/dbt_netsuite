@@ -7,6 +7,6 @@
 
 SELECT 
     *
-    , {{ column_dbt_load_datetime() }}  AS {{ var("dbt_prev_month_col_name") }}
+    , {{ column_dbt_load_datetime() }}  AS {{ var("dbt_prev_month_col_name") }} {# for current data, snapshot date is set to now #}
     
-FROM {{ ref('prep_transaction_with_lines') }} t
+FROM {{ ref('transaction_with_line') }} t

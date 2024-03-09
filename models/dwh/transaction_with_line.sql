@@ -12,5 +12,5 @@ SELECT
 FROM {{ ref('prep_transaction_with_lines') }} t
 
 {% if is_incremental() %}
-    WHERE t.transaction_last_modified_date >= ( SELECT MAX ( incremental_date.transaction_last_modified_date ) FROM {{ this }} as incremental_date );
+    WHERE t.transaction_last_modified_date > ( SELECT MAX ( incremental_date.transaction_last_modified_date ) FROM {{ this }} as incremental_date );
 {% endif %}

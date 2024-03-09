@@ -38,6 +38,7 @@ vars:
   dbt_run_id_col_name         : 'dt_run_id'
   item_key                    : 'item_nsid'
   business_unit_key           : 'bu_nsid'
+  transaction_snapshot_type   : 'Opportunity'
 
 models:
   netsuite_project:
