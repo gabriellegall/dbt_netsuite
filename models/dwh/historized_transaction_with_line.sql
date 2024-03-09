@@ -1,8 +1,8 @@
 {{
     config (
-        materialized    = 'incremental'    
-        , full_refresh  = false
-        , on_schema_change = 'append_new_columns'
+        materialized        = 'incremental'    
+        , full_refresh      = false
+        , on_schema_change  = 'append_new_columns'
     )
 }}
 
