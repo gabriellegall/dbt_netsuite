@@ -33,7 +33,7 @@ vars:
   dbt_start_datetime          : '{{ run_started_at.astimezone(modules.pytz.timezone("Europe/Paris")).strftime("%Y-%m-%d %H:%M:%S") }}'
   dbt_start_date              : '{{ run_started_at.astimezone(modules.pytz.timezone("Europe/Paris")).strftime("%Y-%m-%d") }}'
   dbt_run_id                  : '{{ invocation_id }}'
-  dbt_prev_month_col_name     : 'dbt_functional_snapshot_date'
+  dbt_snapshot_col_name       : 'dbt_functional_snapshot_date'
   dbt_load_datetime_col_name  : 'dbt_load_datetime'
   dbt_run_id_col_name         : 'dt_run_id'
   item_key                    : 'item_nsid'
