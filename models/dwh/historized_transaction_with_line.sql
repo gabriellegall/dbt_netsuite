@@ -13,6 +13,7 @@ SELECT
     , {{ column_dbt_load_datetime() }}  AS {{ var("dbt_load_datetime_col_name") }} {# Load date is set to the current dbt time for all records inserted #}
     , '{{ var("dbt_run_id") }}'         AS {{ var("dbt_run_id_col_name") }}         
 FROM {{ ref('transaction_with_line') }} t
+
 {# Only snapshot the following scope #}
 WHERE t.transaction_type IN ( {{ var("transaction_snapshot_type") | join(', ') }} )
 

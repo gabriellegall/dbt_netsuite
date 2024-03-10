@@ -1,7 +1,7 @@
 
 {{
     config (
-        materialized = 'ephemeral'
+        materialized = 'view'
     )
 }}
 
@@ -11,11 +11,9 @@ SELECT
     , t.transaction_last_modified_date
     , t.transaction_type
     , t.transaction_number
-    , t.transaction_date
+    , CAST(t.transaction_date AS DATETIME2)                         AS transaction_date
     , t.expected_delivery_date
-    , tl.item_nsid
     , {{ dbt_utils.generate_surrogate_key ( ['tl.item_nsid'] )}}    AS fk_{{ var("item_key") }}
-    , t.bu_nsid
     , {{ dbt_utils.generate_surrogate_key ( ['t.bu_nsid'] )}}       AS fk_{{ var("business_unit_key") }}
     , t.customer_nsid
     , {{ column_dbt_load_datetime() }}                              AS {{ var("dbt_load_datetime_col_name") }}

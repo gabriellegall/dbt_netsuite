@@ -1,3 +1,3 @@
 {% macro column_dbt_load_datetime() %}
-    CAST('{{ var("dbt_start_datetime") }}' AS DATETIME)
+    CAST('{{ var("dbt_start_datetime") }}' AS DATETIME2)
 {% endmacro %}

@@ -30,6 +30,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 vars:
   future_proof_date           : '9999-12-31'
+  past_proof_date             : '1900-01-01'
   dbt_start_datetime          : '{{ run_started_at.astimezone(modules.pytz.timezone("Europe/Paris")).strftime("%Y-%m-%d %H:%M:%S") }}'
   dbt_start_date              : '{{ run_started_at.astimezone(modules.pytz.timezone("Europe/Paris")).strftime("%Y-%m-%d") }}'
   dbt_run_id                  : '{{ invocation_id }}'

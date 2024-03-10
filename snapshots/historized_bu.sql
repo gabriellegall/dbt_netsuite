@@ -2,10 +2,10 @@
 
 {{
     config(
-      unique_key    = var("business_unit_key"),
-      strategy      = 'check',
-      target_schema = 'scd',
-      check_cols    = 'all',
+      unique_key    = var("business_unit_key")
+      , strategy      = 'check'
+      , target_schema = 'scd'
+      , check_cols    = 'all'
     )
 }}
 

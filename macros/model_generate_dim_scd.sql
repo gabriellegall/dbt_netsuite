@@ -20,9 +20,13 @@
     SELECT 
         {{ selected_columns_1 | join(', ') }}
         , {{ selected_columns_2 | join(', ') }}
-        , {{ dbt_utils.generate_surrogate_key(['hist.' ~ column_key])}} AS fk_{{ column_key }}
+        , {{ dbt_utils.generate_surrogate_key(['hist.' ~ column_key])}} AS pk_{{ column_key }}
         , {{ excluded_columns_meta | join(', ') }}
-        , {{ column_scd_valid_to_fill_date() }}
+        , IIF ( ROW_NUMBER() OVER ( PARTITION BY hist.{{ column_key }} ORDER BY hist.dbt_valid_from ) = 1
+            , CAST('{{ var("past_proof_date") }}' AS DATETIME2)
+            , hist.dbt_valid_from )                                                             AS scd_valid_from_fill_date
+        , COALESCE(hist.dbt_valid_to, cast('{{ var("future_proof_date") }}' AS DATETIME2))      AS scd_valid_to_fill_date
+        , ROW_NUMBER() OVER ( PARTITION BY hist.{{ column_key }} ORDER BY hist.dbt_valid_from ) AS version_number
     FROM  
         {{ table_name }} AS hist
         LEFT OUTER JOIN 
@@ -30,4 +34,3 @@
             ON live.{{ column_key }} = hist.{{ column_key }}
 
 {% endmacro %}
-
