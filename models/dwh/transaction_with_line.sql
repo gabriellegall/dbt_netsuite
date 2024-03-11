@@ -2,7 +2,7 @@
     config (
         materialized       = 'incremental'
         , unique_key       = ['transaction_nsid', 'transaction_line_nsid']
-        , post_hook        = 'DELETE FROM {{this}} WHERE transaction_nsid IN ( SELECT transaction_nsid FROM [STG].[deleted_records] )'
+        , post_hook        = 'DELETE FROM {{this}} WHERE transaction_nsid IN ( SELECT transaction_nsid FROM {{ ref("deleted_records") }} )'
         , on_schema_change = 'sync_all_columns'
     )
 }}
