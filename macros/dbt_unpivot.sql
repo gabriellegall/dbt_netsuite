@@ -31,7 +31,8 @@
 
       cast('{{ col.column }}' as {{ dbt.type_string() }}) as {{ field_name }},
       cast( {% if col.data_type == 'boolean' %}
-      {# 10/03/2024 GLE : SQLServer requires [] for column names #}
+      
+            {# 10/03/2024 GLE : SQLServer requires [] for column names #}
             [{{ dbt.cast_bool_to_text(col.column) }}]
              {% else %}
             [{{ col.column }}]

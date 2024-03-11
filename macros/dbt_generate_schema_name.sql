@@ -7,6 +7,7 @@
 
     {%- else -%}
 
+        {# 10/03/2024 GLE : Removed the user-specific schemas #}
         {{ custom_schema_name | trim }}
 
     {%- endif -%}
