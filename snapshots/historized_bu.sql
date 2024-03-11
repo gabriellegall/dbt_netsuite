@@ -13,6 +13,7 @@ SELECT
   bu.bu_nsid
   , bu.bu_code
   , bu.bu_country_code
+  , bu.bu_currency
 FROM {{ ref('subsidiary') }} bu
 
 {% endsnapshot %}

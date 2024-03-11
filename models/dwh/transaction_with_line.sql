@@ -15,6 +15,11 @@ SELECT
     , t.transaction_number
     , CAST(t.transaction_date AS DATETIME2)                         AS transaction_date
     , t.expected_delivery_date
+    , tl.foreign_amount
+    , tl.foreign_currency
+    , tl.quantity
+    , tl.bu_rate
+    , tl.foreign_amount * tl.bu_rate                                AS bu_amount 
     , {{ dbt_utils.generate_surrogate_key ( ['tl.item_nsid'] )}}    AS fk_{{ var("item_key") }}
     , {{ dbt_utils.generate_surrogate_key ( ['t.bu_nsid'] )}}       AS fk_{{ var("business_unit_key") }}
     , t.customer_nsid

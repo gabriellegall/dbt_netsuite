@@ -20,6 +20,9 @@ SELECT
     t.* 
     , {{ dbt_utils.star(from=ref('dim_item'), except = excluded_columns ) }}
     , {{ dbt_utils.star(from=ref('dim_bu'), except = excluded_columns ) }}
+    , fx_latest.fx_rate_original_to_usd         AS latest_fx_rate_original_to_usd
+    , fx_latest.fx_rate_original_to_dynamic     AS latest_fx_rate_original_to_dynamic
+    , '{{ var("fx_avg_implicit_currency") }}'   AS dynamic_target_currency
 
 FROM union_current_and_snapshot t
 LEFT OUTER JOIN {{ ref("dim_item") }} it
@@ -28,3 +31,5 @@ LEFT OUTER JOIN {{ ref("dim_item") }} it
 LEFT OUTER JOIN {{ ref("dim_bu") }} bu
     ON bu.pk_{{ var("business_unit_key") }} = t.fk_{{ var("business_unit_key") }}
     AND t.transaction_date BETWEEN bu.scd_valid_from_fill_date AND bu.scd_valid_to_fill_date
+LEFT OUTER JOIN {{ ref("fact_fx_avg_rate_latest") }} fx_latest
+    ON bu.hist_bu_currency = fx_latest.original_currency
