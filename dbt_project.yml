@@ -40,6 +40,7 @@ vars:
   item_key                    : 'item_nsid'
   business_unit_key           : 'bu_nsid'
   transaction_snapshot_type   : ['''Opportunity''', '''Invoice''']
+  fx_avg_implicit_currency    : 'EUR'
 
 models:
   netsuite_project:
