@@ -4,6 +4,9 @@
     )
 }}
 
+
+{# TO DO : Make the joins inside this layer instead of the previous one, this way you can retrieve all columns dynamically from the previous layer #}
+
 SELECT 
     {{ dbt_utils.star(from=ref('transaction_with_line')) }}
     , CASE WHEN t.transaction_type IN ('Opportunity', 'Sales Order') THEN t.expected_delivery_date ELSE t.transaction_date END AS calculation_date
