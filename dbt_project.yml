@@ -41,6 +41,10 @@ vars:
   business_unit_key           : 'bu_nsid'
   transaction_snapshot_type   : ['''Opportunity''', '''Invoice''']
   fx_avg_implicit_currency    : 'EUR'
+  all_transactions_scope_type : ['''Invoice''']
+  all_transactions_scope_date : '2023'
+  scd_excluded_col_name       : ['dbt_scd_id', 'dbt_updated_at', 'dbt_valid_from', 'dbt_valid_to', 'scd_valid_from_fill_date', 'scd_valid_to_fill_date', 'version_number']
+  sales_scope_type            : ['''Opportunity''', '''Invoice''', '''Sales Order''']
 
 models:
   netsuite_project:
