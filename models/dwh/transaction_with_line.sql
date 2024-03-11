@@ -22,7 +22,7 @@ SELECT
     , tl.foreign_amount * tl.bu_rate                                AS bu_amount 
     , {{ dbt_utils.generate_surrogate_key ( ['tl.item_nsid'] )}}    AS fk_{{ var("item_key") }}
     , {{ dbt_utils.generate_surrogate_key ( ['t.bu_nsid'] )}}       AS fk_{{ var("business_unit_key") }}
-    , t.customer_nsid
+    , {{ dbt_utils.generate_surrogate_key ( ['t.customer_nsid'] )}} AS fk_{{ var("customer_key") }}
     , {{ column_dbt_load_datetime() }}                              AS {{ var("dbt_load_datetime_col_name") }}
     , '{{ var("dbt_run_id") }}'                                     AS {{ var("dbt_run_id_col_name") }}
 
