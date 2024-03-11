@@ -15,14 +15,12 @@ WITH union_current_and_snapshot AS
             ~ "' AND transaction_type IN (" ~ var("all_transactions_scope_type") | join(', ') ~ ")") }}
 ),
 
-{% set excluded_columns = var("scd_excluded_col_name") %}
-
 data_consolidation AS 
 (
     SELECT 
         t.* 
-        , {{ dbt_utils.star(from=ref('dim_item'), except = excluded_columns ) }}
-        , {{ dbt_utils.star(from=ref('dim_bu'), except = excluded_columns ) }}
+        , {{ dbt_utils.star(from=ref('dim_item'), except = var("scd_excluded_col_name") ) }}
+        , {{ dbt_utils.star(from=ref('dim_bu'), except = var("scd_excluded_col_name") ) }}
         , COALESCE( fx_dated.fx_rate_original_to_usd, fx_latest.fx_rate_original_to_usd )           AS fx_rate_original_to_usd
         , COALESCE( fx_dated.fx_rate_original_to_dynamic, fx_latest.fx_rate_original_to_dynamic )   AS fx_rate_original_to_dynamic
         , '{{ var("fx_avg_implicit_currency") }}'                                                   AS dynamic_target_currency
