@@ -14,7 +14,7 @@ SELECT
     , '{{ var("dbt_run_id") }}'         AS {{ var("dbt_run_id_col_name") }}         
 FROM {{ ref('transaction_with_line') }} t
 
-{# Only snapshot the following scope #}
+{# To limite data volume, only snapshot the following scope #}
 WHERE t.transaction_type IN ( {{ var("transaction_snapshot_type") | join(', ') }} )
 
 {% if is_incremental() %}
