@@ -6,12 +6,22 @@
 
 {% set excluded_columns = ['dbt_scd_id', 'dbt_updated_at', 'dbt_valid_from', 'dbt_valid_to', 'scd_valid_from_fill_date', 'scd_valid_to_fill_date', 'version_number'] %}
 
+WITH union_current_and_snapshot AS 
+(
+    {{ dbt_utils.union_relations (
+        relations = [
+                    ref('prep_transaction_with_lines_for_union'),
+                    ref('historized_transaction_with_line')
+                    ]
+        ) }}
+)
+
 SELECT 
     t.* 
     , {{ dbt_utils.star(from=ref('dim_item'), except = excluded_columns ) }}
     , {{ dbt_utils.star(from=ref('dim_bu'), except = excluded_columns ) }}
 
-FROM {{ ref("prep_all_transactions_with_line") }} t
+FROM union_current_and_snapshot t
 LEFT OUTER JOIN {{ ref("dim_item") }} it
     ON it.pk_{{ var("item_key") }} = t.fk_{{ var("item_key") }}
     AND t.transaction_date BETWEEN it.scd_valid_from_fill_date AND it.scd_valid_to_fill_date
