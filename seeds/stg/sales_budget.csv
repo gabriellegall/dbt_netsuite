@@ -1,2 +1,2 @@
-budget_year;budget_version;customer_group;bu_code;bu_currency;sales_amount_bu_currency
-2024;BV1;Ubisoft;BSEJ;EUR;1000
+budget_year;budget_version;budget_date;customer_name;bu_code;bu_currency;sales_amount_bu_currency
+2024;BV1;31/01/2024;Ubisoft;BSEJ;EUR;1000

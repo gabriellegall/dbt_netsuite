@@ -38,4 +38,8 @@ data_consolidation AS
         AND EOMONTH(t.transaction_date) = fx_dated.closing_date
 )
 
-SELECT * FROM data_consolidation
+SELECT 
+    * 
+    , fx_rate_original_to_usd     * bu_amount AS usd_amount
+    , fx_rate_original_to_dynamic * bu_amount AS dynamic_amount
+FROM data_consolidation
