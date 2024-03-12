@@ -49,12 +49,14 @@ vars:
 
 models:
   netsuite_project:
+    prp:
+      +schema: prp
     dwh:
       +schema: dwh
     bus:
       +schema: bus
-    prp:
-      +schema: prp
+    ds:
+      +schema: ds
 
 seeds:
   netsuite_project:
