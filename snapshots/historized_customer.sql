@@ -15,4 +15,4 @@ SELECT
   , cu.customer_tier
 FROM {{ ref('customer') }} cu
 
-{% endsnapshot %}
+{% endsnapshot %} 
