@@ -1,4 +1,4 @@
-{% macro generate_cte_rows(data_model, scenario) %}
+{% macro model_generate_dataset_rls(data_model, scenario) %}
 
 {% set scenario_conditions = {
     "all_conditions": """
