@@ -8,7 +8,8 @@ WITH cte_row_id AS (
 SELECT 
   *
   , ROW_NUMBER() OVER (PARTITION BY user_email ORDER BY user_email) as row_id
-FROM {{ ref("user_rls") }}
+FROM {{ ref("historized_user_rls") }}
+WHERE dbt_valid_to IS NULL
 ) 
 
 , cte_authorized_bu_code AS (
@@ -44,7 +45,6 @@ SELECT
 	, bu.authorized_bu_code
 	, cust.authorized_customer_name
   , it.authorized_item_type
-  , ROW_NUMBER() OVER (PARTITION BY bu.user_email ORDER BY bu.user_email) as row_tracker
 FROM cte_authorized_bu_code bu
 INNER JOIN cte_authorized_customer_name cust 
     ON bu.user_email = cust.user_email
