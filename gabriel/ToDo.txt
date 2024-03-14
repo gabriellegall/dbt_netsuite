@@ -1,9 +1,10 @@
-0- Refine the Sales Pipeline definition with Open SO/Opp.
-1- Data Quality
+- Refine the Sales Pipeline definition with Open SO/Opp. based on a variable
+- Data Quality
     a- raw_netsuite vs ds layers
     b- field allowed values eg. Opportunity Statuses with Open vs Closed mapping
     c- unique & not null constraints
-2- Table Indexing
-3- Field Documentation
-4- Table Documentation
-5- Readme file explaining the project
+- Align dbt variables names logically
+- Table Indexing
+- Field Documentation
+- Table Documentation
+- Readme file explaining the project
