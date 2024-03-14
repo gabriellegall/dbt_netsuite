@@ -46,6 +46,10 @@ vars:
   all_transactions_scope_type : ['''Opportunity''', '''Invoice''', '''Sales Order''', '''Journal Entry''']
   all_transactions_scope_date : '2023'
   sales_scope_type            : ['''Opportunity''', '''Invoice''', '''Sales Order''']
+  opportunity_open_scope      : ['''Under Discussion''', '''Ongoing''']
+  opportunity_closed_scope    : ['''Closed - Won''', '''Closed - Lost''']
+  testo                       : ['Under Discussion', 'Ongoing']
+  testo2                      : ['Closed - Won', 'Closed - Lost']
 
 models:
   netsuite_project:

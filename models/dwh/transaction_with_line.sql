@@ -13,6 +13,7 @@ SELECT
     , t.transaction_last_modified_date
     , t.transaction_type
     , t.transaction_number
+    , t.transaction_status
     , CAST(t.transaction_date AS DATETIME2)                         AS transaction_date
     , t.expected_delivery_date
     , tl.foreign_amount

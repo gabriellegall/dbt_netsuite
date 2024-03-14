@@ -20,3 +20,12 @@ LEFT OUTER JOIN {{ ref("dim_item") }} it
 
 {# Scope of the dataset #}
 WHERE t.transaction_type IN ( {{ var("sales_scope_type") | join(', ') }} )
+AND
+    ( 
+        ( t.transaction_type <> 'Opportunity')
+        OR 
+        ( t.transaction_type = 'Opportunity' AND t.transaction_status IN ( {{ var("opportunity_open_scope") | join(', ') }} ) )
+    )
+
+    {# The following works : this is to be generalized since it makes the yml variable cleaner :
+    AND t.transaction_status IN ( '{{ var("testo") | join("', '") }}' ) #}

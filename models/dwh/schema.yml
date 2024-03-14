@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: transaction_with_line
+    columns:
+      - name: transaction_status
+        tests:
+          - accepted_values:
+              name: unexpected_opportunity_status
+              values: '{{ var("testo") + var("testo2") }}'
+              config:
+                where: "transaction_type = 'Opportunity'"

@@ -1,4 +1,5 @@
 - Refine the Sales Pipeline definition with Open SO/Opp. based on a variable
+- Populate the model with actual data
 - Data Quality
     a- raw_netsuite vs ds layers
     b- field allowed values eg. Opportunity Statuses with Open vs Closed mapping
