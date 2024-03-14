@@ -1,0 +1,8 @@
+1- Data Quality
+    a- raw_netsuite vs ds layers
+    b- field allowed values eg. Opportunity Statuses with Open vs Closed mapping
+    c- unique & not null constraints
+2- Table Indexing
+3- Field Documentation
+4- Table Documentation
+5- Readme file explaining the project
