@@ -20,12 +20,13 @@
 
 {% set condition = scenario_conditions[scenario] %}
 
-{% set nb_cte_query = "SELECT MAX(row_id) AS max_row_id FROM netsuite.prp.prep_rls_normalize" %}
-{% set nb_cte = run_query(nb_cte_query) %}
+{% set sql_statement %}
+    SELECT MAX(row_id) AS max_row_id FROM {{ ref ("prep_rls_normalize") }}
+{% endset %}
+{%- set max_row_id = dbt_utils.get_single_value(sql_statement) -%}
 
 {% if execute %}
-
-    {% for i in range(1, nb_cte[0].max_row_id + 1) %}
+    {% for i in range(1, max_row_id + 1) %}
         SELECT
             ds.*,
             rls.user_email
@@ -35,7 +36,6 @@
         WHERE rls.row_id = {{ i }}
         {% if not loop.last %} UNION {% endif %}
     {% endfor %}
-
 {% endif %}
 
 {% endmacro %}
