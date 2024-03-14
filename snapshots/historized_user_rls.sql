@@ -10,8 +10,6 @@
     )
 }}
 
-{# To be tested in more details #}
-
 SELECT
   user_email
   , authorized_bu_code
