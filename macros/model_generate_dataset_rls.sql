@@ -1,19 +1,19 @@
 {% macro model_generate_dataset_rls(data_model, scenario) %}
 
 {% set scenario_conditions = {
-    "all_conditions": """
+    "customer_bu_item": """
         (ds.live_customer_name = rls.authorized_customer_name OR rls.authorized_customer_name = 'All')
         AND (ds.live_bu_code = rls.authorized_bu_code OR rls.authorized_bu_code = 'All')
         AND (ds.live_item_type = rls.authorized_item_type OR rls.authorized_item_type = 'All')
     """,
-    "no_item_condition": """
+    "customer_bu": """
         (ds.live_customer_name = rls.authorized_customer_name OR rls.authorized_customer_name = 'All')
         AND (ds.live_bu_code = rls.authorized_bu_code OR rls.authorized_bu_code = 'All')
     """,
-    "bu_condition": """
+    "bu": """
         (ds.live_bu_code = rls.authorized_bu_code OR rls.authorized_bu_code = 'All')
     """,
-    "customer_condition": """
+    "customer": """
         (ds.live_customer_name = rls.authorized_customer_name OR rls.authorized_customer_name = 'All')
     """
 } %}
@@ -24,7 +24,6 @@
 {% set nb_cte = run_query(nb_cte_query) %}
 
 {% if execute %}
-{# https://docs.getdbt.com/reference/dbt-jinja-functions/execute #}
 
     {% for i in range(1, nb_cte[0].max_row_id + 1) %}
         SELECT

@@ -5,4 +5,4 @@
 }}
 
 -- depends_on: {{ ref('prep_rls_normalize') }}
-{{ model_generate_dataset_rls(ref("dataset_sales_pipeline"), "all_conditions") }}
+{{ model_generate_dataset_rls(ref("dataset_sales_pipeline"), "customer_bu_item") }}
