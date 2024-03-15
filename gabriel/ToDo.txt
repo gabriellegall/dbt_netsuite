@@ -1,8 +1,13 @@
+DONE :
 - Refine the Sales Pipeline definition with Open SO/Opp. based on a variable
+- Data Quality
+    b- field allowed values eg. Opportunity Statuses with Open vs Closed mapping
+
+TO DO :
+- Review the delta update strategy : transaction_nsid must be completely deleted and re-integrated
 - Populate the model with actual data
 - Data Quality
     a- raw_netsuite vs ds layers
-    b- field allowed values eg. Opportunity Statuses with Open vs Closed mapping
     c- unique & not null constraints
 - Align dbt variables names logically
 - Table Indexing
