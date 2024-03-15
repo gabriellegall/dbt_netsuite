@@ -3,7 +3,7 @@
         materialized            = 'incremental'
         , unique_key            = ['transaction_nsid']
         , incremental_strategy  = 'delete+insert'
-        , post_hook             = 'DELETE FROM {{this}} WHERE transaction_nsid IN 
+        , pre_hook              = 'DELETE FROM {{this}} WHERE transaction_nsid IN 
                                     (
                                     SELECT
                                         transaction_nsid
