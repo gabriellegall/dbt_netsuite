@@ -10,6 +10,7 @@
                                     WHERE 
                                         CAST(transaction_last_modified_date AS DATETIME2) > ( SELECT MAX ( incremental_date.transaction_last_modified_date ) FROM {{ this }} as incremental_date ) 
                                     )'
+        , incremental_strategy  = 'append'
         , post_hook             = 'DELETE FROM {{this}} WHERE transaction_nsid IN 
                                     (
                                     SELECT
@@ -18,7 +19,6 @@
                                     WHERE 
                                         CAST(deleted_date AS DATETIME2) > ( SELECT MAX ( incremental_date.transaction_last_modified_date ) FROM {{ this }} as incremental_date )
                                     )'
-        , incremental_strategy  = 'append'
         , on_schema_change      = 'sync_all_columns'
     )
 }}
