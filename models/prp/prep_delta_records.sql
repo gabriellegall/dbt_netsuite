@@ -4,7 +4,7 @@
     )
 }}
 
-SELECT transaction_nsid, MAX ( transaction_line_last_modified_date ) AS transaction_last_modified_date
+SELECT transaction_nsid, MAX ( transaction_line_last_modified_date ) AS transaction_global_last_modified_date
 FROM 
 ( 
     SELECT transaction_nsid, transaction_line_last_modified_date FROM {{ ref ("transactionline") }}
