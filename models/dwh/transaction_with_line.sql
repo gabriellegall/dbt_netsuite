@@ -1,16 +1,35 @@
 {{
     config (
-        materialized       = 'incremental'
-        , unique_key       = ['transaction_nsid', 'transaction_line_nsid']
-        , post_hook        = 'DELETE FROM {{this}} WHERE transaction_nsid IN ( SELECT transaction_nsid FROM {{ ref("deleted_records") }} )'
-        , on_schema_change = 'sync_all_columns'
+        materialized            = 'incremental'
+        , unique_key            = ['transaction_nsid', 'transaction_line_nsid']
+        , pre_hook              = 'DELETE FROM {{this}} WHERE transaction_nsid IN 
+                                    ( 
+                                    SELECT 
+                                        transaction_nsid 
+                                    FROM {{ ref("prep_delta_records") }}  
+                                    WHERE 
+                                        CAST(transaction_last_modified_date AS DATETIME2) > ( SELECT MAX ( incremental_date.transaction_last_modified_date ) FROM {{ this }} as incremental_date ) 
+                                    )'
+        , post_hook             = 'DELETE FROM {{this}} WHERE transaction_nsid IN 
+                                    (
+                                    SELECT
+                                        transaction_nsid
+                                    FROM {{ ref("deleted_records") }}
+                                    WHERE 
+                                        CAST(deleted_date AS DATETIME2) > ( SELECT MAX ( incremental_date.transaction_last_modified_date ) FROM {{ this }} as incremental_date )
+                                    )'
+        , incremental_strategy  = 'append'
+        , on_schema_change      = 'sync_all_columns'
     )
 }}
+
+{# To do : rework the incremental condition to capture the entire transaction NSID #}
 
 SELECT 
     COALESCE(t.transaction_nsid, -1)                                AS transaction_nsid
     , COALESCE(tl.transaction_line_nsid,-1)                         AS transaction_line_nsid
     , t.transaction_last_modified_date
+    , tl.transaction_line_last_modified_date
     , t.transaction_type
     , t.transaction_number
     , t.transaction_status
