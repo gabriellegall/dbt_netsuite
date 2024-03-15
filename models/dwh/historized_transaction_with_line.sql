@@ -15,7 +15,7 @@ SELECT
 FROM {{ ref('transaction_with_line') }} t
 
 {# To limite data volume, only snapshot the following scope #}
-WHERE t.transaction_type IN ( {{ var("transaction_snapshot_type") | join(', ') }} )
+WHERE t.transaction_type IN ( '{{ var("transaction_snapshot_type") | join("', '") }}' )
 
 {% if is_incremental() %}
     {# Checks if a snapshot has been made #}

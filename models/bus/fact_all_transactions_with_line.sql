@@ -12,7 +12,7 @@ WITH union_current_and_snapshot AS
                     ref('historized_transaction_with_line')
                     ]
         , where = "YEAR(transaction_date) >= '" ~ var("all_transactions_scope_date") 
-            ~ "' AND transaction_type IN (" ~ var("all_transactions_scope_type") | join(', ') ~ ")") }}
+            ~ "' AND transaction_type IN ('" ~ var("all_transactions_scope_type") | join("', '") ~ "')") }}
 ),
 
 data_consolidation AS 

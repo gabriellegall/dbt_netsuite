@@ -19,13 +19,10 @@ LEFT OUTER JOIN {{ ref("dim_item") }} it
     AND t.transaction_date BETWEEN it.scd_valid_from_fill_date AND it.scd_valid_to_fill_date
 
 {# Scope of the dataset #}
-WHERE t.transaction_type IN ( {{ var("sales_scope_type") | join(', ') }} )
+WHERE t.transaction_type IN ( '{{ var("sales_scope_type") | join("', '") }}' )
 AND
     ( 
         ( t.transaction_type <> 'Opportunity')
         OR 
-        ( t.transaction_type = 'Opportunity' AND t.transaction_status IN ( {{ var("opportunity_open_scope") | join(', ') }} ) )
+        ( t.transaction_type = 'Opportunity' AND t.transaction_status IN ( '{{ var("opportunity_open_scope") | join("', '") }}' ) )
     )
-
-    {# The following works : this is to be generalized since it makes the yml variable cleaner :
-    AND t.transaction_status IN ( '{{ var("testo") | join("', '") }}' ) #}

@@ -29,27 +29,41 @@ clean-targets:         # directories to be removed by `dbt clean`
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 vars:
-  future_proof_date           : '9999-12-31'
-  past_proof_date             : '1900-01-01'
+
+  # Technical parameters :
   dbt_start_datetime          : '{{ run_started_at.astimezone(modules.pytz.timezone("Europe/Paris")).strftime("%Y-%m-%d %H:%M:%S") }}'
   dbt_start_date              : '{{ run_started_at.astimezone(modules.pytz.timezone("Europe/Paris")).strftime("%Y-%m-%d") }}'
   dbt_run_id                  : '{{ invocation_id }}'
+  future_proof_date           : '9999-12-31'
+  past_proof_date             : '1900-01-01'
+  scd_excluded_col_name       : ['dbt_scd_id', 'dbt_updated_at', 'dbt_valid_from', 'dbt_valid_to', 'scd_valid_from_fill_date', 'scd_valid_to_fill_date', 'version_number']
+
+  # Custom column names :
   dbt_snapshot_col_name       : 'dbt_functional_snapshot_date'
   dbt_load_datetime_col_name  : 'dbt_load_datetime'
   dbt_run_id_col_name         : 'dbt_run_id'
+
+  # Dimensions keys column names :
   item_key                    : 'item_nsid'
   business_unit_key           : 'bu_nsid'
   customer_key                : 'customer_nsid'
+
+  # Dynamic currency definition :
   fx_avg_implicit_currency    : 'EUR'
-  scd_excluded_col_name       : ['dbt_scd_id', 'dbt_updated_at', 'dbt_valid_from', 'dbt_valid_to', 'scd_valid_from_fill_date', 'scd_valid_to_fill_date', 'version_number']
-  transaction_snapshot_type   : ['''Opportunity''', '''Invoice''', '''Sales Order''']
-  all_transactions_scope_type : ['''Opportunity''', '''Invoice''', '''Sales Order''', '''Journal Entry''']
+
+  # Scope of snapshotted data :
+  transaction_snapshot_type   : ['Opportunity', 'Invoice', 'Sales Order']
+
+  # Scope of the virtualized DWH :
+  all_transactions_scope_type : ['Opportunity', 'Invoice', 'Sales Order', 'Journal Entry']
   all_transactions_scope_date : '2023'
-  sales_scope_type            : ['''Opportunity''', '''Invoice''', '''Sales Order''']
-  opportunity_open_scope      : ['''Under Discussion''', '''Ongoing''']
-  opportunity_closed_scope    : ['''Closed - Won''', '''Closed - Lost''']
-  testo                       : ['Under Discussion', 'Ongoing']
-  testo2                      : ['Closed - Won', 'Closed - Lost']
+
+  # Scope of the sales dataset
+  sales_scope_type            : ['Opportunity', 'Invoice', 'Sales Order']
+  opportunity_open_scope      : ['Under Discussion', 'Ongoing']
+
+  # DQ & exhaustivity control in Dbt for opportunity status :
+  opportunity_closed_scope    : ['Closed - Won', 'Closed - Lost']
 
 models:
   netsuite_project:
