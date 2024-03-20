@@ -11,3 +11,11 @@ models:
               config:
                 where: "transaction_type = 'Opportunity'"
                 severity: warn
+      - name: transaction_status
+        tests:
+          - accepted_values:
+              name: unexpected_sales_order_status
+              values: '{{ var("sales_order_open_scope") + var("sales_order_closed_scope") }}'
+              config:
+                where: "transaction_type = 'Sales Order'"
+                severity: warn

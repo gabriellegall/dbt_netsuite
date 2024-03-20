@@ -1,2 +1,7 @@
 item_pattern_nsid;item_pattern
-1;Seasonal
+1;Summer Only
+2;Winter Only
+3;Spring Only
+4;Fall Only
+5;All Year
+6;One-Shot

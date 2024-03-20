@@ -61,9 +61,11 @@ vars:
   # Scope of the sales dataset
   sales_scope_type            : ['Opportunity', 'Invoice', 'Sales Order']
   opportunity_open_scope      : ['Under Discussion', 'Ongoing']
+  sales_order_open_scope      : ['Under Discussion', 'Ongoing']
 
   # DQ & exhaustivity control in Dbt for opportunity status :
   opportunity_closed_scope    : ['Closed - Won', 'Closed - Lost']
+  sales_order_closed_scope    : ['Closed - Won', 'Closed - Lost']
 
 models:
   netsuite_project:
@@ -75,6 +77,7 @@ models:
       +schema: bus
     ds:
       +schema: ds
+      +materialized: table
 
 seeds:
   netsuite_project:

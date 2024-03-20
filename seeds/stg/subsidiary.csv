@@ -1,4 +1,121 @@
-bu_nsid;bu_code;bu_country_code;bu_currency
-1;FSJK;DE;HKD
-2;BSEJ;GB;EUR
-3;ORCA;US;USD
+bu_nsid;bu_code;bu_country_code;bu_currency;bu_legal_name;bu_commercial_group
+1;AUBU;AU;AUD;Australia Corp. Limited;Oceania
+2;ATBU;AT;EUR;Austria Corp. Limited;Europe
+3;BEBU;BE;EUR;Belgium Corp. Limited;Europe
+4;CABU;CA;CAD;Canada Corp. Limited;Americas
+5;DKBU;DK;DKK;Denmark Corp. Limited;Europe
+6;FIBU;FI;EUR;Finland Corp. Limited;Europe
+7;FRBU;FR;EUR;France Corp. Limited;Europe
+8;DEBU;DE;EUR;Germany Corp. Limited;Europe
+9;HKBU;HK;HKD;Hong Kong Corp. Limited;Asia
+10;IEBU;IE;EUR;Ireland Corp. Limited;Europe
+11;ILBU;IL;ILS;Israel Corp. Limited;Asia
+12;ITBU;IT;EUR;Italy Corp. Limited;Europe
+13;JPBU;JP;JPY;Japan Corp. Limited;Asia
+14;KRBU;KR;KRW;Korea, Republic of Corp. Limited;Asia
+15;LUBU;LU;EUR;Luxembourg Corp. Limited;Europe
+16;MTBU;MT;EUR;Malta Corp. Limited;Europe
+17;NLBU;NL;EUR;Netherlands Corp. Limited;Europe
+18;NZBU;NZ;NZD;New Zealand Corp. Limited;Oceania
+19;NOBU;NO;NOK;Norway Corp. Limited;Europe
+20;PTBU;PT;EUR;Portugal Corp. Limited;Europe
+21;SGBU;SG;SGD;Singapore Corp. Limited;Asia
+22;ESBU;ES;EUR;Spain Corp. Limited;Europe
+23;SEBU;SE;SEK;Sweden Corp. Limited;Europe
+24;CHBU;CH;CHF;Switzerland Corp. Limited;Europe
+25;TWBU;TW;TWD;Taiwan, Province of China Corp. Limited;Asia
+26;AEBU;AE;AED;United Arab Emirates Corp. Limited;Asia
+27;GBBU;GB;GBP;United Kingdom of Great Britain and Northern Ireland Corp. Limited;Europe
+28;USBU;US;USD;United States of America Corp. Limited;Americas
+29;GRBU;GR;EUR;Greece Corp. Limited;Europe
+30;CYBU;CY;EUR;Cyprus Corp. Limited;Asia
+31;EEBU;EE;EUR;Estonia Corp. Limited;Europe
+32;LVBU;LV;EUR;Latvia Corp. Limited;Europe
+33;LTBU;LT;EUR;Lithuania Corp. Limited;Europe
+34;PLBU;PL;PLN;Poland Corp. Limited;Europe
+35;CZBU;CZ;CZK;Czechia Corp. Limited;Europe
+36;SKBU;SK;EUR;Slovakia Corp. Limited;Europe
+37;SIBU;SI;EUR;Slovenia Corp. Limited;Europe
+38;HUBU;HU;HUF;Hungary Corp. Limited;Europe
+39;ISBU;IS;ISK;Iceland Corp. Limited;Europe
+40;KRBU;KR;KRW;Korea, Republic of Corp. Limited;Asia
+41;MCBU;MC;EUR;Monaco Corp. Limited;Europe
+42;QABU;QA;QAR;Qatar Corp. Limited;Asia
+43;SABU;SA;SAR;Saudi Arabia Corp. Limited;Asia
+44;KWBU;KW;KWD;Kuwait Corp. Limited;Asia
+45;BHBU;BH;BHD;Bahrain Corp. Limited;Asia
+46;OMBU;OM;OMR;Oman Corp. Limited;Asia
+47;ZABU;ZA;ZAR;South Africa Corp. Limited;Africa
+48;ITBU;IT;EUR;Italy Corp. Limited;Europe
+49;MYBU;MY;MYR;Malaysia Corp. Limited;Asia
+50;ESBU;ES;EUR;Spain Corp. Limited;Europe
+51;LIBU;LI;CHF;Liechtenstein Corp. Limited;Europe
+52;ADBU;AD;EUR;Andorra Corp. Limited;Europe
+53;MCBU;MC;EUR;Monaco Corp. Limited;Europe
+54;SMBU;SM;EUR;San Marino Corp. Limited;Europe
+55;CABU;CA;CAD;Canada Corp. Limited;Americas
+56;BEBU;BE;EUR;Belgium Corp. Limited;Europe
+57;NZBU;NZ;NZD;New Zealand Corp. Limited;Oceania
+58;KRBU;KR;KRW;Korea, Republic of Corp. Limited;Asia
+59;SEBU;SE;SEK;Sweden Corp. Limited;Europe
+60;SGBU;SG;SGD;Singapore Corp. Limited;Asia
+61;BHBU;BH;BHD;Bahrain Corp. Limited;Asia
+62;CHBU;CH;CHF;Switzerland Corp. Limited;Europe
+63;AEBU;AE;AED;United Arab Emirates Corp. Limited;Asia
+64;DKBU;DK;DKK;Denmark Corp. Limited;Europe
+65;KWBU;KW;KWD;Kuwait Corp. Limited;Asia
+66;NOBU;NO;NOK;Norway Corp. Limited;Europe
+67;SABU;SA;SAR;Saudi Arabia Corp. Limited;Asia
+68;QABU;QA;QAR;Qatar Corp. Limited;Asia
+69;OMBU;OM;OMR;Oman Corp. Limited;Asia
+70;LUBU;LU;EUR;Luxembourg Corp. Limited;Europe
+71;FOBU;FO;DKK;Faroe Islands Corp. Limited;Europe
+72;KYBU;KY;KYD;Cayman Islands Corp. Limited;Americas
+73;BMBU;BM;BMD;Bermuda Corp. Limited;Americas
+74;GIBU;GI;GIP;Gibraltar Corp. Limited;Europe
+75;VGBU;VG;USD;Virgin Islands (British) Corp. Limited;Americas
+76;PNBU;PN;NZD;Pitcairn Corp. Limited;Oceania
+77;WFBU;WF;XPF;Wallis and Futuna Corp. Limited;Oceania
+78;JEBU;JE;GBP;Jersey Corp. Limited;Europe
+79;GGBU;GG;GBP;Guernsey Corp. Limited;Europe
+80;IMBU;IM;GBP;Isle of Man Corp. Limited;Europe
+81;SHBU;SH;SHP;Saint Helena, Ascension and Tristan da Cunha Corp. Limited;Africa
+82;FKBU;FK;FKP;Falkland Islands (Malvinas) Corp. Limited;Americas
+83;MSBU;MS;XCD;Montserrat Corp. Limited;Americas
+84;IOBU;IO;USD;British Indian Ocean Territory Corp. Limited;Africa
+85;GIBU;GI;GIP;Gibraltar Corp. Limited;Europe
+86;SMBU;SM;EUR;San Marino Corp. Limited;Europe
+87;ADBU;AD;EUR;Andorra Corp. Limited;Europe
+88;MCBU;MC;EUR;Monaco Corp. Limited;Europe
+89;MTBU;MT;EUR;Malta Corp. Limited;Europe
+90;SMBU;SM;EUR;San Marino Corp. Limited;Europe
+91;VABU;VA;EUR;Holy See Corp. Limited;Europe
+92;MCBU;MC;EUR;Monaco Corp. Limited;Europe
+93;SMBU;SM;EUR;San Marino Corp. Limited;Europe
+94;LIBU;LI;CHF;Liechtenstein Corp. Limited;Europe
+95;MCBU;MC;EUR;Monaco Corp. Limited;Europe
+96;SMBU;SM;EUR;San Marino Corp. Limited;Europe
+97;VABU;VA;EUR;Holy See Corp. Limited;Europe
+98;ADBU;AD;EUR;Andorra Corp. Limited;Europe
+99;SMBU;SM;EUR;San Marino Corp. Limited;Europe
+100;VABU;VA;EUR;Holy See Corp. Limited;Europe
+101;LIBU;LI;CHF;Liechtenstein Corp. Limited;Europe
+102;MCBU;MC;EUR;Monaco Corp. Limited;Europe
+103;SMBU;SM;EUR;San Marino Corp. Limited;Europe
+104;VABU;VA;EUR;Holy See Corp. Limited;Europe
+105;LIBU;LI;CHF;Liechtenstein Corp. Limited;Europe
+106;MCBU;MC;EUR;Monaco Corp. Limited;Europe
+107;SMBU;SM;EUR;San Marino Corp. Limited;Europe
+108;VABU;VA;EUR;Holy See Corp. Limited;Europe
+109;MCBU;MC;EUR;Monaco Corp. Limited;Europe
+110;LIBU;LI;CHF;Liechtenstein Corp. Limited;Europe
+111;SMBU;SM;EUR;San Marino Corp. Limited;Europe
+112;VABU;VA;EUR;Holy See Corp. Limited;Europe
+113;MCBU;MC;EUR;Monaco Corp. Limited;Europe
+114;LIBU;LI;CHF;Liechtenstein Corp. Limited;Europe
+115;SMBU;SM;EUR;San Marino Corp. Limited;Europe
+116;VABU;VA;EUR;Holy See Corp. Limited;Europe
+117;MCBU;MC;EUR;Monaco Corp. Limited;Europe
+118;LIBU;LI;CHF;Liechtenstein Corp. Limited;Europe
+119;SMBU;SM;EUR;San Marino Corp. Limited;Europe
+120;VABU;VA;EUR;Holy See Corp. Limited;Europe

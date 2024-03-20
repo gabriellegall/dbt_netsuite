@@ -3,7 +3,9 @@
         materialized            = 'incremental'
         , unique_key            = ['transaction_nsid']
         , incremental_strategy  = 'delete+insert'
-        , pre_hook              = 'DELETE FROM {{this}} WHERE transaction_nsid IN 
+        , pre_hook              = '-- depends_on: {{ ref("deleted_records") }}
+                                    {% if is_incremental() %}
+                                    DELETE FROM {{this}} WHERE transaction_nsid IN 
                                     (
                                     SELECT
                                         transaction_nsid
@@ -14,7 +16,8 @@
                                                 CAST ( ( SELECT MAX ( incremental_date.transaction_last_modified_date ) FROM {{ this }} as incremental_date ) AS DATE )
                                                 , CAST ( ( SELECT MAX ( incremental_date.transaction_line_last_modified_date ) FROM {{ this }} as incremental_date ) AS DATE )
                                             )
-                                    )'
+                                    )
+                                    {% endif %}'
         , on_schema_change      = 'sync_all_columns'
     )
 }}

@@ -1,9 +1,3 @@
-{{
-    config (
-        materialized = 'view'
-    )
-}}
-
 SELECT 
     {{ dbt_utils.star(from=ref('fact_all_transactions_with_line')) }}
     , CASE WHEN t.transaction_type IN ('Opportunity', 'Sales Order') THEN t.expected_delivery_date ELSE t.transaction_date END AS calculation_date
@@ -22,7 +16,9 @@ LEFT OUTER JOIN {{ ref("dim_item") }} it
 WHERE t.transaction_type IN ( '{{ var("sales_scope_type") | join("', '") }}' )
 AND
     ( 
-        ( t.transaction_type <> 'Opportunity')
+        ( t.transaction_type NOT IN ('Opportunity', 'Sales Order') )
         OR 
         ( t.transaction_type = 'Opportunity' AND t.transaction_status IN ( '{{ var("opportunity_open_scope") | join("', '") }}' ) )
+        OR
+        ( t.transaction_type = 'Sales Order' AND t.transaction_status IN ( '{{ var("sales_order_open_scope") | join("', '") }}' ) )
     )

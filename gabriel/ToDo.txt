@@ -3,14 +3,14 @@ DONE :
 - Data Quality
     b- field allowed values eg. Opportunity Statuses with Open vs Closed mapping
 - Review the delta update strategy : transaction_nsid must be completely deleted and re-integrated
+- Add IF EXISTS to pre hook in transaction_with_line
+- Document query optimization
 
 TO DO :
-- Populate the model with actual data & document full integration tests
 - Data Quality
-    a- raw_netsuite vs ds layers
+    a- raw_netsuite vs ds_layers amountsdbt
     c- unique & not null constraints
-- Align dbt variables names logically
-- Table Indexing
 - Field Documentation
 - Table Documentation
-- Readme file explaining the project
+- Document full integration tests
+- README.md file explaining the project, design choices, and optimization
