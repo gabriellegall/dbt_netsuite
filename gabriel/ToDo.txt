@@ -10,7 +10,9 @@ TO DO :
 - Data Quality
     a- raw_netsuite vs ds_layers amountsdbt
     c- unique & not null constraints
+    d- has fx conversion to usd
 - Field Documentation
 - Table Documentation
 - Document full integration tests
+- Add a datetable ?
 - README.md / Dbt docs : file explaining the project, design choices, and optimization
