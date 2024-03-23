@@ -2,6 +2,11 @@ version: 2
 
 models:
   - name: transaction_with_line
+    description: 
+      This table contains all the latest transactions from NetSuite.
+      The data load is incremental, based on the latest modification dates since the last datawarehouse insert.
+      Hard deleted transaction records in NetSuite are stored under the deleted_records table and are deleted from the datawarehouse as well.
+      Hard deleted transactionline records are managed through the delete+insert loading option, set-up at the transaction level.
     columns:
       - name: transaction_status
         tests:
@@ -30,8 +35,17 @@ models:
           combination_of_columns:
             - transaction_nsid
             - transaction_line_nsid
+
   - name: historized_transaction_with_line
+    description: 
+      This table contains a snapshot of the transactions from NetSuite. 
+      For performance and storage efficiency reasons, the snapshot of a subset of all the data is taken once a month.
+      The snapshot is taken automatically if no data was snapshotted in the previous month.
     columns:
+      - name: '{{ var("dbt_snapshot_col_name") }}'
+        description: end-of-month snapshot date from a business perspective
+      - name: '{{ var("dbt_load_datetime_col_name") }}'
+        description: actual snapshot date from a technical perspective
       - name: transaction_nsid
         tests:
           - not_null

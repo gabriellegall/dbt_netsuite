@@ -47,8 +47,8 @@ FROM {{ ref('transaction') }} t
     LEFT OUTER JOIN {{ ref('transactionline') }} tl
     ON t.transaction_nsid = tl.transaction_nsid
 
--- depends_on: {{ ref('prep_delta_records') }}
 {# Load transactions that have been modified the same day or after the latest modifications loaded in the DWH table #}
+-- depends_on: {{ ref('prep_delta_records') }}
 {% if is_incremental() %}
     WHERE t.transaction_nsid IN
     ( 

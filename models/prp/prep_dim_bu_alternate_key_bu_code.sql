@@ -1,6 +1,3 @@
-{# There is no bu_nsid inside the budget file. The client wants to use the bu_code as join key one the most recent record #}
-{# Therefore, this table is designed to offer an alternate entry key to the dimension table #}
-
 {{
     config (
         materialized = 'view'

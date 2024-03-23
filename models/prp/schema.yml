@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: prep_delta_records
+    description: 
+      This table contains the list of all transaction_nsid and the latest modification date, either at the transaction_nsid level, or at the transaction_line_nsid level.
+      This information is essential to update the DWH transactions with line table using an incremental mode, based on the transaction_nsid key.
+  - name: prep_budget_for_union
+    description: 
+      This table contains the budget data, enriched with all the relevant columns that are expected to match the dataset with which it will be merged.
+  - name: prep_dim_bu_alternate_key_bu_code
+    description: 
+      This table is a workaround solution requested by the client to be able to enrich the budget data with the business unit dimension table.
+      The budget data does not contain any NetSuite ID (nsid) because it is an external file input.
+      The best proxy is to use the business unit code instead.
+      Since the business unit code is not expected to be unique all the time, a data transformation is required to match the latest primary key.
+      This custom alternate key was approved by the client for this use case but should be considered an exception.
+  - name: prep_fx_avg_rate_unpivot
+    description: 
+      This table normalizes the months of the FX rates file and adds a USD-USD exchange rate of 1.
+  - name: prep_rls_normalize
+    description: 
+      This table normalizes the RLS information, when multivalued attributes are separated by a comma.
+  - name: prep_transaction_with_lines_for_union
+    description: 
+      This table defines the current date from Dbt as a functional snapshot date for current transaction data, before it is aggregated with snapshotted transactions.
