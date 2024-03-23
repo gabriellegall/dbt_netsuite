@@ -1,0 +1,7 @@
+version: 2
+
+tests:
+  - name: test_incremental_load
+    description: 
+      This test ensures that the data loaded in the DWH reflects the data in the staging layer. 
+      In other words, this test ensures that the incremental load is working as expected.

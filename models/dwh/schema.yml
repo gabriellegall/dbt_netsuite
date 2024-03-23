@@ -1,10 +1,4 @@
 # To do : check the Pk on snapshotted data to ensure that the column snapshot date is indeed considered, and not just a string
-# To do 2 : integrate the following piece of code :
-      # - dbt_utils.equality:
-      #     compare_model: ref('prep_transaction_with_lines')
-      #     compare_columns:
-      #       - transaction_nsid
-      #       - transaction_line_nsid
 
 version: 2
 
@@ -43,6 +37,7 @@ models:
           combination_of_columns:
             - transaction_nsid
             - transaction_line_nsid
+            
   - name: historized_transaction_with_line
     description: 
       This table contains a snapshot of the transactions from NetSuite. 
