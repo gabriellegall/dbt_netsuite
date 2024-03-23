@@ -1,3 +1,9 @@
+{{
+    config (
+        materialized = 'view'
+    )
+}}
+
 {{ dbt_utils.union_relations (
     relations = [
         ref('dataset_sales_pipeline'),

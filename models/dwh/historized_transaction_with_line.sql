@@ -1,3 +1,4 @@
+{# Don't forget to set it back to false #}
 {{
     config (
         full_refresh            = true
@@ -20,5 +21,5 @@ WHERE t.transaction_type IN ( '{{ var("transaction_snapshot_type") | join("', '"
 
 {% if is_incremental() %}
     {# Checks if a snapshot has been made #}
-    AND {{ column_dbt_previous_month() }} > ( SELECT MAX ( incremental_date.{{ var("dbt_snapshot_col_name") }} ) FROM {{ this }} as incremental_date )
+    AND {{ column_dbt_previous_month() }} >= ( SELECT MAX ( incremental_date.{{ var("dbt_snapshot_col_name") }} ) FROM {{ this }} as incremental_date )
 {% endif %}

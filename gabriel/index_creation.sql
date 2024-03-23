@@ -1,4 +1,8 @@
 
+{# https://docs.getdbt.com/reference/resource-configs/mssql-configs #}
+
+
+
 -- OPTIMIZATION #1
     -- MODEL : [transaction_with_line.sql]
     -- Pre-hook sub-tree cost (After) : 5,4
@@ -36,3 +40,4 @@ CREATE NONCLUSTERED INDEX [nonclustered_historized_transaction_with_line_type_da
 	-- FROM : 3 451 680 
 	-- TO 	: 208 061
 	--> Materialize all the DS as tables
+

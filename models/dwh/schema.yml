@@ -19,3 +19,28 @@ models:
               config:
                 where: "transaction_type = 'Sales Order'"
                 severity: warn
+      - name: transaction_nsid
+        tests:
+          - not_null
+      - name: transaction_line_nsid
+        tests:
+          - not_null
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - transaction_nsid
+            - transaction_line_nsid
+  - name: historized_transaction_with_line
+    columns:
+      - name: transaction_nsid
+        tests:
+          - not_null
+      - name: transaction_line_nsid
+        tests:
+          - not_null
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - var("dbt_snapshot_col_name")
+            - transaction_nsid
+            - transaction_line_nsid

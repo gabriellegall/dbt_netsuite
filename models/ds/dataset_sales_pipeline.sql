@@ -1,3 +1,9 @@
+{{
+    config (
+        materialized = 'view'
+    )
+}}
+
 SELECT 
     {{ dbt_utils.star(from=ref('fact_all_transactions_with_line')) }}
     , CASE WHEN t.transaction_type IN ('Opportunity', 'Sales Order') THEN t.expected_delivery_date ELSE t.transaction_date END AS calculation_date
