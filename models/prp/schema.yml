@@ -23,4 +23,5 @@ models:
       This table normalizes the RLS information, when multivalued attributes are separated by a comma.
   - name: prep_transaction_with_lines_for_union
     description: 
-      This table defines the current date from Dbt as a functional snapshot date for current transaction data, before it is aggregated with snapshotted transactions.
+      This table defines the current date from Dbt as a functional snapshot date for the current transaction data.
+      This information is important to differentiate the snapshotted data and the current data when merged together.
