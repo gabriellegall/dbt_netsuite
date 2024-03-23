@@ -4,8 +4,14 @@
         , unique_key            = ['transaction_nsid']
         , incremental_strategy  = 'delete+insert'
         , pre_hook              = [
-            'ALTER TABLE [dwh].[transaction_with_line]
-            DROP CONSTRAINT IF EXISTS pk_transaction_with_line',            
+            '{%- set target_relation = adapter.get_relation(
+                database=this.database,
+                schema=this.schema,
+                identifier=this.name) -%}
+            {%- set table_exists=target_relation is not none -%}
+            {%- if table_exists -%}
+            ALTER TABLE [dwh].[transaction_with_line] DROP CONSTRAINT IF EXISTS pk_transaction_with_line
+            {%- endif -%}',            
             '-- depends_on: {{ ref("deleted_records") }}
                                     {% if is_incremental() %}
                                     DELETE FROM {{this}} WHERE transaction_nsid IN 
