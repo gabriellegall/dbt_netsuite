@@ -33,11 +33,11 @@ SELECT * FROM {{ ref("prep_transaction_with_lines") }}
             transaction_nsid 
         FROM {{ ref("prep_delta_records") }}  
         WHERE 
-            CAST ( transaction_global_last_modified_date AS DATE ) >= 
+            CAST ( transaction_global_last_modified_date AS DATE ) >=
                 {# Latest modifications loaded in the DWH table #}
                 GREATEST (
-                      CAST ( ( SELECT MAX ( incremental_date.transaction_last_modified_date ) FROM {{ this }} as incremental_date ) AS DATE )
-                    , CAST ( ( SELECT MAX ( incremental_date.transaction_line_last_modified_date ) FROM {{ this }} as incremental_date ) AS DATE )
+                      ( SELECT MAX ( CAST ( incremental_date.transaction_last_modified_date AS DATE ) ) FROM {{ this }} as incremental_date )
+                    , ( SELECT MAX ( CAST ( incremental_date.transaction_line_last_modified_date AS DATE ) ) FROM {{ this }} as incremental_date )
                 )
     )           
 {% endif %}
