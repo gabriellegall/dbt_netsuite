@@ -73,6 +73,9 @@ models:
       +schema: prp
     dwh:
       +schema: dwh
+      transaction_with_line:
+        +pre-hook:  '{{ hook_drop_pk_constraint() }}'
+        +post-hook: ['{{ hook_add_pk_constraint_pt1() }}','{{ hook_add_pk_constraint_pt2() }}']
     bus:
       +schema: bus
     ds:

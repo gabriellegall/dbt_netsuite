@@ -9,6 +9,7 @@ DONE :
     a- raw_netsuite vs ds_layers amounts
 
 TO DO :
+- Fix data type of Bu rate
 - # To do : check the Pk on snapshotted data to ensure that the column snapshot date is indeed considered, and not just a string
 - Data Quality
     c- unique & not null constraints
@@ -21,10 +22,3 @@ TO DO :
 - Table Documentation
 - Document full integration tests
 - README.md / Dbt docs : file explaining the project, design choices, and optimization
-
-, post_hook = 'ALTER TABLE [dwh].[transaction_with_line]
-               ALTER COLUMN [transaction_nsid] INT NOT NULL;
-               ALTER TABLE [dwh].[transaction_with_line]
-               ALTER COLUMN [transaction_line_nsid] INT NOT NULL;
-               ALTER TABLE [dwh].[transaction_with_line]
-               ADD CONSTRAINT pk_transaction_with_line PRIMARY KEY NONCLUSTERED ([transaction_nsid], [transaction_line_nsid]);'
