@@ -42,7 +42,10 @@ vars:
   dbt_snapshot_col_name       : 'dbt_functional_snapshot_date'
   dbt_load_datetime_col_name  : 'dbt_load_datetime'
   dbt_run_id_col_name         : 'dbt_run_id'
-  
+
+  # Constraint names :
+  pk_transaction_with_line    : 'pk_transaction_with_line'
+
   # Dimensions keys column names :
   item_key                    : 'item_nsid'
   business_unit_key           : 'bu_nsid'
@@ -74,8 +77,8 @@ models:
     dwh:
       +schema: dwh
       transaction_with_line:
-        +pre-hook:  '{{ hook_drop_pk_constraint() }}'
-        +post-hook: ['{{ hook_add_pk_constraint_pt1() }}','{{ hook_add_pk_constraint_pt2() }}']
+        +pre-hook: '{{ hook_transaction_drop_pk_constraint() }}'
+        +post-hook: ['{{ hook_transaction_add_not_null() }}','{{ hook_transaction_add_pk() }}']
     bus:
       +schema: bus
     ds:

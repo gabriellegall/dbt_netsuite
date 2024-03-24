@@ -1,4 +1,4 @@
-{% macro hook_drop_pk_constraint() %}
+{% macro hook_transaction_drop_pk_constraint() %}
 
     {%- set target_relation = adapter.get_relation(
         database=this.database,
@@ -8,8 +8,14 @@
     {%- set table_exists = target_relation is not none -%}
     
     {%- if table_exists -%}
-        ALTER TABLE {{ this }}
-        DROP CONSTRAINT IF EXISTS pk_transaction_with_line;
+
+        {% if not is_incremental() %}
+
+            ALTER TABLE {{ this }}
+            DROP CONSTRAINT IF EXISTS {{ var("pk_transaction_with_line") }};
+
+        {% endif %}
+    
     {%- endif -%}
 
 {% endmacro %}

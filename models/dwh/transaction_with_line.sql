@@ -3,8 +3,7 @@
         materialized            = 'incremental'
         , unique_key            = ['transaction_nsid']
         , incremental_strategy  = 'delete+insert'
-        , pre_hook              = [            
-            '-- depends_on: {{ ref("deleted_records") }}
+        , pre_hook              = ['-- depends_on: {{ ref("deleted_records") }}
                                     {% if is_incremental() %}
                                     DELETE FROM {{this}} WHERE transaction_nsid IN 
                                     (
