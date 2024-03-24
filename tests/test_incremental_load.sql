@@ -3,18 +3,18 @@
 	)
 }}
 
-
+{% set excluded_columns_comparison = [var("dbt_load_datetime_col_name"), var("dbt_run_id_col_name")] %}
 
 WITH cte_incremental_table AS (
 SELECT
-	*
-	, CHECKSUM (*) AS checksum_result
+	{{ dbt_utils.star(from=ref('transaction_with_line'), except =  excluded_columns_comparison) }}
+	, CHECKSUM ({{ dbt_utils.star(from=ref('transaction_with_line'), except = excluded_columns_comparison ) }} ) AS checksum_result
 FROM {{ ref("transaction_with_line") }} )
 
 , cte_current_table AS (
 SELECT
-	*
-	, CHECKSUM (*) AS checksum_result
+	{{ dbt_utils.star(from=ref('prep_transaction_with_lines'), except =  excluded_columns_comparison) }}
+	, CHECKSUM ({{ dbt_utils.star(from=ref('prep_transaction_with_lines'), except = excluded_columns_comparison ) }} ) AS checksum_result
 FROM {{ ref("prep_transaction_with_lines") }} )
 
 SELECT 
