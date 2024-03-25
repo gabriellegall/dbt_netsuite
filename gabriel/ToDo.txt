@@ -15,10 +15,9 @@ DONE :
     a- DQ on dimensions
     b- Budget Monitoring
     c- Sales Pipeline Review
+- Fix data type of Bu rate (to reload)
 
 TO DO :
-- Fix data type of Bu rate (to reload)
-- Understand what the hell is going on with this : https://github.com/dbt-msft/tsql-utils/tree/main
 - Add a datetable
 
 - Field Documentation
