@@ -1,0 +1,41 @@
+version: 2
+
+exposures:
+
+  - name: sales_pipeline
+    label: Sales Pipeline Dashboard
+    type: dashboard
+    maturity: high
+    url: https://bi.tool/dashboards/1
+    description: The objective is to provide some visibility on the current pipeline activity to the sales people and the management.
+    depends_on:
+      - ref("dataset_sales_pipeline_rls")
+    owner:
+      name: Perdo Alandez
+      email: palandez@jaffleshop.com
+
+  - name: budget_monitoring
+    label: Budget Monitoring Dashboard
+    type: dashboard
+    maturity: high
+    url: https://bi.tool/dashboards/3
+    description: The objectie is to track the budget progress for the current year.
+    depends_on:
+      - ref("dataset_sales_pipeline_monitoring_rls")
+    owner:
+      name: Perdo Alandez
+      email: palandez@jaffleshop.com
+
+  - name: data_quality
+    label: Data Quality Dashboard
+    type: dashboard
+    maturity: high
+    url: https://bi.tool/dashboards/2
+    description: The objective is to highlight the main data inconsistencies in the datawarehouse
+    depends_on:
+      - ref("dim_bu")
+      - ref("dim_customer")
+      - ref("dim_item")
+    owner:
+      name: Perdo Alandez
+      email: palandez@jaffleshop.com

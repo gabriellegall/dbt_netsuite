@@ -1,0 +1,21 @@
+# To do : check the Pk on snapshotted data to ensure that the column snapshot date is indeed considered, and not just a string
+
+version: 2
+
+models:
+  - name: fact_all_transactions_with_line
+    description: 
+      This table consolidates all the transactions - both current and historized (snapshotted). 
+      A snapshot date field can be use to differentiate the different versions of the transactions data.
+      This table also centralized the first joins with the dimensions that are common to all transaction types.
+    columns:
+      - name: fx_rate_original_to_usd
+        tests:
+          - not_null:
+              config:
+                severity: error
+      - name: fx_rate_original_to_dynamic
+        tests:
+          - not_null:
+              config:
+                severity: error

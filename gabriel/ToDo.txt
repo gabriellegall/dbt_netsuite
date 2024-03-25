@@ -8,15 +8,18 @@ DONE :
 - Data Quality
     a- raw_netsuite vs ds_layers amounts
     b- unique & not null constraints
+    c- has fx conversion to usd
 - Add not if is incremental for the PK 
 - # To do : check the Pk on snapshotted data to ensure that the column snapshot date is indeed considered, and not just a string
+- Add exposures :
+    a- DQ on dimensions
+    b- Budget Monitoring
+    c- Sales Pipeline Review
 
 TO DO :
 - Fix data type of Bu rate (to reload)
-- Data Quality
-    c- has fx conversion to usd
 - Understand what the hell is going on with this : https://github.com/dbt-msft/tsql-utils/tree/main
-- Add a datetable ?
+- Add a datetable
 
 - Field Documentation
 - Table Documentation
