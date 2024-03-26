@@ -24,12 +24,13 @@ data_consolidation AS
         , COALESCE( fx_dated.fx_rate_original_to_usd, fx_latest.fx_rate_original_to_usd )            AS fx_rate_original_to_usd
         , COALESCE( fx_dated.fx_rate_original_to_dynamic, fx_latest.fx_rate_original_to_dynamic )    AS fx_rate_original_to_dynamic
         , '{{ var("fx_avg_implicit_currency") }}'                                                    AS dynamic_target_currency
-
     FROM union_current_and_snapshot t
+
     {# Common dimensions for all tansaction types #}
     LEFT OUTER JOIN {{ ref("dim_bu") }} bu
         ON bu.pk_{{ var("business_unit_key") }} = t.fk_{{ var("business_unit_key") }}
         AND t.transaction_date BETWEEN bu.scd_valid_from_fill_date AND bu.scd_valid_to_fill_date
+
     {# Fx rates #}
     LEFT OUTER JOIN {{ ref("fact_fx_avg_rate_latest") }} fx_latest
         ON bu.hist_bu_currency = fx_latest.original_currency

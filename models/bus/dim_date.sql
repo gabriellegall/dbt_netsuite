@@ -50,7 +50,7 @@ cte_date_dimension AS (
     is_prev_2y                   = IIF (year_number = DATEPART(YEAR, {{ column_dbt_load_date() }})-2,1,0),
     is_prev_1y                   = IIF (year_number = DATEPART(YEAR, {{ column_dbt_load_date() }})-1,1,0),
     is_current_year              = IIF (year_number = DATEPART(YEAR, {{ column_dbt_load_date() }}),1,0),
-    is_next_year                 = IIF (year_number = DATEPART(YEAR, {{ column_dbt_load_date() }})+1,1,0)
+    is_next_1y                   = IIF (year_number = DATEPART(YEAR, {{ column_dbt_load_date() }})+1,1,0)
   FROM cte_core_definition
 )
 
