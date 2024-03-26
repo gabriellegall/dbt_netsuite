@@ -39,6 +39,7 @@ vars:
   scd_excluded_col_name       : ['dbt_scd_id', 'dbt_updated_at', 'dbt_valid_from', 'dbt_valid_to', 'scd_valid_from_fill_date', 'scd_valid_to_fill_date', 'version_number']
   date_table_start_date       : '2020-01-01'
   date_table_window_year      : '5'
+  date_table_fiscal_month     : '2'
 
   # Custom column names :
   dbt_snapshot_col_name       : 'dbt_functional_snapshot_date'
