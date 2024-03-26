@@ -16,9 +16,10 @@ DONE :
     b- Budget Monitoring
     c- Sales Pipeline Review
 - Fix data type of Bu rate (to reload)
+- Add a datetable & integrate YTD use case
 
 TO DO :
-- Add a datetable
+- Fix the YTD problem : snapshotted data should be in YTD too
 
 - Field Documentation
 - Table Documentation

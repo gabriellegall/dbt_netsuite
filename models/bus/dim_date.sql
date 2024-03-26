@@ -14,7 +14,7 @@ WITH cte_sequence AS (
 cte_core_definition AS (
   SELECT
     date_standard                           = CONVERT(DATE,d),
-    formatted_date                          = FORMAT(CONVERT(DATE,d), 'yyyyMMdd'), -- Formatted date as YYYYMMDD
+    date_int                                = FORMAT(CONVERT(DATE,d), 'yyyyMMdd'),
     day_of_month_number                     = DATEPART(DAY,d),
     day_of_week_number                      = DATEPART(WEEKDAY,d),
     first_date_of_month                     = DATEFROMPARTS(YEAR(d),MONTH(d),1),
@@ -34,8 +34,8 @@ cte_core_definition AS (
 
 cte_date_dimension AS (
   SELECT
-    date_standard,
-    formatted_date,
+    date_standard AS pk_date_standard,
+    date_int,
     month_of_year_number,
     year_number,
     first_day_of_year,

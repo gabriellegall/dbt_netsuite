@@ -4,20 +4,11 @@
     )
 }}
 
+WITH cte_calculate AS (
 SELECT 
     {{ dbt_utils.star(from=ref('fact_all_transactions_with_line')) }}
-    , CASE WHEN t.transaction_type IN ('Opportunity', 'Sales Order') THEN t.expected_delivery_date ELSE t.transaction_date END AS calculation_date
-    , {{ dbt_utils.star(from=ref('dim_item')    , except = var("scd_excluded_col_name") ) }}
-    , {{ dbt_utils.star(from=ref('dim_customer'), except = var("scd_excluded_col_name") ) }}
-
-FROM {{ ref("fact_all_transactions_with_line") }} t
-LEFT OUTER JOIN {{ ref("dim_customer") }} cu
-    ON cu.pk_{{ var("customer_key") }} = t.fk_{{ var("customer_key") }}
-    AND t.transaction_date BETWEEN cu.scd_valid_from_fill_date AND cu.scd_valid_to_fill_date
-LEFT OUTER JOIN {{ ref("dim_item") }} it
-    ON it.pk_{{ var("item_key") }} = t.fk_{{ var("item_key") }}
-    AND t.transaction_date BETWEEN it.scd_valid_from_fill_date AND it.scd_valid_to_fill_date
-
+    , CAST ( CASE WHEN t.transaction_type IN ('Opportunity', 'Sales Order') THEN t.expected_delivery_date ELSE t.transaction_date END AS DATE ) AS calculation_date
+FROM {{ ref("fact_all_transactions_with_line") }} t 
 {# Scope of the dataset #}
 WHERE t.transaction_type IN ( '{{ var("sales_scope_type") | join("', '") }}' )
 AND
@@ -28,3 +19,28 @@ AND
         OR
         ( t.transaction_type = 'Sales Order' AND t.transaction_status IN ( '{{ var("sales_order_open_scope") | join("', '") }}' ) )
     )
+)
+
+{% set currencies = ['bu_amount', 'usd_amount', 'dynamic_amount'] %}
+, cte_join_date AS (
+SELECT 
+    t.*
+    {% for column in currencies %}
+        , IIF(d_calc.is_ytd_current_year = 1, {{ column }}, 0) AS {{ column }}_ytd_current_year
+        , IIF(d_calc.is_ytd_prev_1y = 1, {{ column }}, 0) AS {{ column }}_ytd_prev_1y
+    {% endfor %}
+FROM cte_calculate t
+LEFT OUTER JOIN {{ ref("dim_date") }} d_calc
+    ON t.calculation_date = d_calc.pk_date_standard )
+
+SELECT 
+    t.*
+    , {{ dbt_utils.star(from=ref('dim_item')    , except = var("scd_excluded_col_name") ) }}
+    , {{ dbt_utils.star(from=ref('dim_customer'), except = var("scd_excluded_col_name") ) }}
+FROM cte_join_date t
+LEFT OUTER JOIN {{ ref("dim_customer") }} cu
+    ON cu.pk_{{ var("customer_key") }} = t.fk_{{ var("customer_key") }}
+    AND t.transaction_date BETWEEN cu.scd_valid_from_fill_date AND cu.scd_valid_to_fill_date
+LEFT OUTER JOIN {{ ref("dim_item") }} it
+    ON it.pk_{{ var("item_key") }} = t.fk_{{ var("item_key") }}
+    AND t.transaction_date BETWEEN it.scd_valid_from_fill_date AND it.scd_valid_to_fill_date
