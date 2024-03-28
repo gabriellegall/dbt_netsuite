@@ -1,7 +1,7 @@
 {% snapshot historized_bu %}
 
 {{
-    config(
+    config (
       unique_key    = var("business_unit_key")
       , strategy      = 'check'
       , target_schema = 'scd'
