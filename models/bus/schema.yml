@@ -19,3 +19,23 @@ models:
           - not_null:
               config:
                 severity: error
+  - name: dim_bu
+    description: 
+      This dimension table returns for any business unit primary key both (1) the historical attribute, and (2) the current attribute.
+  - name: dim_customer
+    description: 
+      This dimension table returns for any customer primary key both (1) the historical attribute, and (2) the current attribute.
+  - name: dim_item
+    description: 
+      This dimension table returns for any item primary key both (1) the historical attribute, and (2) the current attribute.
+  - name: dim_date
+    description: 
+      This dimension date table contains all date attributes for time-intelligent calculations and advanced filtering (e.g. YTD).
+  - name: fact_fx_avg_rate_dated
+    description: 
+      This average fx rate table contains the normalized fx rates for every month. 
+      This table also calculates the implicit dynamic exchange rate.
+  - name: fact_fx_avg_rate_latest
+    description: 
+      This average fx rate table contains the normalized fx rates for the latest month available only.
+      This table also calculates the implicit dynamic exchange rate.
