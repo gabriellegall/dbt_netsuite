@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: historized_bu
+    description: 
+      This table defines and historizes the business unit dimension with all its attributes. 
+  - name: historized_customer
+    description: 
+      This table defines and historizes the customer dimension with all its attributes. 
+  - name: historized_item
+    description: 
+      This table defines and historizes the item dimension with all its attributes. 
+  - name: historized_user_rls
+    description: 
+      This table historizes the raw row-level-security settings for each user.

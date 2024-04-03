@@ -1,5 +1,3 @@
-# To do : check the Pk on snapshotted data to ensure that the column snapshot date is indeed considered, and not just a string
-
 version: 2
 
 models:

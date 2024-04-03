@@ -20,7 +20,8 @@ DONE :
 - integrate fiscal use case
 
 TO DO :
-- Field Documentation
+- key field documentation (like FX rates)
 - Table Documentation
 - Document full integration tests
-- README.md / Dbt docs : file explaining the project, design choices, and optimization
+- README.md / Dbt docs : file explaining the project, design choices, and optimization 
+    Materialization strategy

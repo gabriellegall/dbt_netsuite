@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: dataset_sales_pipeline
+    description: 
+      This dataset contains the pipeline information, which represent the total expected sales.
+  - name: dataset_sales_pipeline_monitoring
+    description: 
+      This dataset contains the pipeline information as described previously + the budget information - which is used as a performance objective.

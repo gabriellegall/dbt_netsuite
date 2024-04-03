@@ -1,3 +1,8 @@
+{# 
+	The incremental load of the DWH is expected to return the same rows as the rows in the staging area.
+	If there is any discrepancy, this test will return a fail. 
+#}
+
 {{ config ( 
 	severity = 'error' 
 	)
