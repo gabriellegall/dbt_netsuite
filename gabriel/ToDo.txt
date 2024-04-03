@@ -18,10 +18,11 @@ DONE :
 - Fix data type of Bu rate (to reload)
 - Add a datetable & integrate YTD use case
 - integrate fiscal use case
+- Table Documentation
 
 TO DO :
+- Update RLS to account for "ALL" on non applicable dimensions
 - key field documentation (like FX rates)
-- Table Documentation
 - Document full integration tests
 - README.md / Dbt docs : file explaining the project, design choices, and optimization 
     Materialization strategy

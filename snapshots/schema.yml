@@ -1,6 +1,6 @@
 version: 2
 
-models:
+snapshots:
   - name: historized_bu
     description: 
       This table defines and historizes the business unit dimension with all its attributes. 
