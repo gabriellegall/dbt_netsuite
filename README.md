@@ -16,6 +16,7 @@ The first use case identified by the client is a monitoring of the sales pipelin
 In NetSuite, all transactions are recorded at two levels :
 1. transaction, which can be understood as the document header.
 2. transaction_line, which can be understood as the document details.
+
 Some document attributes are defined at a transaction level, while most financial attributes are captured at a transaction_line level.
 There is a one-to-many relationship between transaction and transaction_line. 
 
