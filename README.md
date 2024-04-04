@@ -46,13 +46,13 @@ Overall, the consequence is that the budget data will return NULL if non applica
 The existing NetSuite transactional rate is used to convert foreign amounts to the amounts in business unit currency. However, the client wants to then convert each business unit amount to USD and EUR using an external Excel file provided by the treasury department. The FX rates file provided by the treasury department is at a year-month level, and the client says that the rate to be used depends on the year-month of the transaction date. If no rate is available at the transaction date, then the latest rate available for the given currency should be used.
 The client says that the reporting will always be in USD, but the reporting in EUR currency may change in the future.
 
-### Data processing
+## Data processing
 
-## Historization
+### Historization
 - The client wants to historize the dimension attributes (SCD Type 2) to be able to track changes and report on both the live/current view and the historical view - at the time of the transaction date.
 - The client wants to historize only some transaction types (sales order and opportunities) on a monthly basis. The client wants to limite data volume as much as possible to control costs and run-time performance. Thefore, a tracking of all transaction updates is not necessary, and a monthly snapshot is perfectly sufficient.
 
-## Incremental load
+### Incremental load
 As mentionned previously, the client wants to optimize performance as much as possible.
 An incremental load of the transaction data is possible from NetSuite since both transaction lines and transactions have field called last_modified_date which tracks the date of last update.
 Several challenges are to be noted however :
