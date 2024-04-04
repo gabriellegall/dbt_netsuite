@@ -1,15 +1,11 @@
-Welcome to your new dbt project!
+### Business context
 
-### Using the starter project
+The client is a NetSuite user who wants to construct a monitoring BI ecosystem.
+While NetSuite offers some reporting capabilities, the client is limited because :
+- Some transformations are impossible to do in NetSuite (e.g. perform several joins throughout the model)
+- Some external data should be integrated (mostly Excel files in this project)
+...
 
-Try running the following commands:
-- dbt run
-- dbt test
+The first use case identified by the client is a monitoring of the Sales pipeline, taking into account invoices, sales orders and opportunities.
 
-
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+### Business requirements
