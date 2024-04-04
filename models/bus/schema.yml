@@ -34,8 +34,8 @@ models:
   - name: fact_fx_avg_rate_dated
     description: 
       This average fx rate table contains the normalized fx rates for every month. 
-      This table also calculates the implicit dynamic exchange rate.
+      This table also calculates the implicit dynamic exchange rate - based on the USD rate.
   - name: fact_fx_avg_rate_latest
     description: 
       This average fx rate table contains the normalized fx rates for the latest month available only.
-      This table also calculates the implicit dynamic exchange rate.
+      This table also calculates the implicit dynamic exchange rate - based on the USD rate.
