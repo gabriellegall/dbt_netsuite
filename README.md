@@ -43,6 +43,7 @@ Because the data entry is made by the finance team, the budget Excel file matche
 - The finance team only provides the customer_name, and the client is aware that no relation will be possible with the NetSuite customer dimension since the join is too fuzzy.
 - No budget is recorded at an item level.
 - The finance team only provides the bu_code, which is not the expected foreign key to the Business Unit dimension. The expected key is the bu_nsid, but the client says that the bu_code is an acceptable alternative key.
+
 Overall, the consequence is that the budget data will return NULL if non applicable dimension attributes are ever used as filters inside the BI tool.
 
 ### FX rates
