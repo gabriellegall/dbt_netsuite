@@ -8,12 +8,12 @@ While NetSuite offers some reporting capabilities, the client is limited with Ne
 ...
 
 # Business requirements
-The first use case identified by the client is a monitoring of the sales pipeline, which is defined by the invoices, sales orders and opportunities transaction types in NetSuite.
+The first use case identified by the client is a monitoring of the sales pipeline, which is defined by the aggregation of invoices, open sales orders and open opportunities in NetSuite. The list of applicable statuses to define 'open' sales orders and opportunities is provided by the client.
 
 ## Input sources
 
 ### Transactions
-In NetSuite, transactions are recorded at two levels :
+In NetSuite, all transactions are recorded at two levels :
 1. transaction, which can be understood as the document header.
 2. transaction_line, which can be understood as the document details.
 
@@ -40,7 +40,7 @@ Overall, the consequence is that the budget data will return NULL if non applica
 
 ## FX rates
 The existing NetSuite transactional rate is used to convert foreign amounts to the amounts in business unit currency. However, the client wants to then convert each business unit amount to USD and EUR using an external Excel file provided by the treasury department. The FX rates file provided by the treasury department is at a year-month level, and the client says that the rate to be used depends on the year-month of the transaction date. If no rate is available at the transaction date, then the latest rate available for the given currency should be used.
-The client says that amounts will always require to be reported in USD currency, but the reporting in EUR currency may change in the future.
+The client says that the reporting will always be in USD, but the reporting in EUR currency may change in the future.
 
 ## Historization
 
@@ -48,4 +48,8 @@ The client says that amounts will always require to be reported in USD currency,
 
 ## Modilarity
 
+## Fiscal dates
+
 # Data quality requirements
+
+# Design choices / Risks identified and mitigation actions
