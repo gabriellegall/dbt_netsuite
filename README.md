@@ -16,6 +16,8 @@ The first use case identified by the client is a monitoring of the sales pipelin
 In NetSuite, all transactions are recorded at two levels :
 1. transaction, which can be understood as the document header.
 2. transaction_line, which can be understood as the document details.
+Some document attributes are defined at a transaction level, while most financial attributes are captured at a transaction_line level.
+There is a one-to-many relationship between transaction and transaction_line. 
 
 ### NetSuite Dimensions
 There are several NetSuite dimension that are relevant in the context of the sales pipeline analysis (and more) :
@@ -54,11 +56,11 @@ The client says that the reporting will always be in USD, but the reporting in E
 
 ### Incremental load
 As mentionned previously, the client wants to optimize performance as much as possible.
-An incremental load of the transaction data is possible from NetSuite since both transaction lines and transactions have field called last_modified_date which tracks the date of last update.
+An incremental load of the transaction data is possible from NetSuite since both transaction_lines and transactions have field called last_modified_date which tracks the date of last update.
 Several challenges are to be noted however :
-- The date of last update at the transaction line level and at the transaction level are sometimes inconsistent : a transaction line can be updated without the transaction being updated, and vice-versa. To solve this challenge, the client agrees to perform DELETE + INSERT operation at a transaction level, based on the maximum date of last update. This is a conservative incremental scenario ensuring that all changes are captured.
-- Deleted transaction are physically deleted from NetSuite transaction table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. An audit table called 'Deleted Records' lists all transactions physically deleted from NetSuite. 
-- Deleted transaction lines are also physically deleted from NetSuite transaction line table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. Since a deleted transaction line automatically updates the data of last update at a transaction level, performing a DELETE + INSERT operation at a transaction level will automatically solve this problem.
+- The date of last update at the transaction_line level and at the transaction level are sometimes inconsistent : a transaction_line can be updated without the transaction being updated, and vice-versa. To solve this challenge, the client agrees to perform DELETE + INSERT operation at a transaction level, based on the maximum date of last update. This is a conservative incremental scenario ensuring that all changes are captured.
+- Deleted transaction are physically deleted from NetSuite transaction table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. An audit table called 'Deleted Records' lists all transactions physically deleted from NetSuite and can be used to perform this operation. 
+- Deleted transaction_lines are also physically deleted from NetSuite transaction_line table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. Since a deleted transaction_line automatically updates the date of last update at a transaction level, performing a DELETE + INSERT operation at a transaction level will automatically solve this problem.
 
 ## Modilarity
 
