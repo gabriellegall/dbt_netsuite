@@ -1,9 +1,9 @@
 # Configuration
-- **Database**: [SQL Server Express 2022](https://www.microsoft.com/fr-fr/sql-server/sql-server-downloads)
-- **Interface**: SQL Server Management Studio 19.3
-- **Db creation SQL command**: `CREATE DATABASE netsuite`
-- **Python package**: dbt-sqlserver
-- **Initialization Dbt command**: `dbt seed; dbt snapshot; dbt run; dbt test`
+- Database: [SQL Server Express 2022](https://www.microsoft.com/fr-fr/sql-server/sql-server-downloads)
+- Interface: SQL Server Management Studio 19.3
+- Db creation SQL command: `CREATE DATABASE netsuite`
+- Python package: dbt-sqlserver
+- Initialization Dbt command: `dbt seed; dbt snapshot; dbt run; dbt test`
 
 # Business context
 The client is a company working in the cosmetic industry.
