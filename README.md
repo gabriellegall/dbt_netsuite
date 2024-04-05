@@ -6,30 +6,33 @@ While NetSuite offers some reporting capabilities, the client is limited with Ne
 - Some transformations are impossible to do in NetSuite (e.g. perform several joins throughout the model).
 - Some external data should be integrated and cannot be recorded in NetSuite (e.g. budget, custom fx rates).
 - Data historization (snapshotting) is impossible in NetSuite.
-- BI users are not necessarily NetSuite users. They have a different user journeys and different row-level-security requirements.
+- BI users are not necessarily NetSuite users:
+    - They have a different user journey, and
+    - They have different row-level-security requirements.
 
 # Business requirements
 The first use case identified by the client is a monitoring of the sales pipeline, which is defined by the aggregation of invoices, 'open' sales orders and 'open' opportunities in NetSuite. The sales pipeline is basically the estimated landing sales for the year.
 The client wants to use the annual budget as a performance objective for the sales and consolidate everything under a dataset which will be connected to a BI dashboard.
 The dashboard will show the estimated landing compared to the objective and will enable the managers to monitor the sales team among each business unit, and for each client.
+This dashboard should also show the evolution of the sales landing at different points in time (i.e. different snapshot dates, also known as cut-off dates). This will help the business evaluate the data reliability and the evolution of the total sales landing throughout the year.
 
 ## Data sources
 
-### Transactions
-In NetSuite, all transactions are recorded at two levels :
+### NetSuite fact transactions
+In NetSuite, all transactions (facts) are recorded at two levels :
 1. transaction, which can be understood as the document header.
 2. transaction_line, which can be understood as the document details.
 
 Some document attributes are defined at a transaction level, while most financial attributes are captured at a transaction_line level.
 There is a one-to-many relationship between transaction and transaction_line. 
 
-### NetSuite Dimensions
+### NetSuite dimensions
 There are several NetSuite dimension that are relevant in the context of the sales pipeline analysis (and more) :
 - Customer
 - Item
 - Business Unit (aka. 'Subsidiary' in NetSuite)
 
-### Date Dimension
+### Date dimension
 The client has a fiscal calendar that is not starting in january, but in february.
 This should be taken into consideration for all fields with time dependency ('current year', 'previous year', etc.)
 
@@ -67,31 +70,31 @@ Several challenges are to be noted however :
 - Deleted transaction are physically deleted from NetSuite transaction table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. An audit table called 'deleted_records' lists all transactions physically deleted from NetSuite and can be used to perform this operation. 
 - Deleted transaction_lines are also physically deleted from NetSuite transaction_line table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. Since a deleted transaction_line automatically updates the date of last update at a transaction level, performing a DELETE + INSERT operation at a transaction level will automatically solve this problem.
 
-# Data architecture
-The datawarehouse is structure through several layers :
-- stg: staging of the raw data. This table is expected to a an exact copy of NetSuite data. In the modern data stack, the stg layer is automatically updated using a dedicated tool like Fivetran or Stitch.
-- 'prep': intermediate layer to perform any technical transformation. SQL Server does not support nested CTEs, so intermediate calculations should be materialized as views.
-- 'scd': historization of the requirement elements (typically dimensions) using Dbt snapshots
-- 'dwh': storage of all the NetSuite transaction and transaction lines data (facts) in a normalized manner. Update of this table is incremental since it covers 100% of the NetSuite data. monthly historized transaction lines are also stored in this layer since storing them as Dbt snapshots under the scd layer would be too costly.
-- 'bus': virtualized layer built on top of the dwh and scd layers. This is where final dimension tables are structured and the scope of all transactions and transaction lines to be retrieved for all use-cases is defined.
-- 'ds': denormalized dataset layer contaning all additive calculations and joins with the dimension tables. This layer also contains the datasets including the user row-level-security.
+# Data architecture design
+The datawarehouse is structure through several layers in order to ensure (1) performance (2) clarity and (3) modilarity :
+- **'stg'**: Staging of the raw data. Those tables are expected to be an exact copy of NetSuite data. In the modern data stack, the stg layer is automatically updated using a dedicated tool like Fivetran or Stitch - having native NetSuite connectors.
+- **'prep'**: Intermediate layer to perform any technical transformation. SQL Server does not support nested CTEs, so intermediate calculations at any step should be materialized as views.
+- **'scd'**: Historization of the requirement elements (typically dimensions) using Dbt snapshots
+- **'dwh'**: Storage of all the NetSuite transaction and transaction lines data (facts) in a native normalized manner. Update of this table is incremental since it covers 100% of the NetSuite data (high volume). Monthly historized transaction lines are also stored in this layer since storing them as Dbt snapshots under the scd layer would be too costly.
+- **'bus'**: Virtualized layer built on top of the dwh and scd layers. This is where final dimension tables are structured and the scope of all transactions and transaction lines to be retrieved, for all use-cases, is defined.
+- **'ds'**: Denormalized dataset layer contaning all additive calculations and joins with the dimension tables to answer to business use-cases. This layer also contains the datasets including the user row-level-security. This layer is typically designed for BI tools like Tableau - expecting a single flat data source input. This layer is not applicable to tools like Power BI - expecting a star schema as a semantic layer.
 
 # Identified risks and mitigation actions
 
 ## Incremental load discrepancy
-**Problem**: One of the main risks is that the complex incremental update of the DWH table using the previously described incremental load is somehow flawed.
+**Problem**: One of the main risks is that the complex incremental update of the dwh table using the previously described incremental load is somehow flawed.
 **Assessment**: Probability: Medium, Impact: High
 **Solution**: To control this risk, a test scenario has been designed to **control any row difference between the staging layer and the DWH layer using a hash of all columns and a full-outer join**. As a measure of safety (and performance), a primary key constraint has been applied on the dwh layer to ensure that no duplicate can ever be loaded or historized.
 
 ## Changing schemas and maintenance
 **Problem**: Since the ERP was recently implemented and is constantly evolving, several new fields will be integrated and the table schemas will evolve frequently.
 **Assessment**: Probability: High, Impact: Medium
-**Solution**: To control this risk, **the schema of all tables is only defined once**.  Historized dimension tables are defined in the snapshots script, while transactions with transaction lines are defined under a single preparation script (under 'prep'). **Any change to those scripts will automatically propagate to the upper datawarehouse layer ('dwh'), business layers ('bus') and the dataset layers ('ds')**. This automatic propagation is managed using the '*' operator and the dbt_utils.star() function.
+**Solution**: To control this risk, **the schema of all tables is only defined once**.  Historized dimension tables are defined in the snapshots scripts, while transactions with transaction lines are defined under a single preparation script (under 'prep'). **Any change to those scripts will automatically propagate to the upper datawarehouse layer ('dwh'), business layers ('bus') and the dataset layers ('ds')**. This automatic propagation is managed using the '*' operator and the dbt_utils.star() function.
 
 ## Scope extension
-**Problem**: In this first use-case, the data to be integrated from NetSuite into the different layers only covers invoice, sales orders and opportunities. However, other use cases will be requested by the client in the future (e.g. purchase orders analysis by supplier, stock with item receipts and item fulfillments, etc.). 
+**Problem**: In this first use-case, the data to be integrated from NetSuite into the different layers only covers invoice, sales orders and opportunities. However, **other use cases will be requested by the client in the future** (e.g. purchase orders analysis by supplier, stock with item receipts and item fulfillments, etc.). 
 **Assessment**: Probability: High, Impact: Medium
-**Solution**: To manage evolutions, the highly normalized structure of the native NetSuite data model was kept in the dwh layer and the bus layer. Furthermore, several parameters were applied to filter the records at each level in a dynamic manner: (1) when the transactions and transaction lines are historized, (2) when the transactions and transaction lines are pushed to the bus layer, (3) when the datasets are constructed. This design enables a dynamic update of the scope of the BI platform (through the bus layer condition parameters) while keeping 100% of all NetSuite data in the dwh layer - ready to be used and integrated when needed. 
+**Solution**: To manage evolutions, **the highly normalized structure of the native NetSuite data model was kept in the dwh layer and the bus layer**. Furthermore, several parameters were applied to filter the records at each level in a dynamic manner: (1) when the transactions and transaction lines are historized in the dwh layer, (2) when the transactions and transaction lines are pushed to the bus layer, (3) when the datasets are constructed. This design enables a dynamic update of the scope of the BI platform (through the bus layer condition parameters mostly) while keeping 100% of all NetSuite data in the dwh layer - ready to be used and integrated when needed. 
 
 ## Data volume being processed
 ### Parameters on doc and date
