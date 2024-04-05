@@ -4,6 +4,7 @@
 - Db creation SQL command: `CREATE DATABASE netsuite`
 - Python package: dbt-sqlserver
 - Initialization Dbt command: `dbt seed; dbt snapshot; dbt run; dbt test`
+- Db reset SQL command: `dbt run-operation admin_drop_all_except_stg; dbt snapshot; dbt run; dbt test`
 
 # Business context
 The client is a company working in the cosmetic industry.
