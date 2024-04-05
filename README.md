@@ -3,6 +3,7 @@
 - Interface: SQL Server Management Studio 19.3
 - Initialization: `CREATE DATABASE netsuite`
 - Python package: dbt-sqlserver
+- Full-execution: `dbt seed; dbt snapshot; dbt run; dbt test`
 
 # Business context
 The client is a company working in the cosmetic industry.
