@@ -3,7 +3,7 @@
 - Interface: SQL Server Management Studio 19.3
 - DB creation SQL command: `CREATE DATABASE netsuite`
 - Python package: dbt-sqlserver
-- Initialization Dbt command: `dbt seed; dbt snapshot; dbt run; dbt test`
+- Full-run Dbt command: `dbt seed; dbt snapshot; dbt run; dbt test`
 - DB reset Dbt command: `dbt run-operation admin_drop_all_except_stg; dbt snapshot; dbt run; dbt test`
 
 # Business context
