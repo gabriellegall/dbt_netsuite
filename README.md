@@ -1,5 +1,5 @@
 # Business context
-The client is a company working in the Cosmetic industry.
+The client is a company working in the cosmetic industry.
 Following a successful implementation of the ERP NetSuite, the CEO wants to construct a BI ecosystem and leverage this new data source.
 While NetSuite offers some reporting capabilities, the client is limited with NetSuite alone because :
 - Some transformations are impossible to do in NetSuite (e.g. perform several joins throughout the model).
@@ -57,10 +57,10 @@ The client says that the reporting will always be in USD, but the reporting in E
 ## Data processing
 ### Historization
 - The client wants to historize the dimension attributes (SCD Type 2) to be able to track changes and report on both the live/current view and the historical view - at the time of the transaction date.
-- The client wants to historize only some transaction types (invoices, sales order and opportunities) on a monthly basis. The client wants to limite data volume as much as possible to control costs and run-time performance. Thefore, a tracking of all transaction updates is not necessary, and a monthly snapshot is perfectly sufficient.
+- The client wants to historize only some transaction types (invoices, sales order and opportunities) on a monthly basis. The client wants to limit data volume as much as possible to control costs and run-time performance. Therefore, a tracking of all transaction updates is not necessary, and a monthly snapshot is perfectly sufficient.
 
 ### Incremental load
-As mentionned previously, the client wants to optimize performance as much as possible.
+As mentioned previously, the client wants to optimize performance as much as possible.
 An incremental load of the transaction data is possible from NetSuite since both transaction_lines and transactions have field called last_modified_date which tracks the date of last update.
 Several challenges are to be noted however :
 - The date of last update at the transaction_line level and at the transaction level are sometimes inconsistent : a transaction_line can be updated without the transaction being updated, and vice-versa. To solve this challenge, the client agrees to perform DELETE + INSERT operation at a transaction level, based on the maximum date of last update. This is a conservative incremental scenario ensuring that all changes are captured.
@@ -68,13 +68,13 @@ Several challenges are to be noted however :
 - Deleted transaction_lines are also physically deleted from NetSuite transaction_line table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. Since a deleted transaction_line automatically updates the date of last update at a transaction level, performing a DELETE + INSERT operation at a transaction level will automatically solve this problem.
 
 # Data architecture design
-The datawarehouse is structured through several layers in order to ensure (1) performance (2) clarity and (3) modilarity :
+The datawarehouse is structured through several layers in order to ensure (1) performance (2) clarity and (3) modularity :
 - **'stg'**: Staging of the raw data. Those tables are expected to be an exact copy of NetSuite data. In the modern data stack, the stg layer is automatically updated using a dedicated tool like Fivetran or Stitch - having native NetSuite connectors.
 - **'prep'**: Intermediate layer to perform any technical transformation. SQL Server does not support nested CTEs, so intermediate calculations at any step should be materialized as views or tables.
 - **'scd'**: Historization of the requirement elements (typically dimensions) using Dbt snapshots
 - **'dwh'**: Storage of all the NetSuite transactions and transaction lines data (facts) in a native normalized manner. Update of this table is incremental since it contains 100% of the NetSuite data (high volume). Monthly historized transaction lines are also stored in this layer since storing them as Dbt snapshots under the scd layer would be too costly.
 - **'bus'**: Virtualized layer built on top of the dwh and scd layers. This is where final dimension tables are structured and the scope of all transactions and transaction lines to be retrieved, for all use-cases, is defined.
-- **'ds'**: Denormalized dataset layer contaning all additive calculations and joins with the dimension tables to answer to business use-cases. This layer also contains the datasets including the user row-level-security. This layer is typically designed for BI tools like Tableau - expecting a single flat data source input. This layer is not applicable to tools like Power BI - expecting a star schema as a semantic layer.
+- **'ds'**: Denormalized dataset layer containing all additive calculations and joins with the dimension tables to answer to business use-cases. This layer also contains the datasets including the user row-level-security. This layer is typically designed for BI tools like Tableau - expecting a single flat data source input. This layer is not applicable to tools like Power BI - expecting a star schema as a semantic layer.
 
 # Identified risks and mitigation actions
 ## Incremental load discrepancy
@@ -94,7 +94,7 @@ The datawarehouse is structured through several layers in order to ensure (1) pe
 - **Solution**: To optimize performance, the table containing the transactions and transaction lines in the dwh layer is updated in an incremental manner. Since it covers 100% of all the NetSuite data, we cannot afford to use a table materialization, a view or a CTE. The dimension tables in the bus layer can be virtualized since they only cover a lower data volume. The fact table in the bus layer however will be queried often to construct the various datasets and requires a table materialization. The datasets are materialized as tables too since they will be queried often by the BI tool.
 
 ## DQ
-- **Problem**: If the BI tool shows data inconsistencies or missing values, the data platform adoption will become much more chalenging moving forward.
+- **Problem**: If the BI tool shows data inconsistencies or missing values, the data platform adoption will become much more challenging moving forward.
 - **Solution**: To minimize the data anomalies and ensure consistency throughout the entire data processing pipeline several data quality controls have been implemented:
     - 'open' sales orders and opportunities are actually defined by several NetSuite statuses like 'under discussion', 'ongoing', etc. This list of statuses is provided by the client but there is a risk that some new statuses may be created by the NetSuite admins without informing the data team. To ensure that Dbt captures all statuses, a validation list of the open + closed statuses is hard coded in the project parameters. If any unknown status appears for sales orders or opportunities, Dbt will return a warning.
     - If any currency is missing from the FX rates file provided by the treasury department, the converted amount will be NULL. This represents a high risk that the aggregated data could be incorrect. To ensure that amounts are converted properly, a non-NULL constraint is applied on the FX rates after it has been joined with the transactions and transaction lines data.
