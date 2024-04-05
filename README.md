@@ -1,3 +1,6 @@
+# Configuration
+- [SQL Server Express 2022](https://www.microsoft.com/fr-fr/sql-server/sql-server-downloads)
+
 # Business context
 The client is a company working in the cosmetic industry.
 Following a successful implementation of the ERP NetSuite, the CEO wants to construct a BI ecosystem and leverage this new data source.
@@ -85,21 +88,25 @@ The datawarehouse is structured through several layers in order to ensure (1) pe
 - **Problem**: Since the ERP was recently implemented and is constantly evolving, several new fields will be integrated and the table schemas will evolve frequently.
 - **Solution**: To control this risk, **the schema of all tables is only defined once**.  Historized dimension tables are defined in the snapshots scripts, while transactions with transaction lines are defined under a single preparation script (under 'prep'). **Any change to those scripts will automatically propagate to the upper datawarehouse layer ('dwh'), business layers ('bus') and the dataset layers ('ds')**. This automatic propagation is managed using the '*' operator and the dbt_utils.star() function.
 
+## Repeated code and typos
+- **Problem**: 
+- **Solution**: 
+
 ## Scalability with scope extension
 - **Problem**: In this first use-case, the data to be integrated from NetSuite into the different layers only covers invoice, sales orders and opportunities. However, **other use cases will be requested by the client in the future** (e.g. purchase orders analysis by supplier, stock with item receipts and item fulfillments, etc.). 
-- **Solution**: To manage evolutions, **the highly normalized structure of the native NetSuite data model was kept in the dwh layer and the bus layer**. Furthermore, several parameters were applied to filter the records at each level in a dynamic manner: (1) when the transactions and transaction lines are historized in the dwh layer, (2) when the transactions and transaction lines are pushed to the bus layer, (3) when the datasets are constructed. This design enables a dynamic update of the scope of the BI platform (through the bus layer condition parameters mostly) while keeping 100% of all NetSuite data in the dwh layer - ready to be used and integrated when needed. 
+- **Solution**: To manage evolutions, **the highly normalized structure of the native NetSuite data model was kept in the dwh layer and the bus layer**. Furthermore, several parameters were applied to filter the records at each level in a dynamic manner: (1) when the transactions and transaction lines are historized in the dwh layer, (2) when the transactions and transaction lines are pushed to the bus layer, (3) when the datasets are constructed. This design enables a dynamic update of the scope of the BI platform while keeping 100% of all NetSuite data in the dwh layer - ready to be used and integrated when needed. 
 
 ## Materialization
 - **Problem**: The performance of the database is critical and highly related to the materialization strategy. One risk is that the datawarehouse requires too much resources to process an increasing volume of data.
 - **Solution**: To optimize performance, the table containing the transactions and transaction lines in the dwh layer is updated in an incremental manner. Since it covers 100% of all the NetSuite data, we cannot afford to use a table materialization, a view or a CTE. The dimension tables in the bus layer can be virtualized since they only cover a lower data volume. The fact table in the bus layer however will be queried often to construct the various datasets and requires a table materialization. The datasets are materialized as tables too since they will be queried often by the BI tool.
 
-## DQ
+## Data quality
 - **Problem**: If the BI tool shows data inconsistencies or missing values, the data platform adoption will become much more challenging moving forward.
 - **Solution**: To minimize the data anomalies and ensure consistency throughout the entire data processing pipeline several data quality controls have been implemented:
     - 'open' sales orders and opportunities are actually defined by several NetSuite statuses like 'under discussion', 'ongoing', etc. This list of statuses is provided by the client but there is a risk that some new statuses may be created by the NetSuite admins without informing the data team. To ensure that Dbt captures all statuses, a validation list of the open + closed statuses is hard coded in the project parameters. If any unknown status appears for sales orders or opportunities, Dbt will return a warning.
-    - If any currency is missing from the FX rates file provided by the treasury department, the converted amount will be NULL. This represents a high risk that the aggregated data could be incorrect. To ensure that amounts are converted properly, a non-NULL constraint is applied on the FX rates after it has been joined with the transactions and transaction lines data.
+    - If any currency is missing from the FX rates file provided by the treasury department, the converted amount will be NULL. This represents a high risk that the aggregated data could be incorrect. To ensure that amounts are converted properly, a non-NULL constraint is applied on the FX rates after it has been joined with the transactions and transaction lines.
 
-## BUS layer maintenance
-
-# Design choices
-Dynamic hash keys
+# Discussion
+## Performance
+Dynamic hash keys perf
+Indexing perf
