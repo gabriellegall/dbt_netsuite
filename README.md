@@ -1,7 +1,7 @@
 # Configuration
 - Database: [SQL Server Express 2022](https://www.microsoft.com/fr-fr/sql-server/sql-server-downloads)
 - Interface: SQL Server Management Studio 19.3
-- Initialization: '''CREATE DATABASE netsuite
+- Initialization: `CREATE DATABASE netsuite`
 - Python package: dbt-sqlserver
 
 # Business context
