@@ -1,5 +1,7 @@
 # Configuration
-- [SQL Server Express 2022](https://www.microsoft.com/fr-fr/sql-server/sql-server-downloads)
+- Database: [SQL Server Express 2022](https://www.microsoft.com/fr-fr/sql-server/sql-server-downloads)
+- Interface: SQL Server Management Studio 19.3
+- Python package: dbt-sqlserver
 
 # Business context
 The client is a company working in the cosmetic industry.
@@ -12,7 +14,7 @@ While NetSuite offers some reporting capabilities, the client is limited with Ne
     - They have a different user journey, and
     - They have different row-level-security requirements.
 
-# Business requirements
+# Business requirements 
 The first use case identified by the client is a monitoring of the sales pipeline, which is defined by the aggregation of invoices, 'open' sales orders and 'open' opportunities in NetSuite. The sales pipeline is basically the estimated landing sales for the year.
 The client wants to use the annual budget as a performance objective for the sales and consolidate everything under a dataset which will be connected to a BI dashboard.
 The dashboard will show the estimated landing compared to the objective and will enable the managers to monitor the sales team among each business unit, and for each client.
