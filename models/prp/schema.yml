@@ -23,8 +23,12 @@ models:
       This table normalizes the RLS information, when multivalued attributes are separated by a comma.
       This information is used to manage dataset dynamic row-level-security at a user level.
       The column row_id identifies the set of conditons for the user. The intersection of all conditions within a row_id defines the security rule. 
-      Conditions are additive if several row_id are recorded for a single user. This is a simple way to manage advanced conditions.
+      Conditions are additive if several row_id are recorded for a single user. This is a simple way to manage advanced custom combinations of conditions.
   - name: prep_transaction_with_lines_for_union
     description: 
       This table defines the current date from Dbt as a functional snapshot date for the current transaction data.
       This information is used to differentiate the snapshotted data and the current data when merged together.
+  - name: prep_transaction_with_lines
+    description: 
+      This table merges together the transactions with the transaction lines.
+      It also computes the hash foreign keys to the dimension tables.

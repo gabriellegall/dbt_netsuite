@@ -5,9 +5,9 @@ version: 2
 models:
   - name: fact_all_transactions_with_line
     description: 
-      This table consolidates all the transactions - both current and historized (snapshotted). 
+      This table consolidates all the transactions and transaction lines - both current and historized (snapshotted). 
       A snapshot date field can be use to differentiate the different versions of the transactions data.
-      This table also centralizes the first joins with the dimensions that are common to all transaction types.
+      This table also centralizes the first joins with the dimensions that are common to all transaction types (e.g. Business Unit).
     columns:
       - name: fx_rate_original_to_usd
         tests:
