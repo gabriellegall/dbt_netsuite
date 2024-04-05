@@ -1,3 +1,8 @@
+{#
+    Custom SQL script to be executed when all tables and views should be dropped from the database, except the stg layer. 
+    This can be useful when a table is renamed, or when a materialization is changed
+#}
+
 DECLARE @sql NVARCHAR(MAX) = ''
 
 -- Drop all views except those in the STG schema
