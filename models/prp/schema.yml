@@ -8,6 +8,12 @@ models:
   - name: prep_budget_for_union
     description: 
       This table contains the budget data, enriched with all the relevant columns that are expected to match the dataset with which it will be merged.
+    columns:
+      - name: live_bu_code
+        tests:
+          - not_null:
+              config:
+                severity: warn
   - name: prep_dim_bu_alternate_key_bu_code
     description: 
       This table is a workaround solution requested by the client to be able to enrich the budget data with the business unit dimension table.

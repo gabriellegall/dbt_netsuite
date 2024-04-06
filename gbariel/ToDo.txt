@@ -19,9 +19,9 @@ DONE :
 - Add a datetable & integrate YTD use case
 - integrate fiscal use case
 - Table Documentation
+- Dbt DROP ALL BUT STG
 
 TO DO :
-- Dbt DROP ALL BUT STG
 - DQ rule : bu_code exists in Dim Bu
 - Update RLS to account for "ALL" on non applicable dimensions
 - key field documentation (like FX rates)

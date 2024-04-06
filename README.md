@@ -110,6 +110,7 @@ The datawarehouse is structured through several layers in order to ensure (1) pe
 - **Solution**: To minimize the data anomalies and ensure consistency throughout the entire data processing pipeline several data quality controls have been implemented:
     - 'open' sales orders and opportunities are actually defined by several NetSuite statuses like 'under discussion', 'ongoing', etc. This list of statuses is provided by the client but there is a risk that some new statuses may be created by the NetSuite admins without informing the data team. To ensure that Dbt captures all statuses, a validation list of the open + closed statuses is hard coded in the project parameters. If any unknown status appears for sales orders or opportunities, Dbt will return a warning.
     - If any currency is missing from the FX rates file provided by the treasury department, the converted amount will be NULL. This represents a high risk that the aggregated data could be incorrect. To ensure that amounts are converted properly, a non-NULL constraint is applied on the FX rates after it has been joined with the transactions and transaction lines.
+    - If the bu_code recorded in the budget file recorded manually by the finance team does not exist in NetSuite, it will be impossible to associate it with the sales figures. To ensure that all bu_code recorded in the budget file are correct, a non-NULL constraint is applied on the budget after it has been joined with the NetSuite business unit dimension.
 
 # Discussion
 ## Performance
