@@ -19,9 +19,11 @@ While NetSuite offers some reporting capabilities, the client is limited with Ne
 
 # Business requirements 
 The first use case identified by the client is a monitoring of the sales pipeline, which is defined by the aggregation of invoices, 'open' sales orders and 'open' opportunities in NetSuite. The sales pipeline is basically the estimated landing sales for the year.
+
 The client wants to use the annual budget as a performance objective for the sales and consolidate everything under a dataset which will be connected to a BI dashboard.
 The dashboard will show the estimated landing compared to the objective and will enable the managers to monitor the sales team among each business unit, and for each client.
-This dashboard should also show the evolution of the sales landing at different points in time (i.e. different snapshot dates, also known as cut-off dates). This will help the business evaluate the data reliability and the evolution of the total sales landing throughout the year.
+
+This dashboard should also show the evolution of the sales landing every monthly (i.e. a monthly snapshot of the data). This will help the business evaluate the data reliability and the evolution of the total sales landing throughout the year.
 
 ## Data sources
 ### NetSuite fact transactions
@@ -45,9 +47,9 @@ This should be taken into consideration for all fields with time dependency ('cu
 ### Row-level-security (RLS)
 Datasets are expected to be restricted to the scope of each authorized user - at a row level.
 RLS is provided in the form of an Excel file and containing several dimensions to be used for each user email : bu_code, customer_name and item_type.
-The Excel file is expected to contain multivalued attributes separated by a comma ','.
+
 The security that should be enforced is the intersection of all conditions/dimensions.
-However, if another record is provided for the same user email, the two sets of conditions to be additive. This is a rare exception for some users who need to see the data of all their business unit + the data of some of their clients accross all business unit.
+However, if another record is provided for the same user email, the two sets of conditions to be additive. This is a rare exception for some users who need to see the data of all their business unit + the data of some of their clients across all business unit.
 
 ### Budget
 To monitor the performance of the sales pipeline, a budget file is provided by the client's finance team in the form of an Excel file. 
@@ -59,7 +61,10 @@ Because the data entry is made by the finance team, the budget Excel file matche
 Overall, the consequence is that the budget data will return NULL if non applicable dimension attributes are ever used as filters inside the BI tool.
 
 ### FX rates
-The existing NetSuite transactional rate is used to convert foreign amounts to the amounts in business unit currency. However, the client wants to then convert each business unit amount to USD and EUR using an external Excel file provided by the treasury department. The FX rates file provided by the treasury department is at a year-month level, and the client says that the rate to be used depends on the year-month of the transaction date. If no rate is available at the transaction date, then the latest rate available for the given currency should be used.
+The existing NetSuite transactional rate is used to convert foreign amounts to the amounts in business unit currency. However, the client wants to then convert each business unit amount to USD and EUR using an external Excel file provided by the treasury department.
+
+The FX rates file provided by the treasury department is at a year-month level, and the client says that the rate to be used depends on the year-month of the transaction date. If no rate is available at the transaction date, then the latest rate available for the given currency should be used.
+
 The client says that the reporting will always be in USD, but the reporting in EUR currency may change in the future.
 
 ## Data processing
