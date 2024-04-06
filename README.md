@@ -46,10 +46,10 @@ This should be taken into consideration for all fields with time dependency ('cu
 
 ### Row-level-security (RLS)
 Datasets are expected to be restricted to the scope of each authorized user - at a row level.
-RLS is provided in the form of an Excel file and containing several dimensions to be used for each user email : bu_code, customer_name and item_type.
+RLS is provided in the form of an Excel file containing several dimensions to be used for each user email : bu_code, customer_name and item_type.
 
 The security that should be enforced is the intersection of all conditions/dimensions.
-However, if another record is provided for the same user email, the two sets of conditions to be additive. This is a rare exception for some users who need to see the data of all their business unit + the data of some of their clients across all business unit.
+However, if another record is provided for the same user email, the two sets of conditions to be additive. This is a rare exception for some users who need to see the data of all their business unit + the data of some of their clients across all business units.
 
 ### Budget
 To monitor the performance of the sales pipeline, a budget file is provided by the client's finance team in the form of an Excel file. 
@@ -92,11 +92,12 @@ The datawarehouse is structured through several layers in order to ensure (1) pe
 # Identified risks and mitigation actions
 ## Incremental load discrepancy
 - **Problem**: One of the main risks is that the complex incremental update of the dwh table using the previously described incremental load is somehow flawed.
-- **Solution**: To control this risk, a test scenario has been designed to **control any row difference between the staging layer and the DWH layer using a hash of all columns and a full-outer join**. As a measure of safety (and performance), a primary key constraint has been applied on the dwh layer to ensure that no duplicate can ever be loaded or historized.
+- **Solution**: To control this risk, a test scenario has been designed to **control any row difference between the staging layer and the dwh layer using a hash of all columns and a full-outer join**.
+As an extra measure of safety (and performance), a primary key constraint has been applied on the dwh layer to ensure that no duplicate can ever be loaded or historized.
 
 ## Changing schemas and maintenance
 - **Problem**: Since the ERP was recently implemented and is constantly evolving, several new fields will be integrated and the table schemas will evolve frequently.
-- **Solution**: To control this risk, **the schema of all tables is only defined once**.  Historized dimension tables are defined in the snapshots scripts, while transactions with transaction lines are defined under a single preparation script (under 'prep'). **Any change to those scripts will automatically propagate to the upper datawarehouse layer ('dwh'), business layers ('bus') and the dataset layers ('ds')**. This automatic propagation is managed using the '*' operator and the dbt_utils.star() function.
+- **Solution**: To control this risk, **the schema of all tables is only defined once**.  Historized dimension tables are defined in the snapshots scripts, while transactions with transaction lines are defined under a single preparation script (under 'prep'). **Any change to those scripts will automatically propagate to the upper datawarehouse layer ('dwh'), business layers ('bus') and the dataset layers ('ds')**. This automatic propagation is managed using the SQL '*' operator and the Dbt dbt_utils.star() function.
 
 ## Repeated code and typos
 - **Problem**: 
@@ -108,7 +109,11 @@ The datawarehouse is structured through several layers in order to ensure (1) pe
 
 ## Materialization
 - **Problem**: The performance of the database is critical and highly related to the materialization strategy. One risk is that the datawarehouse requires too much resources to process an increasing volume of data.
-- **Solution**: To optimize performance, the table containing the transactions and transaction lines in the dwh layer is updated in an incremental manner. Since it covers 100% of all the NetSuite data, we cannot afford to use a table materialization, a view or a CTE. The dimension tables in the bus layer can be virtualized since they only cover a lower data volume. The fact table in the bus layer however will be queried often to construct the various datasets and requires a table materialization. The datasets are materialized as tables too since they will be queried often by the BI tool.
+- **Solution**: 
+    - To optimize performance, the table containing the transactions and transaction lines in the dwh layer is updated in an incremental manner. Since it covers 100% of all the NetSuite data, we cannot afford to use a table materialization, a view or a CTE. 
+    - The dimension tables in the bus layer can be virtualized since they only cover a lower data volume. 
+    - The fact table in the bus layer however will be queried often to construct the various datasets and requires a table materialization.
+    - The datasets are materialized as tables too since they will be queried often by the BI tool.
 
 ## Data quality
 - **Problem**: If the BI tool shows data inconsistencies or missing values, the data platform adoption will become much more challenging moving forward.
