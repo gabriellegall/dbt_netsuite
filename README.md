@@ -84,10 +84,6 @@ Several challenges are to be noted however :
 
 # Data architecture design
 
-## DAG
-The overall project DAG is presented here:
-![DAG](https://github.com/gabriellegall/Dbt_NetSuite/blob/main/DAG.png?raw=true)
-
 ## Layers
 The datawarehouse is structured through several layers in order to ensure (1) performance (2) clarity and (3) modularity :
 - **'stg'**: Staging of the raw data. Those tables are expected to be an exact copy of NetSuite data. In the modern data stack, the stg layer is automatically updated using a dedicated tool like Fivetran or Stitch - having native NetSuite connectors.
@@ -96,6 +92,10 @@ The datawarehouse is structured through several layers in order to ensure (1) pe
 - **'dwh'**: Storage of all the NetSuite transactions and transaction lines data (facts) in a native normalized manner. Update of this table is incremental since it contains 100% of the NetSuite data (high volume). Monthly historized transaction lines are also stored in this layer since storing them as Dbt snapshots under the scd layer would be too costly.
 - **'bus'**: Virtualized layer built on top of the dwh and scd layers. This is where final dimension tables are structured and the scope of all transactions and transaction lines to be retrieved, for all use-cases, is defined.
 - **'ds'**: Denormalized dataset layer containing all additive calculations and joins with the dimension tables to answer to business use-cases. This layer also contains the datasets including the user row-level-security. This layer is typically designed for BI tools like Tableau - expecting a single flat data source input. This layer is not applicable to tools like Power BI - expecting a star schema as a semantic layer.
+
+## DAG
+The overall project DAG is presented here:
+![DAG](https://github.com/gabriellegall/Dbt_NetSuite/blob/main/DAG.png?raw=true)
 
 # Identified risks and mitigation actions
 ## Incremental load discrepancy
