@@ -53,6 +53,8 @@ RLS is provided in the form of an Excel file containing several dimensions to be
 The security that should be enforced is the intersection of all conditions/dimensions.
 However, if another record is provided for the same user email, the two sets of conditions to be additive. This is a rare exception for some users who need to see the data of all their business unit + the data of some of their clients across all business units.
 
+Another requirement regarding security is that the RLS set-up history should be accessible at any time, to know which user had access to which scope.
+
 ### Budget
 To monitor the performance of the sales pipeline, a budget file is provided by the client's finance team in the form of an Excel file. 
 Because the data entry is made by the finance team, the budget Excel file matches with some, but not all, of the dimension attributes of NetSuite listed previously. Namely :
