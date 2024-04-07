@@ -1,10 +1,12 @@
 # Configuration
 - Database: [SQL Server Express 2022](https://www.microsoft.com/fr-fr/sql-server/sql-server-downloads)
 - Interface: SQL Server Management Studio 19.3
-- DB creation SQL command: `CREATE DATABASE netsuite`
+- DB creation SQL command (mandatory): `CREATE DATABASE netsuite`
 - Python package: dbt-sqlserver
-- Full run Dbt command: `dbt seed; dbt snapshot; dbt run; dbt test`
-- Full reset & run Dbt command: `dbt run-operation admin_drop_all_except_stg; dbt snapshot; dbt run; dbt test`
+
+## Dbt commands
+- Full run: `dbt seed; dbt snapshot; dbt run; dbt test`
+- Full DB reset & run: `dbt run-operation admin_drop_all_except_stg; dbt snapshot; dbt run; dbt test`
 
 # Business context
 The client is a company working in the cosmetic industry.
@@ -100,8 +102,10 @@ As an extra measure of safety (and performance), a primary key constraint has be
 - **Solution**: To control this risk, **the schema of all tables is only defined once**.  Historized dimension tables are defined in the snapshots scripts, while transactions with transaction lines are defined under a single preparation script (under 'prep'). **Any change to those scripts will automatically propagate to the upper datawarehouse layer ('dwh'), business layers ('bus') and the dataset layers ('ds')**. This automatic propagation is managed using the SQL '*' operator and the Dbt dbt_utils.star() function.
 
 ## Repeated code and typos
-- **Problem**: 
-- **Solution**: 
+- **Problem**: Some SQL logics are extremely similar across models, and any change or update should propagate dynamically. There are two main transformation patterns in this project:
+    - All historized dimension tables in the business layer are a result of a self-join on the primary key, to flatten the historical and current versions of the attributes (SCD Type 2). This way, it becomes easy to report on both the historical and the current version of the dimension attributes.
+    - All datasets with RLS implemented are the result of join between the original dataset and the RLS table. While the join condition with the RLS table can depend on the applicable dimensions for the business scope, the majority of the code is always the same.
+- **Solution**: To centralize those generic logics, macros were created and called to define the models. More details about those macros can be found in the schema.yml file.
 
 ## Scalability with scope extension
 - **Problem**: In this first use-case, the data to be integrated from NetSuite into the different layers only covers invoice, sales orders and opportunities. However, **other use cases will be requested by the client in the future** (e.g. purchase orders analysis by supplier, stock with item receipts and item fulfillments, etc.). 
@@ -124,5 +128,6 @@ As an extra measure of safety (and performance), a primary key constraint has be
 
 # Discussion
 ## Performance
-Dynamic hash keys perf
-Indexing perf
+As data will continue to grow, there are some elements that could be implemented or modified to further optimize the performance of the database:
+- Clustered and non-clustered indexes could be created on the fields that are commonly used to filter the data. Typically the transaction_status, transaction_date, transaction_type.
+- Materialization of the transaction with transaction lines in the bus layer could be set to incremental (with the same logic as in the dwh layer). The only downside with this materialization strategy is that a full reload would have to be executed when the scope of the bus layer is changed.
