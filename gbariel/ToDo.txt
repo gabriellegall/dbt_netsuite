@@ -21,13 +21,12 @@ DONE :
 - Table Documentation
 - Dbt DROP ALL BUT STG
 - DQ rule : bu_code exists in Dim Bu
+- README.md / Dbt docs : file explaining the project, design choices, and optimization 
 
 TO DO :
 - Update RLS to account for "ALL" on non applicable dimensions
 - key field documentation (like FX rates)
 - Document full integration tests
-- README.md / Dbt docs : file explaining the project, design choices, and optimization 
-    Materialization strategy
 
 Don't forget at the end :
 > Apply the materialization strategy
