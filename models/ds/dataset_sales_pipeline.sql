@@ -25,11 +25,19 @@ AND
 , cte_calculate AS (
 SELECT 
     t.*
-    {% for column in currencies %}
-        , IIF(d_calc.is_prev_2y_fiscal_year = 1, {{ column }}, 0) AS {{ column }}_prev_2y_fiscal_year
-        , IIF(d_calc.is_prev_1y_fiscal_year = 1, {{ column }}, 0) AS {{ column }}_prev_1y_fiscal_year
-        , IIF(d_calc.is_current_fiscal_year = 1, {{ column }}, 0) AS {{ column }}_current_fiscal_year
-        , IIF(d_calc.is_next_1y_fiscal_year = 1, {{ column }}, 0) AS {{ column }}_next_1y_fiscal_year
+    {% for currency in currencies %}
+        , IIF(d_calc.is_prev_2y_fiscal_year = 1, {{ currency }}, 0) AS total_{{ currency }}_prev_2y_fiscal_year
+        , IIF(d_calc.is_prev_1y_fiscal_year = 1, {{ currency }}, 0) AS total_{{ currency }}_prev_1y_fiscal_year
+        , IIF(d_calc.is_current_fiscal_year = 1, {{ currency }}, 0) AS total_{{ currency }}_current_fiscal_year
+        , IIF(d_calc.is_next_1y_fiscal_year = 1, {{ currency }}, 0) AS total_{{ currency }}_next_1y_fiscal_year
+    {% endfor %}
+    {% for currency in currencies %}
+        {% for type in var("sales_scope_type") %}
+        , IIF(d_calc.is_prev_2y_fiscal_year = 1 AND t.transaction_type = '{{ type }}', {{ currency }}, 0) AS {{ type | lower | replace(" ", "_") }}_{{ currency }}_prev_2y_fiscal_year
+        , IIF(d_calc.is_prev_1y_fiscal_year = 1 AND t.transaction_type = '{{ type }}', {{ currency }}, 0) AS {{ type | lower | replace(" ", "_") }}_{{ currency }}_prev_1y_fiscal_year
+        , IIF(d_calc.is_current_fiscal_year = 1 AND t.transaction_type = '{{ type }}', {{ currency }}, 0) AS {{ type | lower | replace(" ", "_") }}_{{ currency }}_current_fiscal_year
+        , IIF(d_calc.is_next_1y_fiscal_year = 1 AND t.transaction_type = '{{ type }}', {{ currency }}, 0) AS {{ type | lower | replace(" ", "_") }}_{{ currency }}_next_1y_fiscal_year
+        {% endfor %}
     {% endfor %}
 FROM cte_scope t 
 LEFT OUTER JOIN {{ ref("dim_date") }} d_calc

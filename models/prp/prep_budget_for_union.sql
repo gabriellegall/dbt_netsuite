@@ -7,15 +7,16 @@
 WITH consolidate_data AS 
 
 (
-    SELECT 
-        budget_year
+    SELECT
+        'Budget'                                                                                     AS transaction_type  
+        , budget_year
         , budget_version
         {# customer_name cannot be matched with the dimension table and is therefore the only common field with the customer dimension #}
-        , customer_name                                                                             AS live_customer_name
-        , customer_name                                                                             AS hist_customer_name
+        , customer_name                                                                              AS live_customer_name
+        , customer_name                                                                              AS hist_customer_name
         {# The bu_currency written in the Excel file is for user input clarity and traceability only, but can be replaced with the appropriate bu_currency from the dimension table #}
         , {{ dbt_utils.star(from=ref('dim_bu'), except = var("scd_excluded_col_name") ) }}
-        , sales_amount_bu_currency
+        , sales_amount_bu_currency                                                                   AS budget_sales_amount_bu_currency
         , budget_date                                                                                AS calculation_date
         , COALESCE( fx_dated.fx_rate_original_to_usd, fx_latest.fx_rate_original_to_usd )            AS fx_rate_original_to_usd
         , COALESCE( fx_dated.fx_rate_original_to_dynamic, fx_latest.fx_rate_original_to_dynamic )    AS fx_rate_original_to_dynamic
@@ -33,6 +34,6 @@ WITH consolidate_data AS
 
 SELECT
     *
-    , fx_rate_original_to_usd       * sales_amount_bu_currency AS sales_amount_usd_currency
-    , fx_rate_original_to_dynamic   * sales_amount_bu_currency AS sales_amount_dynamic_currency
+    , fx_rate_original_to_usd       * budget_sales_amount_bu_currency AS budget_sales_amount_usd_currency
+    , fx_rate_original_to_dynamic   * budget_sales_amount_bu_currency AS budget_sales_amount_dynamic_currency
 FROM consolidate_data
