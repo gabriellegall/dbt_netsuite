@@ -57,6 +57,7 @@ For instance,
 - User2 shoud have access to :
     - all business units and all item types for the customer 'Nu Smart Global' only, but also
     - 2 business units, and all customers and item types inside those two business units.
+
 | user_email | authorized_bu_code | authorized_customer_name | authorized_item_type |
 |----------|----------|----------|----------|
 | user1@example.com | AUBU,ATBU | All | All |
