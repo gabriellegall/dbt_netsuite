@@ -83,6 +83,12 @@ Several challenges are to be noted however :
 - Deleted transaction_lines are also physically deleted from NetSuite transaction_line table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. Since a deleted transaction_line automatically updates the date of last update at a transaction level, performing a DELETE + INSERT operation at a transaction level will automatically solve this problem.
 
 # Data architecture design
+
+## DAG
+The overall project DAG is presented here:
+
+
+## Layers
 The datawarehouse is structured through several layers in order to ensure (1) performance (2) clarity and (3) modularity :
 - **'stg'**: Staging of the raw data. Those tables are expected to be an exact copy of NetSuite data. In the modern data stack, the stg layer is automatically updated using a dedicated tool like Fivetran or Stitch - having native NetSuite connectors.
 - **'prep'**: Intermediate layer to perform any technical transformation. SQL Server does not support nested CTEs, so intermediate calculations at any step should be materialized as views or tables.
