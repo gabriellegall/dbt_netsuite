@@ -86,7 +86,7 @@ Several challenges are to be noted however :
 
 ## DAG
 The overall project DAG is presented here:
-
+![DAG](https://github.com/gabriellegall/Dbt_NetSuite/blob/main/DAG.png?raw=true)
 
 ## Layers
 The datawarehouse is structured through several layers in order to ensure (1) performance (2) clarity and (3) modularity :
