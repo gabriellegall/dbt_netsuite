@@ -86,11 +86,11 @@ Several challenges are to be noted however :
 
 ## Layers
 The datawarehouse is structured through several layers in order to ensure (1) performance (2) clarity and (3) modularity :
-- **'stg'**: Staging of the raw data. Those tables are expected to be an exact copy of NetSuite data. In the modern data stack, the stg layer is automatically updated using a dedicated tool like Fivetran or Stitch - having native NetSuite connectors.
-- **'prep'**: Intermediate layer to perform any technical transformation. SQL Server does not support nested CTEs, so intermediate calculations at any step should be materialized as views or tables.
-- **'scd'**: Historization of the requirement elements (typically dimensions) using Dbt snapshots
-- **'dwh'**: Storage of all the NetSuite transactions and transaction lines data (facts) in a native normalized manner. Update of this table is incremental since it contains 100% of the NetSuite data (high volume). Monthly historized transaction lines are also stored in this layer since storing them as Dbt snapshots under the scd layer would be too costly.
-- **'bus'**: Virtualized layer built on top of the dwh and scd layers. This is where final dimension tables are structured and the scope of all transactions and transaction lines to be retrieved, for all use-cases, is defined.
+- **'stg'**: Staging of the raw data. Those tables are expected to be **an exact copy of NetSuite data**. In the modern data stack, the stg layer is automatically updated using a dedicated tool like Fivetran or Stitch - having native NetSuite connectors.
+- **'prep'**: **Intermediate layer to perform any technical transformation**. SQL Server does not support nested CTEs, so intermediate calculations at any step should be materialized as views or tables.
+- **'scd'**: **Historization** of the requirement elements (typically dimensions) using Dbt snapshots
+- **'dwh'**: Storage of **all** the NetSuite transactions and transaction lines data (facts) in a native normalized manner. Update of this table is incremental since it contains 100% of the NetSuite data (high volume). Monthly historized transaction lines are also stored in this layer since storing them as Dbt snapshots under the scd layer would be too costly.
+- **'bus'**: Virtualized layer built on top of the dwh and scd layers. This is where **final dimension tables are structured and the scope of all transactions and transaction lines to be retrieved**, for all use-cases, is defined.
 - **'ds'**: Denormalized dataset layer containing all additive calculations and joins with the dimension tables to answer to business use-cases. This layer also contains the datasets including the user row-level-security. This layer is typically designed for BI tools like Tableau - expecting a single flat data source input. This layer is not applicable to tools like Power BI - expecting a star schema as a semantic layer.
 
 ## DAG
@@ -108,22 +108,22 @@ As an extra measure of safety (and performance), a primary key constraint has be
 - **Solution**: To control this risk, **the schema of all tables is only defined once**.  Historized dimension tables are defined in the snapshots scripts, while transactions with transaction lines are defined under a single preparation script (under 'prep'). **Any change to those scripts will automatically propagate to the upper datawarehouse layer ('dwh'), business layers ('bus') and the dataset layers ('ds')**. This automatic propagation is managed using the SQL '*' operator and the Dbt dbt_utils.star() function.
 
 ## Repeated code and typos
-- **Problem**: Some SQL logics are extremely similar across models, and any change or update should propagate dynamically. There are two main transformation patterns in this project:
+- **Problem**: **Some SQL logics are extremely similar across models**, and any change or update should propagate dynamically. There are two main transformation patterns in this project:
     - All historized dimension tables in the business layer are a result of a self-join on the primary key, to flatten the historical and current versions of the attributes (SCD Type 2). This way, it becomes easy to report on both the historical and the current version of the dimension attributes.
     - All datasets with RLS implemented are the result of join between the original dataset and the RLS table. While the join condition with the RLS table can depend on the applicable dimensions for the business scope, the majority of the code is always the same.
-- **Solution**: To centralize those generic logics, macros were created and called to define the models. More details about those macros can be found in the schema.yml file.
+- **Solution**: To centralize those generic logics, **macros** were created and called to define the models. More details about those macros can be found in the schema.yml file.
 
 ## Scalability with scope extension
 - **Problem**: In this first use-case, the data to be integrated from NetSuite into the different layers only covers invoice, sales orders and opportunities. However, **other use cases will be requested by the client in the future** (e.g. purchase orders analysis by supplier, stock with item receipts and item fulfillments, etc.). 
 - **Solution**: To manage evolutions, **the highly normalized structure of the native NetSuite data model was kept in the dwh layer and the bus layer**. Furthermore, several parameters were applied to filter the records at each level in a dynamic manner: (1) when the transactions and transaction lines are historized in the dwh layer, (2) when the transactions and transaction lines are pushed to the bus layer, (3) when the datasets are constructed. This design enables a dynamic update of the scope of the BI platform while keeping 100% of all NetSuite data in the dwh layer - ready to be used and integrated when needed. 
 
 ## Materialization
-- **Problem**: The performance of the database is critical and highly related to the materialization strategy. One risk is that the datawarehouse requires too much resources to process an increasing volume of data.
+- **Problem**: The performance of the database is critical and highly related to the **materialization strategy**. One risk is that the datawarehouse requires too much resources to process an increasing volume of data.
 - **Solution**: 
-    - To optimize performance, the table containing the transactions and transaction lines in the dwh layer is updated in an incremental manner. Since it covers 100% of all the NetSuite data, we cannot afford to use a table materialization, a view or a CTE. 
-    - The dimension tables in the bus layer can be virtualized since they only cover a lower data volume. 
-    - The fact table in the bus layer however will be queried often to construct the various datasets and requires a table materialization.
-    - The datasets are materialized as tables too since they will be queried often by the BI tool.
+    - To optimize performance, the table containing the transactions and transaction lines in the dwh layer is updated in an **incremental manner**. Since it covers 100% of all the NetSuite data, we cannot afford to use a table materialization, a view or a CTE. 
+    - The dimension tables in the bus layer can be **virtualized** since they only cover a lower data volume. 
+    - The fact table in the bus layer however will be queried often to construct the various datasets and requires a **table materialization**.
+    - The datasets are **materialized as tables** too since they will be queried often by the BI tool.
 
 ## Data quality
 - **Problem**: If the BI tool shows data inconsistencies or missing values, the data platform adoption will become much more challenging moving forward.
