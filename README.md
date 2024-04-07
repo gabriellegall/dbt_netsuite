@@ -53,6 +53,12 @@ RLS is provided in the form of an Excel file containing several dimensions to be
 The security that should be enforced is the intersection of all conditions/dimensions.
 However, if another record is provided for the same user email, the two sets of conditions to be additive. This is a rare exception for some users who need to see the data of all their business unit + the data of some of their clients across all business units.
 
+| user_email | authorized_bu_code | authorized_customer_name | authorized_item_type |
+|----------|----------|----------|----------|
+| user1@example.com | AUBU,ATBU | All | All |
+| user2@example.com | All | Nu Smart Global | All |
+| user2@example.com | AUBU,ATBU | All | All |
+
 Another requirement regarding security is that the RLS set-up history should be accessible at any time, to know which user had access to which scope.
 
 ### Budget
@@ -62,7 +68,7 @@ Because the data entry is made by the finance team, the budget Excel file matche
 - No budget is recorded at an item level.
 - The finance team only provides the bu_code, which is not the expected foreign key to the Business Unit dimension. The expected key is the bu_nsid, but the client says that the bu_code is an acceptable alternative key.
 
-Overall, the consequence is that the budget data will return NULL if non applicable dimension attributes are ever used as filters inside the BI tool.
+Overall, the consequence is that the budget data will return NULL if non applicable dimension attributes are ever used as filters inside the BI tool. 
 
 ### FX rates
 The existing NetSuite transactional rate is used to convert foreign amounts to the amounts in business unit currency. However, the client wants to then convert each business unit amount to USD and EUR using an external Excel file provided by the treasury department.
