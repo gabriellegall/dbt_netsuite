@@ -52,7 +52,11 @@ RLS is provided in the form of an Excel file containing several dimensions to be
 
 The security that should be enforced is the intersection of all conditions/dimensions.
 However, if another record is provided for the same user email, the two sets of conditions to be additive. This is a rare exception for some users who need to see the data of all their business unit + the data of some of their clients across all business units.
-
+For instance, 
+- User1 shoud have access to 2 business units, and all customers and item types inside those two business units.
+- User2 shoud have access to :
+    - all business units and all item types for the customer 'Nu Smart Global' only, but also
+    - 2 business units, and all customers and item types inside those two business units.
 | user_email | authorized_bu_code | authorized_customer_name | authorized_item_type |
 |----------|----------|----------|----------|
 | user1@example.com | AUBU,ATBU | All | All |
