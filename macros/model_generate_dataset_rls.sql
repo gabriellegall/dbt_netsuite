@@ -9,12 +9,17 @@
     "customer_bu": """
         (ds.live_customer_name = rls.authorized_customer_name OR rls.authorized_customer_name = 'All')
         AND (ds.live_bu_code = rls.authorized_bu_code OR rls.authorized_bu_code = 'All')
+        AND (rls.authorized_item_type = 'All')
     """,
     "bu": """
-        (ds.live_bu_code = rls.authorized_bu_code OR rls.authorized_bu_code = 'All')
+        (rls.authorized_customer_name = 'All')
+        AND (ds.live_bu_code = rls.authorized_bu_code OR rls.authorized_bu_code = 'All')
+        AND (rls.authorized_item_type = 'All')        
     """,
     "customer": """
         (ds.live_customer_name = rls.authorized_customer_name OR rls.authorized_customer_name = 'All')
+        AND (rls.authorized_bu_code = 'All')
+        AND (rls.authorized_item_type = 'All')    
     """
 } %}
 

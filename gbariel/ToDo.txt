@@ -22,9 +22,9 @@ DONE :
 - Dbt DROP ALL BUT STG
 - DQ rule : bu_code exists in Dim Bu
 - README.md / Dbt docs : file explaining the project, design choices, and optimization 
+- Update RLS to account for "ALL" on non applicable dimensions
 
 TO DO :
-- Update RLS to account for "ALL" on non applicable dimensions
 - key field documentation (like FX rates)
 - Document full integration tests
 
