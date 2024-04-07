@@ -1,6 +1,7 @@
 user_email;authorized_bu_code;authorized_customer_name;authorized_item_type
 user1@example.com;AUBU,ATBU;All;All
 user2@example.com;All;Nu Smart Global;All
+user2@example.com;AUBU,ATBU;All;All
 user3@example.com;DKBU,FIBU;All;Assembly
 user4@example.com;FRBU,DEBU;All;All
 user5@example.com;HKBU,IEBU;All;All
