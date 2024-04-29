@@ -16,8 +16,6 @@ WITH cte_sequence AS (
   FROM GENERATE_SERIES(0, DATEDIFF(DAY, CAST('{{ var("date_table_start_date") }}' AS DATE), DATEADD(YEAR, {{ var("date_table_window_year") }}, {{ column_dbt_load_date() }})), 1) AS gs
 ),
 
--- Hello Worlds
--- Hello Worldo
 cte_core_definition AS (
   SELECT
     date_standard                        = CONVERT(DATE,d)
@@ -40,7 +38,6 @@ cte_core_definition AS (
   FROM cte_sequence
 ),
 
--- Hello world
 cte_date_dimension AS (
   SELECT
     date_standard AS pk_date_standard
