@@ -17,6 +17,7 @@ WITH cte_sequence AS (
 ),
 
 -- Hello Worlds
+-- Hello Worldo
 cte_core_definition AS (
   SELECT
     date_standard                        = CONVERT(DATE,d)
