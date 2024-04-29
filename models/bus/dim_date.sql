@@ -38,6 +38,7 @@ cte_core_definition AS (
   FROM cte_sequence
 ),
 
+-- Hello world
 cte_date_dimension AS (
   SELECT
     date_standard AS pk_date_standard
