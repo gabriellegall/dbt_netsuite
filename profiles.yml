@@ -11,7 +11,7 @@ netsuite_project:
       encrypt: false
       trust_cert: true
       windows_login: true
-    merge:
+    uat:
       type: sqlserver
       host: localhost
       port: 1433
