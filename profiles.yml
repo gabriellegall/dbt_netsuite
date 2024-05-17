@@ -30,4 +30,4 @@ netsuite_project:
       schema: prod
       encrypt: false
       trust_cert: true
-      windows_login: true
+      windows_login: true 
