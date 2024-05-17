@@ -15,7 +15,7 @@ WITH unioned_data AS (
 )
 
 {# Tableau does not support a mix of NULL and non-NULL values when aggregating - so we replace all blanks (created by the UNION) with 0 #}
-{%- set sales_columns = adapter.get_columns_in_relation(ref('dataset_sales_pipeline')) | selectattr('name', 'ne', '_dbt_source_relation') | map(attribute='name') | list -%}
+{%- set sales_columns = adapter.get_columns_in_relation(ref('dataset_sales_pipeline')) | map(attribute='name') | list -%}
 {%- set numerical_columns_sales = list_numerical_columns('dataset_sales_pipeline') -%}
 {%- set budget_columns = adapter.get_columns_in_relation(ref('prep_budget_for_union')) | map(attribute='name') | list -%}
 
