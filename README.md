@@ -151,3 +151,6 @@ As an extra measure of safety (and performance), a primary key constraint has be
 As data will continue to grow, there are some elements that could be implemented or modified to further optimize the performance of the database:
 - Clustered and non-clustered indexes could be created on the fields that are commonly used to filter the data. Typically the transaction_status, transaction_date, transaction_type.
 - Materialization of the transaction with transaction lines in the bus layer could be set to incremental (with the same logic as in the dwh layer). The only downside with this materialization strategy is that a full reload would have to be executed when the scope of the bus layer is changed.
+
+## Data quality
+Data quality (more specifically data transformations) could be monitored by integrating some [Dbt unit tests](https://docs.getdbt.com/docs/build/unit-tests). This new feature was released in Dbt 1.8 and could be relevant for several transformations performed inside the datasets. 
