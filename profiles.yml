@@ -1,5 +1,5 @@
 netsuite_project:
-  target: dev
+  target: prod
   outputs:
     dev:
       type: sqlserver
@@ -7,8 +7,27 @@ netsuite_project:
       port: 1433
       database: netsuite
       driver: 'ODBC Driver 17 for SQL Server'
-      schema: dbo
+      schema: gabriel_dev
       encrypt: false
       trust_cert: true
       windows_login: true
-      
+    uat:
+      type: sqlserver
+      host: localhost
+      port: 1433
+      database: netsuite
+      driver: 'ODBC Driver 17 for SQL Server'
+      schema: uat
+      encrypt: false
+      trust_cert: true
+      windows_login: true
+    prod:
+      type: sqlserver
+      host: localhost
+      port: 1433
+      database: netsuite
+      driver: 'ODBC Driver 17 for SQL Server'
+      schema: prod
+      encrypt: false
+      trust_cert: true
+      windows_login: true

@@ -1,7 +1,6 @@
-{# Don't forget to set it back to false #}
 {{
     config (
-        full_refresh            = true
+        full_refresh            = false
         , materialized          = 'incremental'    
         , on_schema_change      = 'append_new_columns'
         , incremental_strategy  = 'append'
