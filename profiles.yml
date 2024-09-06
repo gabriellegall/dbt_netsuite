@@ -1,5 +1,5 @@
 netsuite_project:
-  target: prod
+  target: dev
   outputs:
     dev:
       type: sqlserver
