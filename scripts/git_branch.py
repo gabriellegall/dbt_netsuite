@@ -6,7 +6,7 @@ def get_git_branch():
         # Run 'git rev-parse --abbrev-ref HEAD' to get the current branch name
         branch_name = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).strip().decode('utf-8')
         
-        # Replace any character not in the allowed set (a-d, 1-3) with '_'
+        # Replace any character not in the allowed set with '_'
         normalized_branch_name = re.sub(r'[^a-zA-Z0-9]', '_', branch_name)
 
         return normalized_branch_name
