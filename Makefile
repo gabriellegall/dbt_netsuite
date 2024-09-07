@@ -21,3 +21,9 @@ ifndef MODEL
 	$(error model is not defined. Please specify the model using MODEL=<your_model>)
 endif
 	dbt run --select $(MODEL) --vars "branch_name: $(BRANCH_NAME)" --defer --state prod_run_artifacts
+
+dbt_test:
+ifndef MODEL
+	$(error model is not defined. Please specify the model using MODEL=<your_model>)
+endif
+	dbt test --select $(MODEL) --vars "branch_name: $(BRANCH_NAME)" --defer --state prod_run_artifacts
