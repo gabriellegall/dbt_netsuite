@@ -1,5 +1,5 @@
 netsuite_project:
-  target: prod
+  target: dev
   outputs:
     dev:
       type: sqlserver
@@ -7,17 +7,7 @@ netsuite_project:
       port: 1433
       database: netsuite
       driver: 'ODBC Driver 17 for SQL Server'
-      schema: gabriel_dev
-      encrypt: false
-      trust_cert: true
-      windows_login: true
-    uat:
-      type: sqlserver
-      host: localhost
-      port: 1433
-      database: netsuite
-      driver: 'ODBC Driver 17 for SQL Server'
-      schema: uat
+      schema: "{{ var('branch_name') }}"
       encrypt: false
       trust_cert: true
       windows_login: true
