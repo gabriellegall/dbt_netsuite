@@ -2,3 +2,4 @@
 target/
 dbt_packages/
 logs/
+prod_run_artifacts/
