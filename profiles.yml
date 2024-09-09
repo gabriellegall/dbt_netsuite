@@ -1,5 +1,5 @@
 netsuite_project:
-  target: docker
+  target: docker_dev
   outputs:
     dev:
       type: sqlserver
