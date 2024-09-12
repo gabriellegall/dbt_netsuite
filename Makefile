@@ -1,6 +1,7 @@
 BRANCH_NAME := $(shell python scripts/git_branch.py)
 
 refresh_artifacts:
+	powershell.exe -ExecutionPolicy Bypass -Command "if (-not (Test-Path "prod_run_artifacts")) {New-Item -Path "prod_run_artifacts" -ItemType Directory}"
 	del /q /s prod_run_artifacts\*
 	xcopy /Y "target\*" "prod_run_artifacts\"
 
