@@ -1,6 +1,7 @@
 netsuite_project:
-  target: dev
+  target: docker_dev
   outputs:
+  # local SSQL
     dev:
       type: sqlserver
       host: localhost 
@@ -21,3 +22,28 @@ netsuite_project:
       encrypt: false
       trust_cert: true
       windows_login: true
+  # docker SSQL
+    docker_dev:
+      type: sqlserver
+      host: localhost
+      port: 1433
+      database: netsuite
+      driver: 'ODBC Driver 17 for SQL Server'
+      schema: "{{ var('branch_name') }}"
+      encrypt: false
+      trust_cert: true
+      windows_login: false  
+      user: sa
+      password: Strong&Password=94210
+    docker_prod:
+      type: sqlserver
+      host: localhost
+      port: 1433
+      database: netsuite
+      driver: 'ODBC Driver 17 for SQL Server'
+      schema: prod
+      encrypt: false
+      trust_cert: true
+      windows_login: false  
+      user: sa
+      password: Strong&Password=94210
