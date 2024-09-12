@@ -12,8 +12,15 @@ END'
 %}
 
 WITH cte_sequence AS (
-  SELECT DATEADD(DAY,value, CAST('{{ var("date_table_start_date") }}' AS DATE)) AS d
-  FROM GENERATE_SERIES(0, DATEDIFF(DAY, CAST('{{ var("date_table_start_date") }}' AS DATE), DATEADD(YEAR, {{ var("date_table_window_year") }}, {{ column_dbt_load_date() }})), 1) AS gs
+  SELECT 
+    DATEADD(DAY,value, CAST('{{ var("date_table_start_date") }}' AS DATE)) AS d
+  FROM GENERATE_SERIES ( 
+    0
+    , DATEDIFF(DAY, CAST('{{ var("date_table_start_date") }}' AS DATE)
+    , DATEADD(YEAR, {{ var("date_table_window_year") }}
+    , {{ column_dbt_load_date() }}))
+    , 1
+    ) AS gs
 ),
 
 cte_core_definition AS (

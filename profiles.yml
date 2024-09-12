@@ -1,6 +1,7 @@
 netsuite_project:
   target: docker_dev
   outputs:
+  # local SSQL
     dev:
       type: sqlserver
       host: localhost 
@@ -21,6 +22,7 @@ netsuite_project:
       encrypt: false
       trust_cert: true
       windows_login: true
+  # docker SSQL
     docker_dev:
       type: sqlserver
       host: localhost
