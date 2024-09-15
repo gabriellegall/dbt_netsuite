@@ -33,10 +33,6 @@ dbt_prod_soft_reset:
 	dbt test --target prod
 	$(MAKE) refresh_artifacts
 
-# dev-to-prod command(s)
-drop_branch_schema: 
-	dbt run-operation admin_drop_all --vars "branch_name: $(BRANCH_NAME)" --args "{'except_stg': True, 'specific_schema': $(BRANCH_NAME)}"
-
 # dev command(s)
 dbt_run:
 ifndef MODEL
@@ -49,3 +45,7 @@ ifndef MODEL
 	$(error model is not defined. Please specify the model using MODEL=<your_model>)
 endif
 	dbt test --select $(MODEL) --vars "branch_name: $(BRANCH_NAME)" --defer --state prod_run_artifacts
+
+# dev-to-prod command(s)
+drop_branch_schema: 
+	dbt run-operation admin_drop_all --vars "branch_name: $(BRANCH_NAME)" --args "{'except_stg': True, 'specific_schema': $(BRANCH_NAME)}"

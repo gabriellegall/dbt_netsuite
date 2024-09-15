@@ -3,7 +3,7 @@ netsuite_project:
   outputs:
     dev:
       type: sqlserver
-      host: 172.232.58.123 # for local build use: localhost
+      host: localhost
       port: 1433
       database: netsuite
       driver: 'ODBC Driver 18 for SQL Server'
@@ -15,7 +15,7 @@ netsuite_project:
       password: Strong&Password=94210
     prod:
       type: sqlserver
-      host: 172.232.58.123 # for local build use: localhost
+      host: localhost
       port: 1433
       database: netsuite
       driver: 'ODBC Driver 18 for SQL Server'

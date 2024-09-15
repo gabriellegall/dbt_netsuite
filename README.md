@@ -1,12 +1,23 @@
 # Technology
-- Database: [SQL Server Express 2022](https://www.microsoft.com/fr-fr/sql-server/sql-server-downloads)
-- Interface: SQL Server Management Studio 19.3
+This Dbt project uses SQL Server Express on a Docker image. I used SQL Server Management Studio to inspect the results.
+
+## Installation
+- ODBC driver (Windows): `winget install Microsoft.msodbcsql`
+- Docker
 - Python package: dbt-sqlserver
 
 ## Commands
-- DB creation SQL command (mandatory): `CREATE DATABASE netsuite`
-- Full run: `dbt seed; dbt snapshot; dbt run; dbt test`
-- Full DB reset & run: `dbt run-operation admin_drop_all_except_stg; dbt snapshot; dbt run; dbt test`
+### Docker
+- Launch Docker (volume, image, run): `MAKE docker_start`
+- Stop Docker: `MAKE docker_end`
+### Set-up
+- Launch (or reset) the entire dbt project: `MAKE dbt_prod_hard_reset`
+- Reset the entire dbt project except the staging schema (i.e dbt seeds): `MAKE dbt_prod_soft_reset`
+### Development
+- Dbt run using the development branch: `MAKE dbt_run`
+- Dbt run using the development branch: `MAKE dbt_test`
+### Cleaning
+- Delete the development branch schema: `MAKE drop_branch_schema`
 
 # Business context
 The client is a company working in the cosmetic industry.
