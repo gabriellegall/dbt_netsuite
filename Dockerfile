@@ -11,7 +11,8 @@ RUN apt-get update && \
         gnupg \
         unixodbc \
         unixodbc-dev \
-        libodbc2 && \
+        libodbc2 \
+        make && \
     rm -rf /var/lib/apt/lists/*
 
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
@@ -24,5 +25,7 @@ COPY . .
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
+
+RUN make dbt_prod_hard_reset
 
 CMD ["dbt", "seed", "--select", "customer", "--target", "prod"]
