@@ -4,8 +4,8 @@ BRANCH_NAME := $(shell python scripts/git_branch.py)
 docker_start:
 	docker volume create netsuite_data_volume_ssql
 	docker volume ls
-	docker build -f sqlserver_deployment/docker/Dockerfile -t my-sqlserver-image .
-	docker run -d -p 1433:1433 --name netsuite-sqlserver-container --mount source=netsuite_data_volume_ssql,target=/var/opt/mssql my-sqlserver-image
+	docker build -f sqlserver_deployment/docker/Dockerfile -t netsuite-sqlserver-image .
+	docker run -d -p 1433:1433 --name netsuite-sqlserver-container --mount source=netsuite_data_volume_ssql,target=/var/opt/mssql netsuite-sqlserver-image
 
 docker_end:
 	docker stop netsuite-sqlserver-container
