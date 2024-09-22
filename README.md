@@ -1,13 +1,12 @@
 # Technology
-This Dbt project uses SQL Server Express on a Docker image. I used SQL Server Management Studio to inspect the results.
 
 ## Installation
+- An instance of SQL Server Express 2022 is required. The profiles.yml host should be updated accordingly. If needed, a docker image of SQL Server Express is available under sqlserver_deployment > docker
 - ODBC driver (Windows): `winget install Microsoft.msodbcsql`
-- Docker
-- Python package: dbt-sqlserver
+- Python libraries and Dbt: `pip install -r requirements.txt`
 
 ## Commands
-### Docker
+### Localhost of SQL Server Express using Docker (Optional)
 - Launch Docker (volume, image, run): `MAKE docker_start`
 - Stop Docker: `MAKE docker_end`
 ### Set-up
