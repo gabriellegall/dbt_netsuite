@@ -23,9 +23,8 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
 COPY . .
 
 COPY requirements.txt .
+
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
-RUN make dbt_prod_hard_reset
-
-CMD ["dbt", "seed", "--select", "customer", "--target", "prod"]
+CMD ["/bin/bash"]
