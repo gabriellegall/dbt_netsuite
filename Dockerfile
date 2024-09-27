@@ -28,3 +28,4 @@ RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
 CMD ["/bin/bash"]
+# CMD ["dbt", "seed", "--select", "customer", "--target", "prod"]
