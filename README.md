@@ -4,6 +4,8 @@
 - An instance of SQL Server Express 2022 is required. The profiles.yml host should be updated accordingly. If needed, a docker image of SQL Server Express is available under deployment > deployment_sqlserver > docker
 - ODBC driver (Windows): `winget install Microsoft.msodbcsql`
 - Python libraries and Dbt: `pip install -r requirements.txt`
+- Docker
+- SQL Server Management Studio (SSMS)
 
 ## Commands
 ### Localhost of SQL Server Express using Docker (Optional)
