@@ -19,6 +19,7 @@
                                     )
                                     {% endif %}']      
         , on_schema_change      = 'sync_all_columns'
+        , as_columnstore        = false
     )
 }}
 

@@ -3,3 +3,4 @@ target/
 dbt_packages/
 logs/
 prod_run_artifacts/
+deployment/netsuite-project-kubeconfig.yaml

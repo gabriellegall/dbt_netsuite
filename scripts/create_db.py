@@ -1,20 +1,29 @@
-# pip install pyodbc
 import pyodbc
 import time
+import yaml
 
-# Sleep for 15 seconds
+# Load configuration from YAML file
+with open("profiles.yml", "r") as f:
+    config = yaml.safe_load(f)
+
+# Sleep - to leave some time for the database to initialize
 time.sleep(15)
 
 # Create the DB if it does not exist
-server = 'localhost' 
-username = 'sa'
-password = 'Strong&Password=94210'
+netsuite_project = config["netsuite_project"]
+
+target_environment = netsuite_project["target"]
+driver = netsuite_project["outputs"][target_environment]["driver"]
+server = netsuite_project["outputs"][target_environment]["host"]
+username = netsuite_project["outputs"][target_environment]["user"]
+password = netsuite_project["outputs"][target_environment]["password"]
 
 conn_str = (
-    f'DRIVER={{ODBC Driver 17 for SQL Server}};'
+    f'DRIVER={driver};'
     f'SERVER={server},1433;'
     f'UID={username};'
     f'PWD={password};'
+    'TrustServerCertificate=yes;'
 )
 
 conn = pyodbc.connect(conn_str, autocommit=True)

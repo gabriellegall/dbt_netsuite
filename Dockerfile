@@ -1,12 +1,31 @@
-# Use the official Microsoft SQL Server Express image from the Docker Hub
-FROM mcr.microsoft.com/mssql/server:2022-latest
+FROM python:3.9-slim
 
-# Set environment variables
-ENV SA_PASSWORD=Strong&Password=94210
-ENV ACCEPT_EULA=Y
+ENV DBT_HOME=/netsuite_project
+WORKDIR $DBT_HOME
 
-# Expose the SQL Server port
-EXPOSE 1433
+RUN apt-get update && \
+    apt-get install -y \
+        git \
+        apt-transport-https \
+        curl \
+        gnupg \
+        unixodbc \
+        unixodbc-dev \
+        libodbc2 \
+        make && \
+    rm -rf /var/lib/apt/lists/*
 
-# Run SQL Server
-CMD ["/opt/mssql/bin/sqlservr"]
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
+    apt-get update && \
+    ACCEPT_EULA=Y apt-get install -y msodbcsql18
+
+COPY . .
+
+COPY requirements.txt .
+
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+CMD ["/bin/bash"]
+# CMD ["dbt", "seed", "--select", "customer", "--target", "prod"]

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: netsuite-dbt-container
+spec:
+  containers:
+  - name: dbt
+    image: gabriellegall/dbt-netsuite-image
+    tty: true
+    stdin: true 
+    command: ["make", "dbt_prod_hard_reset"]
+  restartPolicy: Never
