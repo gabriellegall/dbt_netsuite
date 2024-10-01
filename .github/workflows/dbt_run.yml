@@ -20,4 +20,4 @@ jobs:
             -v ${{ github.workspace }}:/netsuite_project \
             -w /netsuite_project \
             gabriellegall/dbt-netsuite-image \
-            /bin/bash -c "make dbt_prod_soft_reset"
+            bash -c "make dbt_prod_soft_reset"
