@@ -22,6 +22,8 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
 
 COPY . .
 
+RUN git config --global --add safe.directory /netsuite_project
+
 COPY requirements.txt .
 
 RUN pip install --upgrade pip && \
