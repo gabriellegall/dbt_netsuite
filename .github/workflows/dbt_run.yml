@@ -3,8 +3,8 @@ name: Run dbt Soft Reset
 on:
   push:
     branches:
-      - main
-  workflow_dispatch: 
+      - main  # Runs on push to the main branch
+  workflow_dispatch:  # Allows manual triggering from the Actions tab
 
 jobs:
   run-dbt-soft-reset:
@@ -15,7 +15,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run dbt soft reset
-        uses: docker://gabriellegall/dbt-netsuite-image
-        with:
-          entrypoint: "/bin/sh"
-          args: "-c 'make dbt_prod_soft_reset'"
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/netsuite_project \
+            -w /netsuite_project \
+            gabriellegall/dbt-netsuite-image \
+            make dbt_prod_soft_reset
