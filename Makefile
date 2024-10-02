@@ -24,14 +24,17 @@ dbt_prod_hard_reset:
 	dbt snapshot --target prod
 	dbt run --target prod
 	dbt test --target prod
-	$(MAKE) refresh_artifacts
 
 dbt_prod_soft_reset:
 	dbt run-operation admin_drop_all --target prod --args "{'except_stg': True}"
 	dbt snapshot --target prod
 	dbt run --target prod
 	dbt test --target prod
-	$(MAKE) refresh_artifacts
+
+dbt_prod_run:
+	dbt snapshot --target prod
+	dbt run --target prod
+	dbt test --target prod
 
 # dev command(s)
 dbt_run:
