@@ -1,4 +1,4 @@
-name: Run dbt Soft Reset
+name: Dbt regular run
 
 on:
   schedule:
@@ -13,10 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Run dbt soft reset
+      - name: Dbt regular run
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
             -w /netsuite_project \
             gabriellegall/dbt-netsuite-image \
-            bash -c "dbt deps && make dbt_prod_soft_reset"
+            bash -c "dbt deps && make dbt_prod_run"
