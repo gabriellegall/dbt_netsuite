@@ -1,0 +1,17 @@
+name: Extract Branch Name
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: 
+
+jobs:
+  extract_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Display Branch Name
+        run: echo "The branch name is ${{ github.ref_name }}"
