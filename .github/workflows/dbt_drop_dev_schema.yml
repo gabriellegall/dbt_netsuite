@@ -3,7 +3,7 @@ name: Drop DEV schema upon merge
 on:
   pull_request:
     branches:
-      - main  # Triggers when a pull request is merged into main
+      - master  # Triggers when a pull request is merged into main
     types: [closed]  # Only triggers when the pull request is closed (merged)
 
 jobs:
