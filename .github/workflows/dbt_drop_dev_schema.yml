@@ -1,4 +1,4 @@
-name: Dbt regular run 2
+name: Drop DEV schema upon merge
 
 on:
   pull_request:
