@@ -1,8 +1,9 @@
 name: Dbt regular run 2
 
 on:
-  schedule:
-    - cron: '0 * * * *'  # Runs every hour at minute 0
+  push:
+    branches:
+      - main  # Triggers on push to the main branch (including merges)
   workflow_dispatch:  # Allows manual triggering from the Actions tab
 
 jobs:
@@ -12,6 +13,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.before }}  # Check out the branch before the merge (source branch)
 
       - name: Dbt regular run 2
         run: |
