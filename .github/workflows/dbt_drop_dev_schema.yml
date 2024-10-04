@@ -3,7 +3,7 @@ name: Dbt regular run 2
 on:
   push:
     branches:
-      - main  # Triggers on push to the main branch (including merges)
+      - master  # Triggers on push to the main branch (including merges)
   workflow_dispatch:  # Allows manual triggering from the Actions tab
 
 jobs:
