@@ -21,6 +21,10 @@ jobs:
             gabriellegall/dbt-netsuite-image \
             bash -c "dbt deps && make dbt_prod_run"
 
+      - name: List all files in the repository
+        run: |
+          ls -R . || echo "No files found in the repository"
+          
       - name: Upload production artifacts (target folder)
         uses: actions/upload-artifact@v3
         with:
