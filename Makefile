@@ -45,9 +45,12 @@ endif
 
 dbt_test:
 ifndef MODEL
-	$(error model is not defined. Please specify the model using MODEL=<your_model>)
-endif
+	@echo "Running dbt test on everything..."
+	dbt test --vars "branch_name: $(BRANCH_NAME)" --defer --state prod_run_artifacts
+else
+	@echo "Running dbt test on model: $(MODEL)..."
 	dbt test --select $(MODEL) --vars "branch_name: $(BRANCH_NAME)" --defer --state prod_run_artifacts
+endif
 
 # dev-to-prod command(s)
 drop_branch_schema: 
