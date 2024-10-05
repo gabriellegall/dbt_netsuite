@@ -1,4 +1,4 @@
-name: Dbt regular run
+name: dbt_regular_run
 
 on:
   schedule:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Dbt regular run
+      - name: dbt_prod_run
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
@@ -21,7 +21,7 @@ jobs:
             gabriellegall/dbt-netsuite-image \
             bash -c "dbt deps && make dbt_prod_run"
 
-      - name: Upload production artifacts
+      - name: upload_artifacts
         uses: actions/upload-artifact@v3
         with:
           name: prod_run_artifacts
