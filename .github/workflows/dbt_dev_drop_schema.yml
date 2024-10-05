@@ -1,4 +1,4 @@
-name: Drop DEV schema upon merge
+name: Drop development schema upon merge
 
 on:
   pull_request:
@@ -16,7 +16,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}  # Check out the source branch of the pull request
 
-      - name: Dbt regular run 2
+      - name: Dbt drop development schema
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
