@@ -1,4 +1,4 @@
-name: Drop development schema upon merge
+name: drop_development_schema_upon_merge
 
 on:
   pull_request:
@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: checkout_repository
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.ref }}  # Check out the source branch of the pull request
 
-      - name: Dbt drop development schema
+      - name: drop_development_schema
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
