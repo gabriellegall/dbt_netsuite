@@ -1,4 +1,4 @@
-# Technology
+# Technology 
 
 ## Installation 
 - An instance of SQL Server Express 2022 is required. The profiles.yml host should be updated accordingly. If needed, a docker image of SQL Server Express is available under deployment > deployment_sqlserver > docker
