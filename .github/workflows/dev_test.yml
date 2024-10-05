@@ -1,4 +1,4 @@
-name: Test the development schema upon pull request
+name: test_development_schema_upon_pr
 
 on:
   pull_request:
@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: checkout_repository
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.ref }} # Check out the source branch of the pull request
 
-      - name: Dbt drop development branch
+      - name: dbt_test_branch
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
