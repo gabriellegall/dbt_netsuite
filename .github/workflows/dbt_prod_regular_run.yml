@@ -21,27 +21,10 @@ jobs:
             gabriellegall/dbt-netsuite-image \
             bash -c "dbt deps && make dbt_prod_run"
 
-      - name: Show hidden files test
-        uses: actions/upload-artifact@v3
-        with:
-          name: prod_run_artifacts
-          path: netsuite_project/target/** 
-          retention-days: 30
-          if-no-files-found: warn
-          include-hidden-files: true  # Set to true if you want to include hidden files
-        
-      - name: List all files in the repository
-        run: |
-          ls -R . || echo "No files found in the repository"
-
-      - name: Show hidden files test 2
+      - name: Upload production artifacts
         uses: actions/upload-artifact@v3
         with:
           name: prod_run_artifacts
           path: target/** 
           retention-days: 30
           if-no-files-found: warn
-          include-hidden-files: true  # Set to true if you want to include hidden files
-
-      - name: List files before upload
-        run: ls -R target
