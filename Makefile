@@ -1,13 +1,20 @@
 BRANCH_NAME := $(shell python scripts/git_branch.py)
 
 # installation
-install:
-	@echo "Checking for GitHub CLI installation..."
-	winget install --id GitHub.cli || echo "Warning: Failed to install GitHub CLI. It may already be installed."
-	@echo "Installing ODBC driver..."
-	winget install Microsoft.msodbcsql || echo "Warning: Failed to install ODBC driver. It may already be installed."
-	@echo "Installing Python libraries and dbt..."
-	pip install -r requirements.txt || echo "Warning: Failed to install Python libraries."
+install_github_cli:
+	winget install --id GitHub.cli
+
+install_python_libraries:
+	pip install -r requirements.txt
+
+install_sqlserver_odbc:
+	winget install Microsoft.msodbcsql
+
+install_ssms:
+	winget install Microsoft.SQLServerManagementStudio
+
+install_docker_desktop:
+	winget install Docker.DockerDesktop
 
 # local SQL Server with Docker
 docker_start:

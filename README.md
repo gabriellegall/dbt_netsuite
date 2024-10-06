@@ -1,14 +1,19 @@
 # Technology 
 
 ## Installation 
-- An instance of SQL Server Express 2022 is required. The profiles.yml host should be updated accordingly. If needed, a docker image of SQL Server Express is available under deployment > deployment_sqlserver > docker
-- SQL Server Management Studio (SSMS)
-- Docker Deskop (Optional)
+An instance of SQL Server Express 2022 is required. 
+The profiles.yml host should be updated accordingly. If needed, a docker image of SQL Server Express is available under deployment > deployment_sqlserver > docker
+
+### Required installation
+- Python libraries and Dbt: `MAKE install_python_libraries`
+- SQL Server ODBC: `MAKE install_sqlserver_odbc`
+- SQL Server Management Studio: `MAKE install_ssms`
+- GitHub CLI: `MAKE install_github_cli`
+
+### Optional installation
+- Docker Desktop: `MAKE install_docker_desktop`
 
 ## Commands
-### Automated installation
-- Install GitHub CLI, SQL Server ODBC driver, Python libraries and Dbt: `MAKE install`
-
 ### Localhost of SQL Server Express using Docker (Optional)
 - Launch Docker (volume, image, run): `MAKE docker_start`
 - Stop Docker: `MAKE docker_end`
