@@ -11,7 +11,7 @@ docker_end:
 	docker stop netsuite-sqlserver-container
 	docker rm netsuite-sqlserver-container
 
-# admin command(s)
+# prod command(s)
 dbt_prod_hard_reset: 
 	python scripts/create_db.py
 	dbt run-operation admin_drop_all --target prod --args "{'except_stg': False}"
