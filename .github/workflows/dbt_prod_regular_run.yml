@@ -1,4 +1,4 @@
-name: dbt_regular_run
+name: dbt_prod_regular_run
 
 on:
   schedule:
