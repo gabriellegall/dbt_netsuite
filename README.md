@@ -21,9 +21,13 @@ This Docker image can also be used for local testing with Docker Desktop.
 ### Set-up
 - Launch (or reset) the entire dbt project: `MAKE dbt_prod_hard_reset`
 - Reset the entire dbt project except the staging schema (i.e dbt seeds): `MAKE dbt_prod_soft_reset`
-### Development
+### Run
+- Dbt run (incremental): `MAKE dbt_prod_run`
+### Development branch
 - Dbt run using the development branch: `MAKE dbt_run`
 - Dbt run using the development branch: `MAKE dbt_test`
+### Artifacts
+- Download from GitHub: `MAKE refresh_artifacts`
 ### Cleaning
 - Delete the development branch schema: `MAKE drop_branch_schema`
 
