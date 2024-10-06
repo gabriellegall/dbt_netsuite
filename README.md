@@ -1,6 +1,7 @@
 # Technology 
 
 ## Installation 
+### Prerequisites
 - Python must be installed
 - A cloud instance of SQL Server Express 2022 is required. The profiles.yml host should be updated accordingly. 
 If needed, a Docker image of SQL Server Express is available under deployment > deployment_sqlserver > docker.
