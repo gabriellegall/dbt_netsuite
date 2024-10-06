@@ -20,8 +20,8 @@ jobs:
 
       # Build the Docker image
       - name: build_docker_image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/dbt-netsuite-image:tagname .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/dbt-netsuite-image .
 
       # Push the Docker image to Docker Hub
       - name: push_docker_image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/dbt-netsuite-image:tagname
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/dbt-netsuite-image
