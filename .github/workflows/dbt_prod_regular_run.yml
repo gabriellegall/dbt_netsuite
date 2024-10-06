@@ -25,6 +25,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: prod_run_artifacts
-          path: target/** 
+          path: |
+            target/manifest.json
+            target/run_results.json
           retention-days: 30
           if-no-files-found: warn
