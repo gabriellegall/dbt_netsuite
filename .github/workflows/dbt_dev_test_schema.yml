@@ -1,4 +1,4 @@
-name: test_development_schema_upon_pr
+name: dbt_dev_test_schema
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize]  # Runs when a PR is opened or synchronized (updated)
 
 jobs:
-  run-dbt-test:
+  dbt_dev_test_schema_job:
     runs-on: ubuntu-latest
 
     steps:
