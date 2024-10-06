@@ -1,4 +1,4 @@
-name: dbt_artifacts
+name: dbt_prod_artifacts
 
 on:
   schedule:
@@ -19,7 +19,7 @@ jobs:
             -v ${{ github.workspace }}:/netsuite_project \
             -w /netsuite_project \
             gabriellegall/dbt-netsuite-image \
-            bash -c "dbt deps && dbt compile"
+            bash -c "dbt deps && make dbt_prod_compile"
 
       - name: upload_artifacts
         uses: actions/upload-artifact@v3
