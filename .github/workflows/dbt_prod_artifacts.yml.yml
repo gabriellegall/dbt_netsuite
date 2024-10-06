@@ -6,14 +6,14 @@ on:
   workflow_dispatch:  # Allows manual triggering from the Actions tab
 
 jobs:
-  dbt-regular-run:
+  dbt-artifacts:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: dbt_prod_run
+      - name: dbt_compile
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
