@@ -1,4 +1,4 @@
-name: docker_image_update
+name: dbt_prod_docker_upload
 
 on:
   push:
