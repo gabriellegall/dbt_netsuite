@@ -1,4 +1,4 @@
-name: drop_development_schema_upon_merge
+name: dbt_dev_drop_schema
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
     types: [closed]  # Only triggers when the pull request is closed (merged)
 
 jobs:
-  run-dbt-soft-reset:
+  dbt_dev_drop_schema_job:
     runs-on: ubuntu-latest
 
     steps:

@@ -1,4 +1,4 @@
-name: dbt_regular_run
+name: dbt_prod_regular_run
 
 on:
   schedule:
@@ -6,11 +6,11 @@ on:
   workflow_dispatch:  # Allows manual triggering from the Actions tab
 
 jobs:
-  dbt-regular-run:
+  dbt_prod_regular_run_job:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: checkout_repository
         uses: actions/checkout@v3
 
       - name: dbt_prod_run
@@ -20,13 +20,3 @@ jobs:
             -w /netsuite_project \
             gabriellegall/dbt-netsuite-image \
             bash -c "dbt deps && make dbt_prod_run"
-
-      - name: upload_artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: prod_run_artifacts
-          path: |
-            target/manifest.json
-            target/run_results.json
-          retention-days: 30
-          if-no-files-found: warn
