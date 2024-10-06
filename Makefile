@@ -12,9 +12,6 @@ docker_end:
 	docker rm netsuite-sqlserver-container
 
 # admin command(s)
-refresh_artifacts:
-	powershell.exe -ExecutionPolicy Bypass -Command "if (Test-Path 'prod_run_artifacts') { Remove-Item -Recurse -Force 'prod_run_artifacts' }; gh run download $(gh run list --workflow 'dbt_prod_artifacts' --limit 1 --json databaseId -q '.[0].databaseId') --pattern 'prod_run_artifacts'"
-
 dbt_prod_hard_reset: 
 	python scripts/create_db.py
 	dbt run-operation admin_drop_all --target prod --args "{'except_stg': False}"
@@ -38,6 +35,9 @@ dbt_prod_compile:
 	dbt compile --target prod
 
 # dev command(s)
+refresh_artifacts: # deletes the folder 'prod_run_artifacts' if it exists. Then, checks the GitHub workflow 'dbt_prod_artifacts_upload' to then download the artifacts 'prod_run_artifacts' and store it under a folder having the same name
+	powershell.exe -ExecutionPolicy Bypass -Command "if (Test-Path 'prod_run_artifacts') { Remove-Item -Recurse -Force 'prod_run_artifacts' }; gh run download $(gh run list --workflow 'dbt_prod_artifacts_upload' --limit 1 --json databaseId -q '.[0].databaseId') --pattern 'prod_run_artifacts'"
+
 dbt_run:
 ifndef MODEL
 	$(error model is not defined. Please specify the model using MODEL=<your_model>)
