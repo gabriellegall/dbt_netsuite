@@ -24,7 +24,7 @@ jobs:
       - name: upload_artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: prod_run_artifacts_files
+          name: prod_run_artifacts
           path: |
             target/manifest.json
             target/run_results.json
