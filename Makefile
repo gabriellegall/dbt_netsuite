@@ -13,9 +13,7 @@ docker_end:
 
 # admin command(s)
 refresh_artifacts:
-	powershell.exe -ExecutionPolicy Bypass -Command "if (-not (Test-Path "prod_run_artifacts")) {New-Item -Path "prod_run_artifacts" -ItemType Directory}"
-	del /q /s prod_run_artifacts\*
-	xcopy /Y "target\*" "prod_run_artifacts\"
+	powershell.exe -ExecutionPolicy Bypass -Command "if (Test-Path 'prod_run_artifacts') { Remove-Item -Recurse -Force 'prod_run_artifacts' }; gh run download $(gh run list --workflow 'dbt_prod_artifacts' --limit 1 --json databaseId -q '.[0].databaseId') --pattern 'prod_run_artifacts_files' -D 'prod_run_artifacts'"
 
 dbt_prod_hard_reset: 
 	python scripts/create_db.py
