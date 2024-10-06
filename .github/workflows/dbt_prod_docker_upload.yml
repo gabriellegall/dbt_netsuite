@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build-and-push:
+  dbt_prod_docker_upload_job:
     runs-on: ubuntu-latest
 
     steps:
