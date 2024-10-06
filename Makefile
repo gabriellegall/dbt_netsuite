@@ -1,6 +1,15 @@
 BRANCH_NAME := $(shell python scripts/git_branch.py)
 
-# Docker
+# installation
+install:
+	@echo "Checking for GitHub CLI installation..."
+	winget install --id GitHub.cli || echo "Warning: Failed to install GitHub CLI. It may already be installed."
+	@echo "Installing ODBC driver..."
+	winget install Microsoft.msodbcsql || echo "Warning: Failed to install ODBC driver. It may already be installed."
+	@echo "Installing Python libraries and dbt..."
+	pip install -r requirements.txt || echo "Warning: Failed to install Python libraries."
+
+# local SQL Server with Docker
 docker_start:
 	docker volume create netsuite_data_volume_ssql
 	docker volume ls
