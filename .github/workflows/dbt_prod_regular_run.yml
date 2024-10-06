@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # Allows manual triggering from the Actions tab
 
 jobs:
-  run-dbt-soft-reset:
+  dbt-regular-run:
     runs-on: ubuntu-latest
 
     steps:
