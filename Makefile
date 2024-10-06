@@ -34,6 +34,9 @@ dbt_prod_run:
 	dbt run --target prod
 	dbt test --target prod
 
+dbt_prod_compile:
+	dbt compile --target prod
+
 # dev command(s)
 dbt_run:
 ifndef MODEL

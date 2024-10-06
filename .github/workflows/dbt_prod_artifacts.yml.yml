@@ -1,30 +1,30 @@
-name: dbt_prod_regular_run
+name: dbt_prod_artifacts
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour at minute 0
+    - cron: '0 0 * * *'  # Runs every day at minute 0
   workflow_dispatch:  # Allows manual triggering from the Actions tab
 
 jobs:
-  dbt-regular-run:
+  dbt-artifacts:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: dbt_prod_run
+      - name: dbt_compile
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
             -w /netsuite_project \
             gabriellegall/dbt-netsuite-image \
-            bash -c "dbt deps && make dbt_prod_run"
+            bash -c "dbt deps && make dbt_prod_compile"
 
       - name: upload_artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: prod_run_artifacts
+          name: prod_run_artifacts_files
           path: |
             target/manifest.json
             target/run_results.json
