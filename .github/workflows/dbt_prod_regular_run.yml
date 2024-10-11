@@ -13,9 +13,6 @@ jobs:
       - name: checkout_repository
         uses: actions/checkout@v3
 
-      - name: pull_docker_image
-        run: docker pull gabriellegall/dbt-netsuite-image
-
       - name: dbt_prod_run
         run: |
           docker run --rm \
