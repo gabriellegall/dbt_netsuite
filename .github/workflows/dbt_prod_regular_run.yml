@@ -13,7 +13,7 @@ jobs:
       - name: checkout_repository
         uses: actions/checkout@v3
         
-      - name: dbt_prod_run_test
+      - name: dbt_prod_run
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
