@@ -18,8 +18,15 @@ jobs:
 
       - name: drop_development_schema
         run: |
+          "
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
             -w /netsuite_project \
             gabriellegall/dbt-netsuite-image \
-            bash -c "dbt deps && make drop_branch_schema"
+            bash -c "
+              export SQLSERVER_HOST='${{ secrets.SQLSERVER_HOST }}' &&
+              export SQLSERVER_USER='${{ secrets.SQLSERVER_USER }}' &&
+              export SQLSERVER_PASSWORD='${{ secrets.SQLSERVER_PASSWORD }}' &&
+              dbt deps &&
+              make dbt_prod_run
+            "
