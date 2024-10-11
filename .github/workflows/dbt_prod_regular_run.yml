@@ -13,6 +13,9 @@ jobs:
       - name: checkout_repository
         uses: actions/checkout@v3
 
+      - name: Print SQLSERVER_HOST
+        run: echo "SQLSERVER_HOST=${{ secrets.SQLSERVER_HOST }}"
+
       - name: dbt_prod_run
         run: |
           docker run --rm \
