@@ -3,7 +3,7 @@ netsuite_project:
   outputs:
     dev:
       type: sqlserver
-      host: 172.232.48.55 #localhost
+      host: "{{ env_var('SQLSERVER_HOST') }}" #localhost
       port: 1433
       database: netsuite
       driver: 'ODBC Driver 18 for SQL Server'
@@ -11,11 +11,11 @@ netsuite_project:
       encrypt: false
       trust_cert: true
       windows_login: false  
-      user: sa
-      password: Strong&Password=94210
+      user: "{{ env_var('SQLSERVER_USER') }}"
+      password: "{{ env_var('SQLSERVER_PASSWORD') }}"
     prod:
       type: sqlserver
-      host: 172.232.48.55 #localhost
+      host: "{{ env_var('SQLSERVER_HOST') }}" #localhost
       port: 1433
       database: netsuite
       driver: 'ODBC Driver 18 for SQL Server'
@@ -23,5 +23,5 @@ netsuite_project:
       encrypt: false
       trust_cert: true
       windows_login: false  
-      user: sa
-      password: Strong&Password=94210
+      user: "{{ env_var('SQLSERVER_USER') }}"
+      password: "{{ env_var('SQLSERVER_PASSWORD') }}"
