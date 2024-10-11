@@ -31,3 +31,18 @@ jobs:
           SQLSERVER_PASSWORD: ${{ secrets.SQLSERVER_PASSWORD }}
         run: |
           echo ${{secrets.SQLSERVER_USER}} | sed 's/./& /g'
+
+      - name: debug
+        env:
+          SQLSERVER_USER: ${{ secrets.SQLSERVER_USER }}
+          SQLSERVER_PASSWORD: ${{ secrets.SQLSERVER_PASSWORD }}
+        run: |
+          echo "$SQLSERVER_USER" | sed 's/./& /g'
+
+      - name: debug
+        env:
+          SQLSERVER_USER: ${{ secrets.SQLSERVER_USER }}
+          SQLSERVER_PASSWORD: ${{ secrets.SQLSERVER_PASSWORD }}
+        run: |
+          echo $SQLSERVER_USER | sed 's/./& /g'
+
