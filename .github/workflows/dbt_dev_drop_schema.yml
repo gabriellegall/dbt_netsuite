@@ -18,7 +18,6 @@ jobs:
 
       - name: drop_development_schema
         run: |
-          "
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
             -w /netsuite_project \
