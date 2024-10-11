@@ -14,18 +14,6 @@ jobs:
         uses: actions/checkout@v3
 
       - name: dbt_prod_run_test
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}:/netsuite_project \
-            -w /netsuite_project \
-            gabriellegall/dbt-netsuite-image \
-            bash -c "export SQLSERVER_HOST="172.232.48.55" && export SQLSERVER_USER="sa" && export SQLSERVER_PASSWORD="Strong&Password=94210" && dbt deps && make dbt_prod_run"
-        env:
-          SQLSERVER_HOST: ${{ secrets.SQLSERVER_HOST}}
-          SQLSERVER_USER : ${{ secrets.SQLSERVER_USER }}
-          SQLSERVER_PASSWORD: ${{ secrets.SQLSERVER_PASSWORD }}
-
-      - name: test_1
         env:
           SQLSERVER_HOST: ${{ secrets.SQLSERVER_HOST}}
           SQLSERVER_USER : ${{ secrets.SQLSERVER_USER }}
