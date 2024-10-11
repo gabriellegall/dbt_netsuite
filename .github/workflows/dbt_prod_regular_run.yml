@@ -25,14 +25,13 @@ jobs:
           SQLSERVER_USER : ${{ secrets.SQLSERVER_USER }}
           SQLSERVER_PASSWORD: ${{ secrets.SQLSERVER_PASSWORD }}
 
-      - name: dbt_prod_run
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}:/netsuite_project \
-            -w /netsuite_project \
-            gabriellegall/dbt-netsuite-image \
-            bash -c "export SQLSERVER_HOST="172.232.48.55" && export SQLSERVER_USER="$SQLSERVER_USER" && dbt deps && make dbt_prod_run"
+      - name: debug
         env:
-          SQLSERVER_HOST: ${{ secrets.SQLSERVER_HOST}}
-          SQLSERVER_USER : ${{ secrets.SQLSERVER_USER }}
+          SQLSERVER_USER: ${{ secrets.SQLSERVER_USER }}
           SQLSERVER_PASSWORD: ${{ secrets.SQLSERVER_PASSWORD }}
+        run: |
+          echo $SQLSERVER_USER >> secrets.txt
+          echo $SQLSERVER_PASSWORD >> secrets.txt
+      
+      - name: Run tmate
+        uses: mxschmitt/action-tmate@v2
