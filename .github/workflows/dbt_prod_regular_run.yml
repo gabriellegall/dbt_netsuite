@@ -16,7 +16,7 @@ jobs:
       - name: dbt_prod_run
         run: |
           docker run --rm \
-            -v /home/runner/work/dbt_netsuite/dbt_netsuite:/netsuite_project \
+            -v ${{ github.workspace }}:/netsuite_project \
             -w /netsuite_project \
             gabriellegall/dbt-netsuite-image \
             bash -c "dbt deps && make dbt_prod_run"
