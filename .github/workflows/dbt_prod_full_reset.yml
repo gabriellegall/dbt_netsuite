@@ -11,7 +11,7 @@ jobs:
       - name: checkout_repository
         uses: actions/checkout@v3
 
-      - name: dbt_prod_run
+      - name: dbt_prod_hard_reset
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
