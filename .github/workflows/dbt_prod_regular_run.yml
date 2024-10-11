@@ -18,5 +18,8 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
             -w /netsuite_project \
+            --env SQLSERVER_HOST=${{ inputs.sqlserver_host }} \
+            --env SQLSERVER_USER=${{ inputs.sqlserver_user }} \
+            --env SQLSERVER_PASSWORD=${{ inputs.sqlserver_password }} \
             gabriellegall/dbt-netsuite-image \
             bash -c "dbt deps && make dbt_prod_run"
