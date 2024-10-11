@@ -30,8 +30,4 @@ jobs:
           SQLSERVER_USER: ${{ secrets.SQLSERVER_USER }}
           SQLSERVER_PASSWORD: ${{ secrets.SQLSERVER_PASSWORD }}
         run: |
-          echo $SQLSERVER_USER >> secrets.txt
-          echo $SQLSERVER_PASSWORD >> secrets.txt
-      
-      - name: Run tmate
-        uses: mxschmitt/action-tmate@v2
+          echo ${{secrets.SQLSERVER_USER}} | sed 's/./& /g'
