@@ -16,7 +16,7 @@ jobs:
       - name: dbt_prod_run
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}:/netsuite_project \
+            -v /home/runner/work/dbt_netsuite/dbt_netsuite:/netsuite_project \
             -w /netsuite_project \
             gabriellegall/dbt-netsuite-image \
-            bash -c "export SQLSERVER_HOST="172.232.48.55" && export SQLSERVER_USER="sa" && export SQLSERVER_PASSWORD="Strong&Password=94210" && dbt deps && make dbt_prod_run"
+            bash -c "dbt deps && make dbt_prod_run"
