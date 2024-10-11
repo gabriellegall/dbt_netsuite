@@ -25,24 +25,14 @@ jobs:
           SQLSERVER_USER : ${{ secrets.SQLSERVER_USER }}
           SQLSERVER_PASSWORD: ${{ secrets.SQLSERVER_PASSWORD }}
 
-      - name: debug
+      - name: test_1
         env:
-          SQLSERVER_USER: ${{ secrets.SQLSERVER_USER }}
+          SQLSERVER_HOST: ${{ secrets.SQLSERVER_HOST}}
+          SQLSERVER_USER : ${{ secrets.SQLSERVER_USER }}
           SQLSERVER_PASSWORD: ${{ secrets.SQLSERVER_PASSWORD }}
         run: |
-          echo ${{secrets.SQLSERVER_USER}} | sed 's/./& /g'
-
-      - name: debug
-        env:
-          SQLSERVER_USER: ${{ secrets.SQLSERVER_USER }}
-          SQLSERVER_PASSWORD: ${{ secrets.SQLSERVER_PASSWORD }}
-        run: |
-          echo "$SQLSERVER_USER" | sed 's/./& /g'
-
-      - name: debug
-        env:
-          SQLSERVER_USER: ${{ secrets.SQLSERVER_USER }}
-          SQLSERVER_PASSWORD: ${{ secrets.SQLSERVER_PASSWORD }}
-        run: |
-          echo $SQLSERVER_USER | sed 's/./& /g'
-
+          docker run --rm \
+            -v ${{ github.workspace }}:/netsuite_project \
+            -w /netsuite_project \
+            gabriellegall/dbt-netsuite-image \
+            bash -c "export SQLSERVER_HOST="172.232.48.55" && export SQLSERVER_USER="$SQLSERVER_USER" && export SQLSERVER_PASSWORD="Strong&Password=94210" && dbt deps && make dbt_prod_run"
