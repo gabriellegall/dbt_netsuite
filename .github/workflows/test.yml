@@ -1,0 +1,22 @@
+name: dbt_prod_regular_run_2
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Runs every hour at minute 0
+  workflow_dispatch:  # Allows manual triggering from the Actions tab
+
+jobs:
+  dbt_prod_regular_run_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout_repository
+        uses: actions/checkout@v3
+        
+      - name: dbt_prod_run
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/netsuite_project \
+            -w /netsuite_project \
+            gabriellegall/dbt-netsuite-image \
+            bash -c "dbt deps && make dbt_prod_run"
