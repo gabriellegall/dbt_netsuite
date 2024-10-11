@@ -1,6 +1,7 @@
 import pyodbc
 import time
 import yaml
+import os
 
 # Load configuration from YAML file
 with open("profiles.yml", "r") as f:
@@ -14,9 +15,9 @@ netsuite_project = config["netsuite_project"]
 
 target_environment = netsuite_project["target"]
 driver = netsuite_project["outputs"][target_environment]["driver"]
-server = netsuite_project["outputs"][target_environment]["host"]
-username = netsuite_project["outputs"][target_environment]["user"]
-password = netsuite_project["outputs"][target_environment]["password"]
+server = os.getenv("SQLSERVER_HOST")
+username = os.getenv("SQLSERVER_USER")
+password = os.getenv("SQLSERVER_PASSWORD")
 
 conn_str = (
     f'DRIVER={driver};'
