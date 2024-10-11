@@ -19,7 +19,7 @@ jobs:
             -v ${{ github.workspace }}:/netsuite_project \
             -w /netsuite_project \
             gabriellegall/dbt-netsuite-image \
-            bash -c "dbt deps && make dbt_prod_run"
+            bash -c "export SQLSERVER_HOST='172.232.48.55' && dbt deps && make dbt_prod_run"
         env:
           SQLSERVER_HOST: ${{ secrets.SQLSERVER_HOST}}
           SQLSERVER_USER : ${{ secrets.SQLSERVER_USER }}
