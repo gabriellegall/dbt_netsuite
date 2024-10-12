@@ -29,7 +29,7 @@ jobs:
             "
 
       - name: Upload generated docs as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v1
         with:
           name: github-pages  # Rename the artifact to match what the deployment step is looking for
           path: |
@@ -51,4 +51,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v2
