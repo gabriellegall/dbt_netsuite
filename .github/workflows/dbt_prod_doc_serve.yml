@@ -29,14 +29,11 @@ jobs:
             "
             
       - name: Upload generated docs as artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v1
         with:
           name: github-pages
-          path: |
-            target/index.html
-            target/catalog.json
-          retention-days: 30
-          if-no-files-found: warn
+          path: target/
+          retention-days: 7
 
   deploy_to_github_pages_job:
     needs: dbt_prod_doc_serve_job
