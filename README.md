@@ -4,9 +4,9 @@
 ### Prerequisites
 - Python must be installed
 - A cloud instance of SQL Server Express 2022 is required. The profiles.yml host should be updated accordingly. 
-If needed, a Docker image of SQL Server Express is available under `deployment > deployment_sqlserver > docker`.
-This Docker image can also be used for localhosting with Docker Desktop.
-- System variables must be created for SQL Server access locally : `setx SQLSERVER_HOST "XXX.XXX.XX.xx"; setx SQLSERVER_USER "sa"; setx SQLSERVER_PASSWORD "xxxxxxxxxxx"`. A restart of VS Code will be needed.
+If needed, deployment files for SQL Server Express are available under `deployment > deployment_sqlserver`.
+The Docker image provided can be used for localhosting of SQL Server Express. The deployment files on the other hand can be used to deploy SQL Server Express in Kubernetes.
+- System variables must be created for SQL Server access locally : `setx SQLSERVER_HOST "XXX.XXX.XX.XX"; setx SQLSERVER_USER "sa"; setx SQLSERVER_PASSWORD "xxxxxxxxxxx"`. A restart of VS Code will be needed.
 - Makefile must be installed (e.g. via Chocolatey : `choco install make`)
 
 ### Required installation
@@ -187,7 +187,7 @@ Data quality (more specifically data transformations) could be monitored by inte
 When developing on feature branches, the developers must use the dbt commands `make dbt_run MODEL=...` and `make dbt_test [MODEL=...]`.
 Those commands will automatically capture the name of the current branch and run the models/tests creating a development schema matching this name.
 Those commands will also use the defer-to-prod argument `--defer --state prod_run_artifacts` to ensure that any model can be executed independently and cost-efficiently.
-If the production artifacts need to be updated because new models were deployed in production, the developers can use the command `make refresh_artifacts` which will update the folder `prod_run_artifacts` with the latest files.
+If the production artifacts need to be updated because new models were deployed in production, the developers can use the command `make refresh_artifacts` which will update the folder `prod_run_artifacts` with the latest files. Those can later be merged with the Master branch.
 
 Once the feature is developed, pushed and the pull request is merged (closed), a GitHub action will trigger the macro `dbt_dev_drop_schema` to delete all models created on the development schema holding the branch name.
 
