@@ -29,7 +29,7 @@ The Docker image provided can be used for localhosting of SQL Server Express. Th
 - Dbt snapshot, run (incremental), tests: `make dbt_prod_run`
 ### Development branch
 - Dbt run using the development branch: `make dbt_run MODEL=...`
-- Dbt run using the development branch: `make dbt_test [MODEL=...]`
+- Dbt test using the development branch: `make dbt_test [MODEL=...]`
 ### Artifacts
 - Download from GitHub: `make refresh_artifacts`
 ### Cleaning
