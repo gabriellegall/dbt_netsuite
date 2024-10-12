@@ -1,3 +1,5 @@
+# Assuming that the [host], [user] and [password] are hard coded in the profiles.yml, the following command would work:
+
 apiVersion: batch/v1
 kind: CronJob
 metadata:
