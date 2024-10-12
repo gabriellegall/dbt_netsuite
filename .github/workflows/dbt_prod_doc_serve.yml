@@ -28,11 +28,11 @@ jobs:
               make dbt_prod_doc_generate
             "
             
-      - name: Upload specific docs as artifact
+      - name: upload_dbt_doc
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: target/index.html target/catalog.json
+          path: target/
           retention-days: 7
 
   deploy_to_github_pages_job:
@@ -46,6 +46,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
+      - name: deploy_to_github_pages
         id: deployment
         uses: actions/deploy-pages@v4
