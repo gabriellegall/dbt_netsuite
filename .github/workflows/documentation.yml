@@ -37,3 +37,22 @@ jobs:
             target/catalog.json
           retention-days: 30
           if-no-files-found: warn
+
+  deploy_to_github_pages_job:
+    needs: dbt_prod_doc_serve_job  # Ensures this runs after docs generation
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write  # Allows deploying to Pages
+      id-token: write  # Required for verifying source of deployment
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch generated docs from previous job
+        uses: actions/download-artifact@v3
+        with:
+          name: prod_run_artifacts
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
