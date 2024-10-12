@@ -27,14 +27,11 @@ jobs:
               make dbt_prod_compile &&
               make dbt_prod_doc_generate
             "
-
-      - name: List files in target directory
-        run: ls -la target
-
+            
       - name: Upload generated docs as artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
-          name: github-pages  # Rename the artifact to match what the deployment step is looking for
+          name: github-pages
           path: |
             target/index.html
             target/catalog.json
