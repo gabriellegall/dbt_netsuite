@@ -24,7 +24,8 @@ jobs:
               export SQLSERVER_USER='${{ secrets.SQLSERVER_USER }}' &&
               export SQLSERVER_PASSWORD='${{ secrets.SQLSERVER_PASSWORD }}' &&
               dbt deps &&
-              make dbt_prod_compile
+              make dbt_prod_compile &&
+              make dbt_prod_doc_generate
             "
 
       - name: upload_artifacts
