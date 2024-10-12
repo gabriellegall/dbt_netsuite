@@ -2,18 +2,18 @@ name: dbt_prod_doc_serve
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs every day at minute 0
+    - cron: '0 0 * * *'  # Runs every day at midnight
   workflow_dispatch:  # Allows manual triggering from the Actions tab
 
 jobs:
+  # Job to generate and upload artifacts (docs)
   dbt_prod_doc_serve_job:
     runs-on: ubuntu-latest
-
     steps:
       - name: checkout_repository
         uses: actions/checkout@v3
 
-      - name: dbt_compile
+      - name: dbt_compile_and_generate_docs
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/netsuite_project \
@@ -28,17 +28,18 @@ jobs:
               make dbt_prod_doc_generate
             "
 
-      - name: upload_artifacts
+      - name: Upload generated docs as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: prod_run_artifacts
+          name: prod_run_artifacts  # This is the name used for uploading
           path: |
             target/index.html
             target/catalog.json
           retention-days: 30
           if-no-files-found: warn
 
-  deploy_to_github_pages_job:
+  # Job to deploy generated docs to GitHub Pages
+  deploy_to_github_pages:
     needs: dbt_prod_doc_serve_job  # Ensures this runs after docs generation
     runs-on: ubuntu-latest
     permissions:
@@ -52,7 +53,9 @@ jobs:
       - name: Fetch generated docs from previous job
         uses: actions/download-artifact@v3
         with:
-          name: prod_run_artifacts
+          name: prod_run_artifacts  # Ensure this matches the artifact name uploaded earlier
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
+        with:
+          artifact_name: prod_run_artifacts  # Specify the correct artifact name
