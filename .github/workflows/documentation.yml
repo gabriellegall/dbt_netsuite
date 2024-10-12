@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: checkout_repository
         uses: actions/checkout@v3
-
+        
       - name: dbt_compile_and_generate_docs
         run: |
           docker run --rm \
@@ -27,7 +27,7 @@ jobs:
               make dbt_prod_compile &&
               make dbt_prod_doc_generate
             "
-
+            
       - name: Upload generated docs as artifact
         uses: actions/upload-artifact@v4
         with:
@@ -40,15 +40,12 @@ jobs:
 
   deploy_to_github_pages_job:
     needs: dbt_prod_doc_serve_job
-
     permissions:
       pages: write
       id-token: write
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
