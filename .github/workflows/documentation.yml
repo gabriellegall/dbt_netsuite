@@ -28,6 +28,24 @@ jobs:
               make dbt_prod_doc_generate
             "
             
+      - name: Check for symlinks and hard links
+        run: |
+          echo "Checking for symbolic links..."
+          if find target -type l | grep -q .; then
+            echo "Error: Found symbolic links in the target directory."
+            exit 1
+          else
+            echo "No symbolic links found."
+          fi
+
+          echo "Checking for hard links..."
+          if find target -type f -links +1 | grep -q .; then
+            echo "Error: Found hard links in the target directory."
+            exit 1
+          else
+            echo "No hard links found."
+          fi
+
       - name: Upload generated docs as artifact
         uses: actions/upload-artifact@v4
         with:
