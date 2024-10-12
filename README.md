@@ -6,8 +6,8 @@
 - A cloud instance of SQL Server Express 2022 is required. The profiles.yml host should be updated accordingly. 
 If needed, deployment files for SQL Server Express are available under `deployment > deployment_sqlserver`.
 The Docker image provided can be used for localhosting of SQL Server Express. The deployment files on the other hand can be used to deploy SQL Server Express in Kubernetes.
-- System variables must be created for SQL Server access locally : `setx SQLSERVER_HOST "XXX.XXX.XX.XX"; setx SQLSERVER_USER "sa"; setx SQLSERVER_PASSWORD "xxxxxxxxxxx"`. A restart of VS Code will be needed.
-- Makefile must be installed (e.g. via Chocolatey : `choco install make`)
+- System variables must be created for SQL Server access locally: `setx SQLSERVER_HOST "XXX.XXX.XX.XX"; setx SQLSERVER_USER "sa"; setx SQLSERVER_PASSWORD "xxxxxxxxxxx"`. A restart of VS Code will be needed.
+- Makefile must be installed (e.g. via Chocolatey: `choco install make`)
 
 ### Required installation
 - Python libraries and Dbt: `make install_python_libraries`
@@ -26,7 +26,7 @@ The Docker image provided can be used for localhosting of SQL Server Express. Th
 - Launch (or reset) the entire dbt project: `make dbt_prod_hard_reset`
 - Reset the entire dbt project except the staging schema (i.e dbt seeds): `make dbt_prod_soft_reset`
 ### Prod regular run
-- Dbt snapshot, run (incremental), tests : `make dbt_prod_run`
+- Dbt snapshot, run (incremental), tests: `make dbt_prod_run`
 ### Development branch
 - Dbt run using the development branch: `make dbt_run MODEL=...`
 - Dbt run using the development branch: `make dbt_test [MODEL=...]`
@@ -38,7 +38,7 @@ The Docker image provided can be used for localhosting of SQL Server Express. Th
 # Business context
 The client is a company working in the cosmetic industry.
 Following a successful implementation of the ERP NetSuite, the CEO wants to construct a BI ecosystem and leverage this new data source.
-While NetSuite offers some reporting capabilities, the client is limited with NetSuite alone because :
+While NetSuite offers some reporting capabilities, the client is limited with NetSuite alone because:
 - Some transformations are impossible to do in NetSuite (e.g. perform several joins throughout the model).
 - Some external data should be integrated and cannot be recorded in NetSuite (e.g. budget, custom fx rates).
 - Data historization (snapshotting) is impossible in NetSuite.
@@ -56,7 +56,7 @@ This dashboard should also show the evolution of the sales landing every monthly
 
 ## Data sources
 ### NetSuite fact transactions
-In NetSuite, all transactions (facts) are recorded at two levels :
+In NetSuite, all transactions (facts) are recorded at two levels:
 1. transaction, which can be understood as the document header.
 2. transaction_line, which can be understood as the document details.
 
@@ -64,7 +64,7 @@ Some document attributes are defined at a transaction level, while most financia
 There is a one-to-many relationship between transaction and transaction_line. 
 
 ### NetSuite dimensions
-There are several NetSuite dimension that are relevant in the context of the sales pipeline analysis (and more) :
+There are several NetSuite dimension that are relevant in the context of the sales pipeline analysis (and more):
 - Customer
 - Item
 - Business Unit (aka. 'Subsidiary' in NetSuite)
@@ -75,14 +75,14 @@ This should be taken into consideration for all fields with time dependency ('cu
 
 ### Row-level-security (RLS)
 Datasets are expected to be restricted to the scope of each authorized user - at a row level.
-RLS is provided in the form of an Excel file containing several dimensions to be used for each user email : bu_code, customer_name and item_type.
+RLS is provided in the form of an Excel file containing several dimensions to be used for each user email: bu_code, customer_name and item_type.
 
 The security that should be enforced is the intersection of all conditions/dimensions.
 However, if another record is provided for the same user email, the two sets of conditions to be additive. This is a rare exception for some users who need to see the data of all their business unit + the data of some of their clients across all business units.
 
 For instance, 
 - User1 shoud have access to 2 business units, and all customers and item types inside those two business units.
-- User2 shoud have access to :
+- User2 shoud have access to:
     - all business units and all item types for the customer 'Nu Smart Global' only, but also
     - 2 business units, and all customers and item types inside those two business units.
 
@@ -96,7 +96,7 @@ Another requirement regarding security is that the RLS set-up history should be 
 
 ### Budget
 To monitor the performance of the sales pipeline, a budget file is provided by the client's finance team in the form of an Excel file. 
-Because the data entry is made by the finance team, the budget Excel file matches with some, but not all, of the dimension attributes of NetSuite listed previously. Namely :
+Because the data entry is made by the finance team, the budget Excel file matches with some, but not all, of the dimension attributes of NetSuite listed previously. Namely:
 - The finance team only provides the customer_name, and the client is aware that no relation will be possible with the NetSuite customer dimension since the join is too fuzzy.
 - No budget is recorded at an item level.
 - The finance team only provides the bu_code, which is not the expected foreign key to the Business Unit dimension. The expected key is the bu_nsid, but the client says that the bu_code is an acceptable alternative key.
@@ -118,15 +118,15 @@ The client says that the reporting will always be in USD, but the reporting in E
 ### Incremental load
 As mentioned previously, the client wants to optimize performance as much as possible.
 An incremental load of the transaction data is possible from NetSuite since both transaction_lines and transactions have field called last_modified_date which tracks the date of last update.
-Several challenges are to be noted however :
-- The date of last update at the transaction_line level and at the transaction level are sometimes inconsistent : a transaction_line can be updated without the transaction being updated, and vice-versa. To solve this challenge, the client agrees to perform DELETE + INSERT operation at a transaction level, based on the maximum date of last update. This is a conservative incremental scenario ensuring that all changes are captured.
+Several challenges are to be noted however:
+- The date of last update at the transaction_line level and at the transaction level are sometimes inconsistent: a transaction_line can be updated without the transaction being updated, and vice-versa. To solve this challenge, the client agrees to perform DELETE + INSERT operation at a transaction level, based on the maximum date of last update. This is a conservative incremental scenario ensuring that all changes are captured.
 - Deleted transaction are physically deleted from NetSuite transaction table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. An audit table called 'deleted_records' lists all transactions physically deleted from NetSuite and can be used to perform this operation. 
 - Deleted transaction_lines are also physically deleted from NetSuite transaction_line table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. Since a deleted transaction_line automatically updates the date of last update at a transaction level, performing a DELETE + INSERT operation at a transaction level will automatically solve this problem.
 
 # Data architecture design
 
 ## Layers
-The datawarehouse is structured through several layers in order to ensure (1) performance (2) clarity and (3) modularity :
+The datawarehouse is structured through several layers in order to ensure (1) performance (2) clarity and (3) modularity:
 - **'stg'**: Staging of the raw data. Those tables are expected to be **an exact copy of NetSuite data**. In the modern data stack, the stg layer is automatically updated using a dedicated tool like Fivetran or Stitch - having native NetSuite connectors.
 - **'prep'**: **Intermediate layer to perform any technical transformation**. SQL Server does not support nested CTEs, so intermediate calculations at any step should be materialized as views or tables.
 - **'scd'**: **Historization** of the requirement elements (typically dimensions) using Dbt snapshots
@@ -194,3 +194,23 @@ Once the feature is developed, pushed and the pull request is merged (closed), a
 ## Host, login and password
 The host, login and password information in the `profiles.yml` file are not hard coded. Instead, those are system variables that should be set locally before developing.
 When the models are deployed using GitHub Workflows, those variables are dynamically filled using the GitHub Secrets recorded in the cloud repository.
+
+## Testing
+When a pull request is opened or updated, the feature branch is tested automatically via a GitHub workflow. This test is executed using the defer-to-prod argument `--defer --state prod_run_artifacts`
+
+## Docker Hub
+When a pull request is approved, a Docker image of the Master repository is automatically built and pushed to Docker Hub.
+
+# GitHub Workflows
+Several GitHub workflows have been designed - some of which were mentionned previously. Here is the complete list:
+## Production run
+- **dbt_prod_regular_run**: regular workflow running dbt snapshot, tests and run. This workflow is typically designed to be executed hourly or daily.
+- **dbt_prod_full_reset**: exceptional workflow making a reset of the entire database. This workflow is designed to be executed manually exceptionally.
+
+## CI/CD
+- **dbt_prod_docker_upload**: update of the Docker image in Docker Hub. This workflow is automatically executed once a push command is executed to the Master branch.
+- **dbt_dev_test_schema**: dbt test of the feature branch. This workflow is automatically executed once a pull request is opened or updated.
+- **dbt_dev_drop_schema**: drop of the development schema of the feature branch. This workflow is automatically executed once a pull request is validated (closed).
+
+## Utility
+- **dbt_prod_artifacts_upload**: compile & upload of the dbt artifacts to GitHub, based on the Master branch. Those files can later be downloaded by any developer using the command `make refresh_artifacts`. Those files are generated and uploaded once a day.
