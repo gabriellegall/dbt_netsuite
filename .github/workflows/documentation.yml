@@ -1,4 +1,4 @@
-name: dbt_prod_artifacts_upload
+name: dbt_prod_doc_serve
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # Allows manual triggering from the Actions tab
 
 jobs:
-  dbt_prod_artifacts_upload_job:
+  dbt_prod_doc_serve_job:
     runs-on: ubuntu-latest
 
     steps:
