@@ -31,7 +31,7 @@ jobs:
       - name: Upload generated docs as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: prod_run_artifacts  # This is the name used for uploading
+          name: github-pages  # Rename the artifact to match what the deployment step is looking for
           path: |
             target/index.html
             target/catalog.json
