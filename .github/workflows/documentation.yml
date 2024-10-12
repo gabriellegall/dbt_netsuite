@@ -27,10 +27,6 @@ jobs:
               make dbt_prod_compile &&
               make dbt_prod_doc_generate
             "
-            
-      - name: Set file permissions for artifacts
-        run: |
-          chmod -R a+rX target  # Give read access to everyone for all files in the target directory
 
       - name: Upload generated docs as artifact
         uses: actions/upload-artifact@v4
@@ -41,6 +37,10 @@ jobs:
             target/catalog.json
           retention-days: 30
           if-no-files-found: warn
+
+      - name: Set file permissions for artifacts
+        run: |
+          chmod -R a+rX github-pages  # Adjust to the correct directory name for the docs
 
   deploy_to_github_pages_job:
     needs: dbt_prod_doc_serve_job
