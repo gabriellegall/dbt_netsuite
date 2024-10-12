@@ -16,6 +16,7 @@ jobs:
       - name: dbt_compile_and_generate_docs
         run: |
           docker run --rm \
+            --user root \  # Run as the root user
             -v ${{ github.workspace }}:/netsuite_project \
             -w /netsuite_project \
             gabriellegall/dbt-netsuite-image \
@@ -37,10 +38,6 @@ jobs:
             target/catalog.json
           retention-days: 30
           if-no-files-found: warn
-
-      - name: Set file permissions for artifacts
-        run: |
-          chmod -R a+rX github-pages  # Adjust to the correct directory name for the docs
 
   deploy_to_github_pages_job:
     needs: dbt_prod_doc_serve_job
