@@ -42,6 +42,7 @@ jobs:
   deploy_to_github_pages_job:
     needs: dbt_prod_doc_serve_job
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
