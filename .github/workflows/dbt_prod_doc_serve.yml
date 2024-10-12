@@ -6,7 +6,6 @@ on:
       - master
 
 jobs:
-  # Job to generate and upload artifacts (docs)
   dbt_prod_doc_serve_job:
     runs-on: ubuntu-latest
     steps:
