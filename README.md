@@ -4,36 +4,36 @@
 ### Prerequisites
 - Python must be installed
 - A cloud instance of SQL Server Express 2022 is required. The profiles.yml host should be updated accordingly. 
-If needed, a Docker image of SQL Server Express is available under deployment > deployment_sqlserver > docker.
-This Docker image can also be used for local testing with Docker Desktop.
+If needed, a Docker image of SQL Server Express is available under `deployment > deployment_sqlserver > docker`.
+This Docker image can also be used for localhosting with Docker Desktop.
 - System variables must be created for SQL Server access locally : `setx SQLSERVER_HOST "XXX.XXX.XX.xx"; setx SQLSERVER_USER "sa"; setx SQLSERVER_PASSWORD "xxxxxxxxxxx"`. A restart of VS Code will be needed.
 - Makefile must be installed (e.g. via Chocolatey : `choco install make`)
 
 ### Required installation
-- Python libraries and Dbt: `MAKE install_python_libraries`
-- SQL Server ODBC: `MAKE install_sqlserver_odbc`
-- SQL Server Management Studio: `MAKE install_ssms`
-- GitHub CLI: `MAKE install_github_cli`
+- Python libraries and Dbt: `make install_python_libraries`
+- SQL Server ODBC: `make install_sqlserver_odbc`
+- SQL Server Management Studio: `make install_ssms`
+- GitHub CLI: `make install_github_cli`
 
 ### Optional installation
-- Docker Desktop: `MAKE install_docker_desktop`
+- Docker Desktop: `make install_docker_desktop`
 
 ## Commands
 ### Localhost of SQL Server Express using Docker (Optional)
-- Launch Docker (volume, image, run): `MAKE docker_start`
-- Stop Docker: `MAKE docker_end`
-### Set-up
-- Launch (or reset) the entire dbt project: `MAKE dbt_prod_hard_reset`
-- Reset the entire dbt project except the staging schema (i.e dbt seeds): `MAKE dbt_prod_soft_reset`
-### Run
-- Dbt run (incremental): `MAKE dbt_prod_run`
+- Launch Docker (volume, image, run): `make docker_start`
+- Stop Docker: `make docker_end`
+### Prod set-up
+- Launch (or reset) the entire dbt project: `make dbt_prod_hard_reset`
+- Reset the entire dbt project except the staging schema (i.e dbt seeds): `make dbt_prod_soft_reset`
+### Prod regular run
+- Dbt snapshot, run (incremental), tests : `make dbt_prod_run`
 ### Development branch
-- Dbt run using the development branch: `MAKE dbt_run`
-- Dbt run using the development branch: `MAKE dbt_test`
+- Dbt run using the development branch: `make dbt_run MODEL=...`
+- Dbt run using the development branch: `make dbt_test [MODEL=...]`
 ### Artifacts
-- Download from GitHub: `MAKE refresh_artifacts`
+- Download from GitHub: `make refresh_artifacts`
 ### Cleaning
-- Delete the development branch schema: `MAKE drop_branch_schema`
+- Delete the development branch schema: `make drop_branch_schema`
 
 # Business context
 The client is a company working in the cosmetic industry.
@@ -181,3 +181,16 @@ As data will continue to grow, there are some elements that could be implemented
 
 ## Data quality
 Data quality (more specifically data transformations) could be monitored by integrating some [Dbt unit tests](https://docs.getdbt.com/docs/build/unit-tests). This new feature was released in Dbt 1.8 and could be relevant for several transformations performed inside the datasets. 
+
+# CI/CD
+## Dev-to-Prod
+When developing on feature branches, the developers must use the dbt commands `make dbt_run MODEL=...` and `make dbt_test [MODEL=...]`.
+Those commands will automatically capture the name of the current branch and run the models/tests creating a development schema matching this name.
+Those commands will also use the defer-to-prod argument `--defer --state prod_run_artifacts` to ensure that any model can be executed independently and cost-efficiently.
+If the production artifacts need to be updated because new models were deployed in production, the developers can use the command `make refresh_artifacts` which will update the folder `prod_run_artifacts` with the latest files.
+
+Once the feature is developed, pushed and the pull request is merged (closed), a GitHub action will trigger the macro `dbt_dev_drop_schema` to delete all models created on the development schema holding the branch name.
+
+## Host, login and password
+The host, login and password information in the `profiles.yml` file are not hard coded. Instead, those are system variables that should be set locally before developing.
+When the models are deployed using GitHub Workflows, those variables are dynamically filled using the GitHub Secrets recorded in the cloud repository.
