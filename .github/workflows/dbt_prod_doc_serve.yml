@@ -32,9 +32,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: |
-            target/index.html
-            target/catalog.json
+          path: target/index.html target/catalog.json
           retention-days: 7
 
   deploy_to_github_pages_job:
