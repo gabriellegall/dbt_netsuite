@@ -16,7 +16,6 @@ jobs:
       - name: dbt_compile_and_generate_docs
         run: |
           docker run --rm \
-            --user root \  # Run as the root user
             -v ${{ github.workspace }}:/netsuite_project \
             -w /netsuite_project \
             gabriellegall/dbt-netsuite-image \
