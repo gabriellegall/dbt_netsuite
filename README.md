@@ -214,3 +214,6 @@ Several GitHub workflows have been designed - some of which were mentionned prev
 
 ## Utility
 - **dbt_prod_artifacts_upload**: compile & upload of the dbt artifacts to GitHub, based on the Master branch. Those files can later be downloaded by any developer using the command `make refresh_artifacts`. Those files are generated and uploaded once a day.
+
+## Documentation
+- **dbt_prod_doc_serve**: generate & upload the dbt documentation to GitHub hosted pages. The web page is updated whenever a push command is executed to the Master branch.

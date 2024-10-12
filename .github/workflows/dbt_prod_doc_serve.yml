@@ -1,9 +1,9 @@
 name: dbt_prod_doc_serve
 
 on:
-  schedule:
-    - cron: '0 0 * * *'  # Runs every day at midnight
-  workflow_dispatch:  # Allows manual triggering from the Actions tab
+  push:
+    branches:
+      - master
 
 jobs:
   # Job to generate and upload artifacts (docs)
