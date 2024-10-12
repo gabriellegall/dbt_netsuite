@@ -38,24 +38,19 @@ jobs:
           retention-days: 30
           if-no-files-found: warn
 
-  # Job to deploy generated docs to GitHub Pages
-  deploy_to_github_pages:
-    needs: dbt_prod_doc_serve_job  # Ensures this runs after docs generation
-    runs-on: ubuntu-latest
+  deploy_to_github_pages_job:
+    needs: dbt_prod_doc_serve_job
+
     permissions:
-      pages: write  # Allows deploying to Pages
-      id-token: write  # Required for verifying source of deployment
+      pages: write
+      id-token: write
 
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Fetch generated docs from previous job
-        uses: actions/download-artifact@v3
-        with:
-          name: prod_run_artifacts  # Ensure this matches the artifact name uploaded earlier
-
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
-        with:
-          artifact_name: prod_run_artifacts  # Specify the correct artifact name
+        id: deployment
+        uses: actions/deploy-pages@v4 
