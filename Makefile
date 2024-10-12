@@ -50,6 +50,9 @@ dbt_prod_run:
 dbt_prod_compile:
 	dbt compile --target prod
 
+dbt_prod_doc_generate:
+	dbt docs generate --target prod
+
 # dev command(s)
 refresh_artifacts: # deletes the folder 'prod_run_artifacts' if it exists. Then, checks the GitHub workflow 'dbt_prod_artifacts_upload' to then download the artifacts 'prod_run_artifacts' and store it under a folder having the same name
 	powershell.exe -ExecutionPolicy Bypass -Command "if (Test-Path 'prod_run_artifacts') { Remove-Item -Recurse -Force 'prod_run_artifacts' }; gh run download $(gh run list --workflow 'dbt_prod_artifacts_upload' --limit 1 --json databaseId -q '.[0].databaseId') --pattern 'prod_run_artifacts'"
