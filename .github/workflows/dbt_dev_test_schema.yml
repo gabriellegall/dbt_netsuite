@@ -3,7 +3,7 @@ name: dbt_dev_test_schema
 on:
   pull_request:
     branches:
-      - master # Triggers on pull requests to the master branch
+      - master
     types: [opened, synchronize]  # Runs when a PR is opened or synchronized (updated)
 
 jobs:

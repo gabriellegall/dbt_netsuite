@@ -3,7 +3,7 @@ name: dbt_dev_drop_schema
 on:
   pull_request:
     branches:
-      - master  # Triggers when a pull request is merged into main
+      - master
     types: [closed]  # Only triggers when the pull request is closed (merged)
 
 jobs:
