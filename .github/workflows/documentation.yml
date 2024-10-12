@@ -29,7 +29,7 @@ jobs:
             "
 
       - name: Upload generated docs as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: prod_run_artifacts  # This is the name used for uploading
           path: |
