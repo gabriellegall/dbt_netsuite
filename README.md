@@ -22,13 +22,14 @@ The Docker image provided can be used for localhosting of SQL Server Express. Th
 ### Localhost of SQL Server Express using Docker (Optional)
 - Launch Docker (volume, image, run): `make docker_start`
 - Stop Docker: `make docker_end`
-
-Remark: when testing Docker locally, the environments variables must be filled with: `export SQLSERVER_HOST="XXX.XXX.XX.XX"; export SQLSERVER_USER="sa"; export SQLSERVER_PASSWORD="xxxxxxxxxxx"`
 ### Prod set-up
 - Launch (or reset) the entire dbt project: `make dbt_prod_hard_reset`
 - Reset the entire dbt project except the staging schema (i.e dbt seeds): `make dbt_prod_soft_reset`
 ### Prod regular run
 - Dbt snapshot, run (incremental), tests: `make dbt_prod_run`
+
+Remark: when testing the Dockerized Dbt project locally, the environments variables must be filled with: `export SQLSERVER_HOST="XXX.XXX.XX.XX"; export SQLSERVER_USER="sa"; export SQLSERVER_PASSWORD="xxxxxxxxxxx"`
+Then, it will be possible to execute any action, like `make dbt_prod_run`
 ### Development branch
 - Dbt run using the development branch: `make dbt_run MODEL=...`
 - Dbt test using the development branch: `make dbt_test [MODEL=...]`
@@ -36,6 +37,8 @@ Remark: when testing Docker locally, the environments variables must be filled w
 - Download from GitHub: `make refresh_artifacts`
 ### Cleaning
 - Delete the development branch schema: `make drop_branch_schema`
+
+
 
 # Business context
 The client is a company working in the cosmetic industry.
