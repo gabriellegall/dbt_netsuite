@@ -1,1 +1,0 @@
-SELECT 'helloworld' AS test
