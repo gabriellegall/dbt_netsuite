@@ -22,6 +22,7 @@ The Docker image provided can be used for localhosting of SQL Server Express. Th
 ### Localhost of SQL Server Express using Docker (Optional)
 - Launch Docker (volume, image, run): `make docker_start`
 - Stop Docker: `make docker_end`
+
 Remark: when testing Docker locally, the environments variables must be filled with: `export SQLSERVER_HOST="XXX.XXX.XX.XX"; export SQLSERVER_USER="sa"; export SQLSERVER_PASSWORD="xxxxxxxxxxx"`
 ### Prod set-up
 - Launch (or reset) the entire dbt project: `make dbt_prod_hard_reset`
