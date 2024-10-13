@@ -30,6 +30,7 @@ docker_end:
 # prod command(s)
 dbt_prod_hard_reset: 
 	python scripts/create_db.py
+	dbt deps
 	dbt run-operation admin_drop_all --target prod --args "{'except_stg': False}"
 	dbt seed --target prod
 	dbt snapshot --target prod
@@ -37,20 +38,24 @@ dbt_prod_hard_reset:
 	dbt test --target prod
 
 dbt_prod_soft_reset:
+	dbt deps
 	dbt run-operation admin_drop_all --target prod --args "{'except_stg': True}"
 	dbt snapshot --target prod
 	dbt run --target prod
 	dbt test --target prod
 
 dbt_prod_run:
+	dbt deps
 	dbt snapshot --target prod
 	dbt run --target prod
 	dbt test --target prod
 
 dbt_prod_compile:
+	dbt deps
 	dbt compile --target prod
 
 dbt_prod_doc_generate:
+	dbt deps
 	dbt docs generate --target prod
 
 # dev command(s)
@@ -74,4 +79,5 @@ endif
 
 # dev-to-prod command(s)
 drop_branch_schema: 
+	dbt deps
 	dbt run-operation admin_drop_all --vars "branch_name: $(BRANCH_NAME)" --args "{'except_stg': True, 'specific_schema': $(BRANCH_NAME)}"
