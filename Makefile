@@ -66,14 +66,17 @@ dbt_run:
 ifndef MODEL
 	$(error model is not defined. Please specify the model using MODEL=<your_model>)
 endif
+	dbt deps
 	dbt run --select $(MODEL) --vars "branch_name: $(BRANCH_NAME)" --defer --state prod_run_artifacts
 
 dbt_test:
 ifndef MODEL
 	@echo "Running dbt test on everything..."
+	dbt deps
 	dbt test --vars "branch_name: $(BRANCH_NAME)" --defer --state prod_run_artifacts
 else
 	@echo "Running dbt test on model: $(MODEL)..."
+	dbt deps
 	dbt test --select $(MODEL) --vars "branch_name: $(BRANCH_NAME)" --defer --state prod_run_artifacts
 endif
 
