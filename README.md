@@ -188,7 +188,7 @@ As data will continue to grow, there are some elements that could be implemented
 Data quality (more specifically data transformations) could be monitored by integrating some [Dbt unit tests](https://docs.getdbt.com/docs/build/unit-tests). This new feature was released in Dbt 1.8 and could be relevant for several transformations performed inside the datasets. 
 
 ## Outlooks
-We could further enrich this dbt project with custom Python scripts. While [SQL Server does not natively support Python Dbt models](https://docs.getdbt.com/docs/build/python-models#limitations), there are several powerful Python developments that can be easily integrated into this project.
+We could further enrich this Dbt project with custom Python scripts. While [SQL Server does not natively support Python Dbt models](https://docs.getdbt.com/docs/build/python-models#limitations), there are several powerful Python developments that can be easily integrated into this project.
 - APIs could be integrated to ingest external data (e.g. shipping costs - in the context of a cost pass-through analysis)
 - APIs could be used to [refresh automatically Tableau extracts](https://www.notion.so/Tableau-API-for-Refresh-e71b6f5f6edd46dcb4fc534373dfb1a3?pvs=4)
 - NLP algorithms could be used to parse comments, sales memos, reviews, etc.
