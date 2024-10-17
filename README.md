@@ -194,6 +194,7 @@ We could further enrich this Dbt project with custom Python scripts. While [SQL 
 - NLP algorithms could be used to parse comments, sales memos, reviews, etc.
 - Automatic emails and Slack notifications could be sent to notify users about data refreshs.
 - Clustering analysis could be performed to dynamically segment users based on their sales history.
+
 etc.
 
 # CI/CD
