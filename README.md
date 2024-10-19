@@ -232,3 +232,13 @@ Several GitHub workflows have been designed - some of which were mentionned prev
 
 ## Documentation
 - **dbt_prod_doc_serve**: generate & upload the dbt documentation to GitHub hosted pages. The web page is updated whenever a push command is executed to the Master branch.
+
+# Packages
+Two packages are used in this project :
+
+## dbt_utils
+This package was integrated to produce dynamic models, most notably through the macros dbt_utils.star and dbt_utils.union_relations
+
+## dbt_artifacts
+This package was integrated to log the Dbt executions effortlessly. Those Dbt executions are recorded under the schema **'log'** created for this purpose.
+The dbt_artifacts models are only loaded when the Dbt target is set to 'prod' 
