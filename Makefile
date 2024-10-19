@@ -32,6 +32,7 @@ dbt_prod_hard_reset:
 	python scripts/create_db.py
 	dbt deps
 	dbt run-operation admin_drop_all --target prod --args "{'except_stg': False}"
+	dbt run --select dbt_artifacts --target prod
 	dbt seed --target prod
 	dbt snapshot --target prod
 	dbt run --target prod
@@ -40,6 +41,7 @@ dbt_prod_hard_reset:
 dbt_prod_soft_reset:
 	dbt deps
 	dbt run-operation admin_drop_all --target prod --args "{'except_stg': True}"
+	dbt run --select dbt_artifacts --target prod
 	dbt snapshot --target prod
 	dbt run --target prod
 	dbt test --target prod
