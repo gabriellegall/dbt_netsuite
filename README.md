@@ -239,6 +239,6 @@ Two packages are used in this project :
 ## dbt_utils
 This package was primarily integrated to produce dynamic models (automatic schema drift to upper layers), through the macros dbt_utils.star and dbt_utils.union_relations.
 
-## dbt_artifacts
+## [dbt_artifacts](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest/)
 This package was integrated to log the Dbt executions effortlessly. Those Dbt executions are recorded under the schema **'log'** created for this purpose.
 The dbt_artifacts models are only loaded when the Dbt target is set to 'prod'.
