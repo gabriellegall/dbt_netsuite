@@ -237,7 +237,7 @@ Several GitHub workflows have been designed - some of which were mentionned prev
 Two packages are used in this project :
 
 ## dbt_utils
-This package was integrated to produce dynamic models, most notably through the macros dbt_utils.star and dbt_utils.union_relations
+This package was integrated to produce dynamic models (automatic schema drift to upper layers), most notably through the macros dbt_utils.star and dbt_utils.union_relations
 
 ## dbt_artifacts
 This package was integrated to log the Dbt executions effortlessly. Those Dbt executions are recorded under the schema **'log'** created for this purpose.
