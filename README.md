@@ -236,7 +236,7 @@ Several GitHub workflows have been designed - some of which were mentionned prev
 # Packages
 Two packages are used in this project :
 
-## dbt_utils
+## [dbt_utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/)
 This package was primarily integrated to produce dynamic models (automatic schema drift to upper layers), through the macros dbt_utils.star and dbt_utils.union_relations.
 
 ## [dbt_artifacts](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest/)
