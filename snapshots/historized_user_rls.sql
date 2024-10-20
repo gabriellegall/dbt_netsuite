@@ -15,7 +15,6 @@ SELECT
   , authorized_bu_code
   , authorized_customer_name
   , authorized_item_type
-  
 FROM {{ ref("user_rls") }}
 
 {% endsnapshot %}

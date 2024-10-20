@@ -1,0 +1,6 @@
+version: 2
+
+models:
+  - name: historized_all_item
+    description: 
+      This table contains the joined snapshots of the underlying tables composing the item dimension (item, item category, item pattern, etc.). 

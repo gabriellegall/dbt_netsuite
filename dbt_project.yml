@@ -43,6 +43,8 @@ vars:
   item_key                    : 'item_nsid'
   business_unit_key           : 'bu_nsid'
   customer_key                : 'customer_nsid'
+  item_category_key           : 'item_category_nsid'
+  item_pattern_key            : 'item_pattern_nsid'
 
   # Dynamic currency definition :
   fx_avg_implicit_currency    : 'EUR'
@@ -69,6 +71,8 @@ models:
   netsuite_project:
     prp:
       +schema: prp
+    scd:
+      +schema: scd
     dwh:
       +schema: dwh
       transaction_with_line:
