@@ -76,5 +76,5 @@ SELECT
   , surrogate_key AS dbt_scd_id
   , NULL AS dbt_updated_at
   , valid_from_at AS dbt_valid_from
-  , IIF(valid_to_at = CAST('9999-12-31' AS DATETIME2), NULL, valid_to_at) AS dbt_valid_to
+  , IIF(valid_to_at = CAST('{{ var("future_proof_date") }}' AS DATETIME2), NULL, valid_to_at) AS dbt_valid_to
 FROM trange_final
