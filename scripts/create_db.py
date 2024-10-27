@@ -1,14 +1,10 @@
 import pyodbc
-import time
 import yaml
 import os
 
 # Load configuration from YAML file
 with open("profiles.yml", "r") as f:
     config = yaml.safe_load(f)
-
-# Sleep - to leave some time for the database to initialize
-time.sleep(15)
 
 # Create the DB if it does not exist
 netsuite_project = config["netsuite_project"]
