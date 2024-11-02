@@ -1,4 +1,4 @@
-{% macro model_generate_dataset_rls(data_model, scenario) %}
+{% macro model_generate_dataset_rls(data_model, scenario, primary_key) %}
 
 {% set scenario_conditions = {
     "customer_bu_item": """
@@ -30,6 +30,7 @@
 {% endset %}
 {%- set max_row_id = dbt_utils.get_single_value(sql_statement) -%}
 
+WITH cte_union_all_conditions AS (
 {% if execute %}
     {% for i in range(1, max_row_id + 1) %}
         SELECT
@@ -39,8 +40,21 @@
         LEFT JOIN {{ ref("prep_rls_normalize") }} rls
             ON  {{ condition|format(i=i) }}
         WHERE rls.row_id = {{ i }}
-        {% if not loop.last %} UNION {% endif %}
+        {% if not loop.last %} UNION ALL {% endif %}
     {% endfor %}
 {% endif %}
+),
+
+cte_duplicate_identification AS (
+SELECT 
+    *
+    , ROW_NUMBER() OVER (PARTITION BY user_email, {{ primary_key }} ORDER BY {{ primary_key }}) AS id_duplicate
+FROM cte_union_all_conditions
+)
+
+SELECT 
+    *
+FROM cte_duplicate_identification
+WHERE id_duplicate = 1
 
 {% endmacro %}
