@@ -15,7 +15,7 @@ clean-targets: # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
   
-on-run-end:
+on-run-end: # execute the dbt log package if target is 'prod'
   - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"
 
 vars:
