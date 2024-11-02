@@ -9,6 +9,7 @@ WITH consolidate_data AS
 (
     SELECT
         'Budget'                                                                                     AS transaction_type  
+        , {{ dbt_utils.generate_surrogate_key(adapter.get_columns_in_relation(ref('sales_budget')) | map(attribute='name') | list) }} AS pk_{{ var("all_transactions_with_line_key") }}
         , budget_year
         , budget_version
         {# customer_name cannot be matched with the dimension table and is therefore the only common field with the customer dimension #}

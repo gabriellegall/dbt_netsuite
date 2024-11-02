@@ -18,7 +18,8 @@ WITH union_current_and_snapshot AS
 data_consolidation AS 
 (
     SELECT 
-        t.* 
+        {{ dbt_utils.generate_surrogate_key(['t.transaction_nsid', 't.transaction_line_nsid', var("dbt_snapshot_col_name")]) }} AS pk_{{ var("all_transactions_with_line_key") }}
+        , t.* 
         , DENSE_RANK () OVER ( ORDER BY {{ var("dbt_snapshot_col_name") }} DESC )                    AS snapshot_date_order
         , {{ dbt_utils.star(from=ref('dim_bu'), except = var("scd_excluded_col_name") ) }}
         , COALESCE( fx_dated.fx_rate_original_to_usd, fx_latest.fx_rate_original_to_usd )            AS fx_rate_original_to_usd
