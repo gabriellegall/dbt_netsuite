@@ -27,9 +27,6 @@ The Docker image provided can be used for localhosting of SQL Server Express. Th
 - Reset the entire dbt project except the staging schema (i.e dbt seeds): `make dbt_prod_soft_reset`
 ### Prod regular run
 - Dbt snapshot, run (incremental), tests: `make dbt_prod_run`
-
-Remark: when testing the containerized Dbt project locally with Docker Desktop, the environments variables must be filled with the bash command: `export SQLSERVER_HOST="XXX.XXX.XX.XX"; export SQLSERVER_USER="sa"; export SQLSERVER_PASSWORD="xxxxxxxxxxx"`
-Then, it will be possible to execute any action, like `make dbt_prod_run`
 ### Development branch
 - Dbt run using the development branch: `make dbt_run MODEL=...`
 - Dbt test using the development branch: `make dbt_test [MODEL=...]`
