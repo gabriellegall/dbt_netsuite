@@ -12,10 +12,10 @@ The Docker image provided can be used for localhosting of SQL Server Express. Th
 ### Required installation
 - Python libraries and Dbt: `make install_python_libraries`
 - SQL Server ODBC: `make install_sqlserver_odbc`
-- SQL Server Management Studio: `make install_ssms`
 - GitHub CLI: `make install_github_cli`
 
 ### Optional installation
+- SQL Server Management Studio: `make install_ssms`
 - Docker Desktop: `make install_docker_desktop`
 
 ## Commands
