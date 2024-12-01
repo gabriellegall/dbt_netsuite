@@ -7,7 +7,7 @@
 If needed, deployment files for SQL Server Express are available under `deployment > deployment_sqlserver`.
 The Docker image provided can be used for localhosting of SQL Server Express. The deployment files on the other hand can be used to deploy SQL Server Express in Kubernetes.
 - System variables must be created for SQL Server access locally: `setx SQLSERVER_HOST "XXX.XXX.XX.XX"; setx SQLSERVER_USER "sa"; setx SQLSERVER_PASSWORD "xxxxxxxxxxx"` (dont forget to restart VS Code).
-- Makefile must be installed (e.g. via Chocolatey: `choco install make`)
+- Makefile must be installed (e.g. via Chocolatey: `choco install make`).
 
 ### Required installation
 - Python libraries and Dbt: `make install_python_libraries`
