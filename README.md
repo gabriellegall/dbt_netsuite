@@ -6,7 +6,7 @@
 - A cloud instance of SQL Server Express 2022 is required. The profiles.yml host should be updated accordingly. 
 If needed, deployment files for SQL Server Express are available under `deployment > deployment_sqlserver`.
 The Docker image provided can be used for localhosting of SQL Server Express. The deployment files on the other hand can be used to deploy SQL Server Express in Kubernetes.
-- System variables must be created for SQL Server access locally: `setx SQLSERVER_HOST "XXX.XXX.XX.XX"; setx SQLSERVER_USER "sa"; setx SQLSERVER_PASSWORD "xxxxxxxxxxx"`. A restart of VS Code will be needed for the variables to be visible.
+- System variables must be created for SQL Server access locally: `setx SQLSERVER_HOST "XXX.XXX.XX.XX"; setx SQLSERVER_USER "sa"; setx SQLSERVER_PASSWORD "xxxxxxxxxxx"`. (dont forget to restart VS Code).
 - Makefile must be installed (e.g. via Chocolatey: `choco install make`)
 
 ### Required installation
