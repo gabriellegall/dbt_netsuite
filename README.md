@@ -121,9 +121,10 @@ The client says that the reporting will always be in USD, but the reporting in E
 As mentioned previously, the client wants to optimize performance as much as possible.
 An incremental load of the transaction data is possible from NetSuite since both transaction_lines and transactions have field called last_modified_date which tracks the date of last update.
 Several challenges are to be noted however:
-- The date of last update at the transaction_line level and at the transaction level are sometimes inconsistent: a transaction_line can be updated without the transaction being updated, and vice-versa. To solve this challenge, the client agrees to perform DELETE + INSERT operation at a transaction level, based on the maximum date of last update. This is a conservative incremental scenario ensuring that all changes are captured.
+- The date of last update at the transaction_line level and at the transaction level are sometimes inconsistent: a transaction_line can be updated without the transaction being updated, and vice-versa. To solve this challenge, we perform DELETE + INSERT operation at a transaction level, based on the maximum date of last update. This is a conservative incremental scenario ensuring that all changes are captured.
 - Deleted transaction are physically deleted from NetSuite transaction table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. An audit table called 'deleted_records' lists all transactions physically deleted from NetSuite and can be used to perform this operation. 
 - Deleted transaction_lines are also physically deleted from NetSuite transaction_line table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. Since a deleted transaction_line automatically updates the date of last update at a transaction level, performing a DELETE + INSERT operation at a transaction level will automatically solve this problem.
+[source](https://stackoverflow.com/questions/46433007/how-to-identify-deleted-transactions-in-the-netsuite-transactions-table?utm_source=chatgpt.com)
 
 # Data architecture design
 
