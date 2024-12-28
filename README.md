@@ -125,7 +125,7 @@ Several challenges are to be noted however:
 - Deleted transaction are physically deleted from NetSuite transaction table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. An audit table called 'deleted_records' lists all transactions physically deleted from NetSuite and can be used to perform this operation. 
 - Deleted transaction_lines are also physically deleted from NetSuite transaction_line table (hard delete) and should therefore be deleted from the datawarehouse as well during the incremental update. Since a deleted transaction_line automatically updates the date of last update at a transaction level, performing a DELETE + INSERT operation at a transaction level will automatically solve this problem.
 
-[source](https://stackoverflow.com/questions/46433007/how-to-identify-deleted-transactions-in-the-netsuite-transactions-table?utm_source=chatgpt.com)
+[Stack Overflow reference](https://stackoverflow.com/questions/46433007/how-to-identify-deleted-transactions-in-the-netsuite-transactions-table?utm_source=chatgpt.com)
 
 # Data architecture design
 
