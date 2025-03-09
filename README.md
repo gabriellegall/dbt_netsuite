@@ -1,7 +1,7 @@
 # Tooling 
 
 ## Stack
-- Data sources: CSV files are stored as DBT seeds in the repository to simulate production data
+- Data sources: CSV files are stored as DBT seeds in the repository to simulate NetSuite production data
 - DWH storage: SQL Server Express
 - Transformation: DBT
 - Orchestration: GitHub Workflows
