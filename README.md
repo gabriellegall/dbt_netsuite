@@ -1,10 +1,10 @@
-# Tooling 
+# 🛠️ Technical overview 
 
-## Stack
-- Data sources: CSV files are stored as DBT seeds in the repository to simulate NetSuite production data
-- DWH storage: SQL Server Express
-- Transformation: DBT
-- Orchestration: GitHub Workflows
+## Tools
+- Data sources: **CSV files** are stored as **DBT seeds** in the repository to simulate NetSuite production data. Those seeds can be modified as needed to simulate any scenario.
+- Data storage & compute: **SQL Server Express**
+- Transformation: **DBT**
+- Orchestration: **GitHub Workflows** (using GitHub Runners)
 
 ## Installation 
 ### Prerequisites
@@ -38,8 +38,11 @@ The following installations should be executed:
 - Download from GitHub: `make refresh_artifacts`
 ### Cleaning
 - Delete the development branch schema: `make drop_branch_schema`
+ 
+# 💼 Business requirements 
 
-# Business context
+**Client description:**
+
 The client is a company working in the cosmetic industry.
 Following a successful implementation of the ERP NetSuite, the CEO wants to construct a BI ecosystem and leverage this new data source.
 While NetSuite offers some reporting capabilities, the client is limited with NetSuite alone because:
@@ -50,7 +53,8 @@ While NetSuite offers some reporting capabilities, the client is limited with Ne
     - They have a different user journey, and
     - They have different row-level-security requirements.
 
-# Business requirements 
+**Business needs:**
+
 The first use case identified by the client is a monitoring of the sales pipeline, which is defined by the aggregation of invoices, 'open' sales orders and 'open' opportunities in NetSuite. The sales pipeline is basically the estimated landing sales for the year.
 
 The client wants to use the annual budget as a performance objective for the sales and consolidate everything under a dataset which will be connected to a BI dashboard.
@@ -129,7 +133,7 @@ Several challenges are to be noted however:
 
 [Stack Overflow reference](https://stackoverflow.com/questions/46433007/how-to-identify-deleted-transactions-in-the-netsuite-transactions-table?utm_source=chatgpt.com)
 
-# Data architecture design
+# 📐 Data architecture design
 
 ## Layers
 The datawarehouse is structured through several layers in order to ensure (1) performance (2) clarity and (3) modularity:
@@ -144,7 +148,7 @@ The datawarehouse is structured through several layers in order to ensure (1) pe
 The overall project DAG is presented here:
 ![DAG](DAG.png)
 
-# Identified risks and mitigation actions
+# 🔍 Identified risks and mitigation actions
 ## Incremental load discrepancy
 - **Problem**: One of the main risks is that the complex incremental update of the dwh table using the previously described incremental load is somehow flawed.
 - **Solution**: To control this risk, a test scenario has been designed to **control any row difference between the staging layer and the dwh layer using a hash of all columns and a full-outer join**.
@@ -183,7 +187,7 @@ As an extra measure of safety (and performance), a primary key constraint has be
     - If any currency is missing from the FX rates file provided by the treasury department, the converted amount will be NULL. This represents a high risk that the aggregated data could be incorrect. To ensure that amounts are converted properly, a non-NULL constraint is applied on the FX rates after it has been joined with the transactions and transaction lines.
     - If the bu_code recorded in the budget file recorded manually by the finance team does not exist in NetSuite, it will be impossible to associate it with the sales figures. To ensure that all bu_code recorded in the budget file are correct, a non-NULL constraint is applied on the budget after it has been joined with the NetSuite business unit dimension.
 
-# Discussion
+# 💬 Discussion
 ## Performance
 As data will continue to grow, there are some elements that could be implemented or modified to further optimize the performance of the database:
 - Clustered and non-clustered indexes could be created on the fields that are commonly used to filter the data. Typically the transaction_status, transaction_date, transaction_type.
@@ -202,7 +206,7 @@ We could further enrich this Dbt project with custom Python scripts. While [SQL 
 
 etc.
 
-# CI/CD
+# 🔄 CI/CD
 ## Dev-to-Prod
 When developing on feature branches, the developers must use the dbt commands `make dbt_run MODEL=...` and `make dbt_test [MODEL=...]`.
 Those commands will automatically capture the name of the current branch and run the models/tests creating a development schema matching this name.
@@ -238,7 +242,7 @@ Several GitHub workflows have been designed - some of which were mentionned prev
 ## Documentation
 - **dbt_prod_doc_serve**: generate & upload the dbt documentation to GitHub hosted pages. The web page is updated whenever a push command is executed to the Master branch.
 
-# Packages
+# 📦 Packages
 Two packages are used in this project :
 
 ## [dbt_utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/)
