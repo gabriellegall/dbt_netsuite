@@ -225,7 +225,7 @@ When a pull request is opened or updated, the feature branch is tested automatic
 ## Docker Hub
 When a pull request is approved, a Docker image of the Master repository is automatically built and pushed to Docker Hub.
 
-# GitHub Workflows
+# ⚙️ GitHub Workflows
 Several GitHub workflows have been designed - some of which were mentionned previously. Here is the complete list:
 ## Production run
 - **dbt_prod_regular_run**: regular workflow running dbt snapshot, tests and run. This workflow is typically designed to be executed hourly or daily.
