@@ -13,7 +13,7 @@
 - System variables must be created for SQL Server access locally: `setx SQLSERVER_HOST "XXX.XXX.XX.XX"; setx SQLSERVER_USER "sa"; setx SQLSERVER_PASSWORD "xxxxxxxxxxx"` (+restart VS Code).
 - Makefile must be installed (e.g. via Chocolatey: `choco install make`).
 
-### Required installation
+The following installations should be executed:
 - Python libraries and Dbt: `make install_python_libraries`
 - SQL Server ODBC: `make install_sqlserver_odbc`
 - GitHub CLI: `make install_github_cli`
