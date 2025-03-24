@@ -8,10 +8,8 @@
 
 ## Installation 
 ### Prerequisites
-- Python
-- A cloud instance of SQL Server Express 2022 is required. The profiles.yml host should be updated accordingly. 
-If needed, deployment files for SQL Server Express are available under `deployment > deployment_sqlserver`.
-The Docker image provided can be used for localhosting of SQL Server Express. The deployment files on the other hand can be used to deploy SQL Server Express in Kubernetes.
+- Python3
+- A cloud instance of SQL Server Express 2022 is required. The profiles.yml host should be updated accordingly. If needed, deployment files for SQL Server Express are available under `deployment > deployment_sqlserver`.
 - System variables must be created for SQL Server access locally: `setx SQLSERVER_HOST "XXX.XXX.XX.XX"; setx SQLSERVER_USER "sa"; setx SQLSERVER_PASSWORD "xxxxxxxxxxx"` (+restart VS Code).
 - Makefile must be installed (e.g. via Chocolatey: `choco install make`).
 
@@ -25,7 +23,7 @@ The Docker image provided can be used for localhosting of SQL Server Express. Th
 - Docker Desktop: `make install_docker_desktop`
 
 ## Commands
-### Localhost of SQL Server Express using Docker (Optional)
+### Localhost of SQL Server Express using Docker (for testing)
 - Launch Docker (volume, image, run): `make docker_start`
 - Stop Docker: `make docker_end`
 ### Prod set-up
